@@ -21,58 +21,31 @@ export default function Home() {
     const [descIcsmsFrete, setIcmsFrete] = useState(null);
     const [descCredIcmsEntrada, setDesCredIcmsEntrada] = useState (null);
     
+    const CalculoValorLiquido= (variavel) => {
+      let result = 0;
+      result = (variavel / 100) * valorBruto;
+      valorTotalLiquido += parseFloat(result);
+      return "R$ " + result.toFixed(2);
+    }
     
-    const Calculos = [
-      function DescComercial (valorBruto, descComercial){
-        let result = 0;
-        result = (descComercial / 100) * valorBruto ;
-        valorTotalLiquido += parseFloat(result);
-        return "R$ " + result.toFixed(2)
-      },
-      function DescIcms (valorBruto, descIcms ){
-        let result = 0;
-        result = (descIcms / 100) * valorBruto;
-        valorTotalLiquido += parseFloat(result);
-        return "R$ " + result.toFixed(2)
-      },
-      function DescPis (descPis, valorBruto){
-        let result = 0;
-        result = (descPis / 100) * valorBruto;
-        valorTotalLiquido += parseFloat(result);
-        return "R$ " + result.toFixed(2)
-      },
-      function DescConfins(valorBruto, descConfins ){
-        let result = 0;
-        result = (descConfins / 100) * valorBruto;
-        valorTotalLiquido += parseFloat(result);
-        return "R$ " + result.toFixed(2)
-      },
-      function AcresIpi(valorBruto, acresIpi){
-        let result = 0;
-        result = (acresIpi / 100) * valorBruto;
-        valorTotalLiquido -= parseFloat(result)
-        return "R$ " + result.toFixed(2)
-      },
-      function AcresFrete (acresFrete) {
-        let valorLiquido = valorBruto - valorTotalLiquido
-        valorDescIcmsFrete = (acresFrete / 100) * valorLiquido ;
-        valorCustoUnitarioLiquido -= valorDescIcmsFrete
-        return "R$ " + valorDescIcmsFrete.toFixed(2)
-      },
-      function DescIcmsFrete(descIcsmsFrete){
-        let result = 0;
-        result = (descIcsmsFrete / 100) * valorDescIcmsFrete;
+    const CalcularCustoUnitarioLiquido = (variavel) =>{
+      let valorLiquido = valorBruto - valorTotalLiquido;
+      let result = 0;
+      if(variavel === acresFrete){
+        valorDescIcmsFrete = (variavel / 100) * valorLiquido ;
+        valorCustoUnitarioLiquido -= valorDescIcmsFrete;
+        return "R$ " + valorDescIcmsFrete.toFixed(2);
+      }else if(variavel === descIcsmsFrete ){
+        result = (variavel / 100) * valorDescIcmsFrete;
         valorCustoUnitarioLiquido += result
         return "R$ " + result.toFixed(2)
-      },
-      function DescCredIcmsEntrada(descCredIcmsEntrada){
-        let result = 0;
-        let valorLiquido = valorBruto - valorTotalLiquido
-        result = (descCredIcmsEntrada / 100) * valorLiquido;
+      }else{
+        result = (variavel / 100) * valorLiquido;
         valorCustoUnitarioLiquido += result
         return "R$ " + result.toFixed(2)
       }
-    ]
+      
+    }
 
 
     
@@ -276,7 +249,7 @@ export default function Home() {
                           onChange={(e) => {setDescComercial(parseFloat(e.target.value))}}
                         />
                         <div className="flex items-center justify-center">
-                          <span>{ descComercial ? Calculos[0](valorBruto, descComercial) : ""}</span>
+                          <span>{ descComercial ? CalculoValorLiquido(descComercial) : ""}</span>
                         </div>
                       </div>
                   </div>
@@ -296,7 +269,7 @@ export default function Home() {
                           onChange={(e) => {setDescIcms(parseFloat(e.target.value))}}
                         />
                         <div className="flex items-center justify-center">
-                          <span>{ descIcms ? Calculos[1](valorBruto, descIcms) : ""}</span>
+                          <span>{ descIcms ? CalculoValorLiquido(descIcms) : ""}</span>
                         </div>
                       </div>
                   </div>
@@ -316,7 +289,7 @@ export default function Home() {
                           onChange={(e)=> {setDescPis(parseFloat(e.target.value))}}
                         />
                         <div className="flex items-center justify-center">
-                          <span> { descPis ? Calculos[2](descPis, valorBruto) : ""}</span>
+                          <span> { descPis ? CalculoValorLiquido(descPis) : ""}</span>
                         </div>
                       </div>
                   </div>
@@ -336,7 +309,7 @@ export default function Home() {
                           onChange={(e)=> {setDescConfins(parseFloat(e.target.value))}}
                         />
                         <div className="flex items-center justify-center">
-                          <span> { descConfins ? Calculos[3](valorBruto, descConfins) : ""}</span>
+                          <span> { descConfins ? CalculoValorLiquido(descConfins) : ""}</span>
                         </div>
                       </div>
                   </div>
@@ -356,7 +329,7 @@ export default function Home() {
                           onChange={(e)=> {setAcresIpi(parseFloat(e.target.value))}}
                         />
                         <div className="flex items-center justify-center">
-                          <span> { acresIpi ? Calculos[4](valorBruto, acresIpi) : ""}</span>
+                          <span> { acresIpi ? CalculoValorLiquido(acresIpi) : ""}</span>
                         </div>
                       </div>
                   </div>
@@ -394,7 +367,7 @@ export default function Home() {
                           onChange={(e)=> {setAcresFrete(parseFloat(e.target.value))}}
                         />
                         <div className="flex items-center justify-center">
-                          <span> { acresFrete ? Calculos[5](acresFrete) : ""}</span>
+                          <span> { acresFrete ? CalcularCustoUnitarioLiquido(acresFrete) : ""}</span>
                         </div>
                       </div>
                   </div>
@@ -414,7 +387,7 @@ export default function Home() {
                           onChange={(e)=> {setIcmsFrete(parseFloat(e.target.value))}}
                         />
                         <div className="flex items-center justify-center">
-                          <span> { descIcsmsFrete ? Calculos[6](descIcsmsFrete) : ""}</span>
+                          <span> { descIcsmsFrete ? CalcularCustoUnitarioLiquido(descIcsmsFrete) : ""}</span>
                         </div>
                       </div>
                   </div>
