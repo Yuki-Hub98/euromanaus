@@ -1,113 +1,517 @@
-import Image from 'next/image'
+"use client";
+import { DropDown } from "../components/DropDown";
+import React, { useState, useEffect } from "react";
+
 
 export default function Home() {
+   
+    const fornecedor = [ "Fornecedor 1","Fornecedor 2","Fornecedor 3","Fornecedor 4"]
+    let valorTotalLiquido = 0;
+    let valorCustoUnitarioLiquido = 0;
+    let valorDescIcmsFrete = 0
+    const [open, setOpen] = useState(false);
+    const [valorBruto, setValorBruto] = useState(null);
+    const [valorTotal, setValorTotal] = useState(null)
+    const [descComercial, setDescComercial] = useState(null);
+    const [descIcms, setDescIcms] = useState(null);
+    const [descPis, setDescPis] = useState(null);
+    const [descConfins, setDescConfins] = useState(null);
+    const [acresIpi, setAcresIpi] = useState(null);
+    const [acresFrete, setAcresFrete] = useState (null);
+    const [descIcsmsFrete, setIcmsFrete] = useState(null);
+    const [descCredIcmsEntrada, setDesCredIcmsEntrada] = useState (null);
+    
+    
+    const Calculos = [
+      function DescComercial (valorBruto, descComercial){
+        let result = 0;
+        result = (descComercial / 100) * valorBruto ;
+        valorTotalLiquido += parseFloat(result);
+        return "R$ " + result.toFixed(2)
+      },
+      function DescIcms (valorBruto, descIcms ){
+        let result = 0;
+        result = (descIcms / 100) * valorBruto;
+        valorTotalLiquido += parseFloat(result);
+        return "R$ " + result.toFixed(2)
+      },
+      function DescPis (descPis, valorBruto){
+        let result = 0;
+        result = (descPis / 100) * valorBruto;
+        valorTotalLiquido += parseFloat(result);
+        return "R$ " + result.toFixed(2)
+      },
+      function DescConfins(valorBruto, descConfins ){
+        let result = 0;
+        result = (descConfins / 100) * valorBruto;
+        valorTotalLiquido += parseFloat(result);
+        return "R$ " + result.toFixed(2)
+      },
+      function AcresIpi(valorBruto, acresIpi){
+        let result = 0;
+        result = (acresIpi / 100) * valorBruto;
+        valorTotalLiquido -= parseFloat(result)
+        return "R$ " + result.toFixed(2)
+      },
+      function AcresFrete (acresFrete) {
+        let valorLiquido = valorBruto - valorTotalLiquido
+        valorDescIcmsFrete = (acresFrete / 100) * valorLiquido ;
+        valorCustoUnitarioLiquido -= valorDescIcmsFrete
+        return "R$ " + valorDescIcmsFrete.toFixed(2)
+      },
+      function DescIcmsFrete(descIcsmsFrete){
+        let result = 0;
+        result = (descIcsmsFrete / 100) * valorDescIcmsFrete;
+        valorCustoUnitarioLiquido += result
+        return "R$ " + result.toFixed(2)
+      },
+      function DescCredIcmsEntrada(descCredIcmsEntrada){
+        let result = 0;
+        let valorLiquido = valorBruto - valorTotalLiquido
+        result = (descCredIcmsEntrada / 100) * valorLiquido;
+        valorCustoUnitarioLiquido += result
+        return "R$ " + result.toFixed(2)
+      }
+    ]
+
+
+    
+   /* useEffect(() =>{
+      setValorTotal(valorBruto - valorTotalLiquido);
+
+    },[]) */
+    
+   
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    
+      <div className="isolate bg-white px-6 py-2 sm:py-4 lg:px-8">
+        <div
+          className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
+          aria-hidden="true"
+        >
+          <div
+            className="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#0284c7] to-[#0ea5e9] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
+            style={{
+              clipPath:
+                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+            }}
+          />
         </div>
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Cadastro de Máteria Prima
+          </h2>
+        </div>
+        
+          <form
+            action="#"
+            method="POST"
+            className="mx-auto mt-16 max-w-xl sm:mt-20">
+                {/* overflow-y-auto max-h-0 */}
+                
+                  {/* Inicio Primeira parte do Form*/}
+                <div className={`${open ? 'hidden' : 'grid grid-cols-2'} gap-x-8 gap-y-6 sm:grid-cols-2`}>
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-semibold leading-6 text-gray-900"
+                    >
+                      Cod. Fornecedor
+                    </label>
+                    <div className="mt-2.5">
+                      <input
+                        type="text"
+                        name="name"
+                        autoComplete="given-name"
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                        Fornecedor
+                    </label>
+                    <div className="relative mt-2.5">
+                        <DropDown teste={fornecedor} />
+                    </div>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="company"
+                      className="block text-sm font-semibold leading-6 text-gray-900"
+                    >
+                      Descrição do produto
+                    </label>
+                    <div className="mt-2.5">
+                      <input
+                        type="text"
+                        name="company"
+                        id="company"
+                        autoComplete="organization"
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                      Grupo de Matéria Prima
+                    </label>
+                    <div className="relative mt-2.5">
+                      <DropDown />
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                      Unidade Util na Produção
+                    </label>
+                    <div className="relative mt-2.5">
+                      <DropDown />
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                      Unidade de Entrada
+                    </label>
+                    <div className="relative mt-2.5">
+                      <DropDown />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                      Perda (%)
+                      </label>
+                      <div className="mt-2.5">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                        Conversão
+                      </label>
+                      <div className="mt-2.5">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                        Tipo de Máteria Prima
+                    </label>
+                    <div className="relative mt-2.5">
+                      <DropDown />
+                    </div>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer ">
+                  <input type="checkbox" value="" className="sr-only peer"/>
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                  <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Ativo</span>
+                  </label>
+                  {/* Fim Primeira parte do Form*/}
+                </div>
+                <div className={`${open ? 'grid grid-cols-2' : 'hidden'} gap-x-8 gap-y-6 sm:grid-cols-2`}>
+                  <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                       Valor Unit. Bruto
+                      </label>
+                      <div className="mt-2.5">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={(e)=>{setValorBruto(parseFloat(e.target.value))}}
+                        />
+                      </div>
+                  </div>
+                  <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                       (-) Desc. Comercial (%)
+                      </label>
+                      <div className="mt-2.5 grid grid-cols-2">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={(e) => {setDescComercial(parseFloat(e.target.value))}}
+                        />
+                        <div className="flex items-center justify-center">
+                          <span>{ descComercial ? Calculos[0](valorBruto, descComercial) : ""}</span>
+                        </div>
+                      </div>
+                  </div>
+                  <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                       (-) Desc. ICMS (%)
+                      </label>
+                      <div className="mt-2.5 grid grid-cols-2">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={(e) => {setDescIcms(parseFloat(e.target.value))}}
+                        />
+                        <div className="flex items-center justify-center">
+                          <span>{ descIcms ? Calculos[1](valorBruto, descIcms) : ""}</span>
+                        </div>
+                      </div>
+                  </div>
+                  <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                       (-) Desc. PIS (%)
+                      </label>
+                      <div className="mt-2.5 grid grid-cols-2">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={(e)=> {setDescPis(parseFloat(e.target.value))}}
+                        />
+                        <div className="flex items-center justify-center">
+                          <span> { descPis ? Calculos[2](descPis, valorBruto) : ""}</span>
+                        </div>
+                      </div>
+                  </div>
+                  <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                       (-) Desc. CONFINS (%)
+                      </label>
+                      <div className="mt-2.5 grid grid-cols-2">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={(e)=> {setDescConfins(parseFloat(e.target.value))}}
+                        />
+                        <div className="flex items-center justify-center">
+                          <span> { descConfins ? Calculos[3](valorBruto, descConfins) : ""}</span>
+                        </div>
+                      </div>
+                  </div>
+                  <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                       (+) Desc. IPI (%)
+                      </label>
+                      <div className="mt-2.5 grid grid-cols-2">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={(e)=> {setAcresIpi(parseFloat(e.target.value))}}
+                        />
+                        <div className="flex items-center justify-center">
+                          <span> { acresIpi ? Calculos[4](valorBruto, acresIpi) : ""}</span>
+                        </div>
+                      </div>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="company"
+                      className="block text-sm font-semibold leading-6 text-gray-900"
+                    >
+                      Valor Liquido Calculado
+                    </label>
+                    <div className="mt-2.5">
+                      <input
+                        type="text"
+                        name="company"
+                        id="company"
+                        autoComplete="organization"
+                        defaultValue={(valorBruto - valorTotalLiquido).toFixed(2) === "0.00" ? "" : "R$ " + (valorBruto - valorTotalLiquido).toFixed(2)}
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                       (+) Frete (%)
+                      </label>
+                      <div className="mt-2.5 grid grid-cols-2">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={(e)=> {setAcresFrete(parseFloat(e.target.value))}}
+                        />
+                        <div className="flex items-center justify-center">
+                          <span> { acresFrete ? Calculos[5](acresFrete) : ""}</span>
+                        </div>
+                      </div>
+                  </div>
+                  <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                       (-) ICMS Frente (%)
+                      </label>
+                      <div className="mt-2.5 grid grid-cols-2">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={(e)=> {setIcmsFrete(parseFloat(e.target.value))}}
+                        />
+                        <div className="flex items-center justify-center">
+                          <span> { descIcsmsFrete ? Calculos[6](descIcsmsFrete) : ""}</span>
+                        </div>
+                      </div>
+                  </div>
+                  <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                       (-) Cred. ICMS Entrada (%)
+                      </label>
+                      <div className="mt-2.5 grid grid-cols-2">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={(e)=> {setDesCredIcmsEntrada(parseFloat(e.target.value))}}
+                        />
+                        <div className="flex items-center justify-center">
+                          <span> { descCredIcmsEntrada ? Calculos[7](descCredIcmsEntrada) : ""}</span>
+                        </div>
+                      </div>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="company"
+                      className="block text-sm font-semibold leading-6 text-gray-900"
+                    >
+                      Custo Unitário Liquido
+                    </label>
+                    <div className="mt-2.5">
+                      <input
+                        type="text"
+                        name="company"
+                        id="company"
+                        autoComplete="organization"
+                        defaultValue={((valorBruto - valorTotalLiquido) - valorCustoUnitarioLiquido).toFixed(2) === "0.00" ? "" : "R$ " + ((valorBruto - valorTotalLiquido) - valorCustoUnitarioLiquido).toFixed(2)}
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold leading-6 text-gray-900"
+                      >
+                       (+) Valor Perda (%)
+                      </label>
+                      <div className="mt-2.5 grid grid-cols-2">
+                        <input
+                          type="text"
+                          name="name"
+                          autoComplete="given-name"
+                          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={(e)=> {de(parseFloat(e.target.value))}}
+                        />
+                        <div className="flex items-center justify-center">
+                          <span> {/* acresIpi ? Calculos[4](valorBruto, acresIpi) : "" */}</span>
+                        </div>
+                      </div>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="company"
+                      className="block text-sm font-semibold leading-6 text-gray-900"
+                    >
+                      Custo Utilizado Liquido
+                    </label>
+                    <div className="mt-2.5">
+                      <input
+                        type="text"
+                        name="company"
+                        id="company"
+                        autoComplete="organization"
+                        defaultValue={""}
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-10">
+                <button type="button" onClick={() => setOpen(!open)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                  </svg>
+                  <span className="sr-only">Icon description</span>
+                </button>
+                  {/*<button onClick={() => setOpen(!open)}
+                    type="submit"
+                    className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Enviar
+                  </button> */}
+                </div>
+          </form>
+        
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    
   )
 }
