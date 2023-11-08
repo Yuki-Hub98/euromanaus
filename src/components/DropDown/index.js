@@ -22,20 +22,40 @@ import {AiOutlineSearch} from "react-icons/ai"
             })
         }, [])
 
-        {suppliers?.map((supplier)=>{
-                            <li key={supplier?.name} className="p-2 text-sm hover:bg-sky-600 hover:text-white">
-                                {supplier?.name}
+        {teste?.map((test)=>{
+                            <li key={test?.name} className="p-2 text-sm hover:bg-sky-600 hover:text-white">
+                                {test?.name}
                             </li>
                         })}   
-}*/
-
-const DropDown = ( teste ) =>{
-    
+*/
+const fornecedor = [
+    {
+        id: 1,
+        name:"Forncedor 1"
+    },
+    {
+        id:2,
+        name:'Fornecedor 2'
+    },
+    {
+        id:3,
+        name:'Fornecedor 3'
+    },
+    {
+        id:4,
+        name:'Fornecedor 4'
+    },
+    {
+        id:5,
+        name:'Fornecedor 5'
+    },
+  ]
+const DropDown = ( conteudo ) =>{
         const [inputValue, setInputValue] = useState("")
         const [open, setOpen] = useState(false)
         
         return  (
-            <div  >
+            <div>
                 <div
                 onClick={() => setOpen(!open)}
                 className="bg-white w-full p-2 border px-3.5 flex items-center cursor-pointer justify-center rounded"> 
@@ -52,18 +72,10 @@ const DropDown = ( teste ) =>{
                                 placeholder="Searche" 
                                 className="placeholder: text-gray-700 p-2 outline-none" />
                         </div>
-                        <li className={`p-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer`}>
-                            Fornecedor 1
-                        </li>
-                        <li className="p-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer">
-                            Fornecedor 2
-                        </li>
-                        <li className="p-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer">
-                            Fornecedor 3
-                        </li>
-                        <li className="p-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer">
-                            Fornecedor 4
-                        </li>
+                        {fornecedor?.map((test) =>(
+                             <li key={test?.id} className="p-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer"> {test?.name}</li>
+
+                            ))}
                     </ul>
                 </div>
             
