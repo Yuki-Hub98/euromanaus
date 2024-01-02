@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {BiChevronDown} from "react-icons/bi";
 import {AiOutlineSearch} from "react-icons/ai"
- /*
+/*
 
- export async function getStaticProps(){
+export async function getStaticProps(){
     const data = await fetch("https://restcountries.com/v2/all?filds=name");
     const suppliers = await data.json();
 
@@ -49,7 +49,7 @@ const fornecedor = [
         id:5,
         name:'Fornecedor 5'
     },
-  ]
+]
 const DropDown = ( conteudo ) =>{
         const [inputValue, setInputValue] = useState("")
         const [open, setOpen] = useState(false)
@@ -73,7 +73,7 @@ const DropDown = ( conteudo ) =>{
                                 className="placeholder: text-gray-700 p-2 outline-none" />
                         </div>
                         {fornecedor?.map((test) =>(
-                             <li key={test?.id} className="p-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer"> {test?.name}</li>
+                            <li key={test?.id} className="p-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer"> {test?.name}</li>
 
                             ))}
                     </ul>
