@@ -78,7 +78,6 @@ const DropDown = ( conteudo ) =>{
                             ))}
                     </ul>
                 </div>
-            
         );
 }
 
