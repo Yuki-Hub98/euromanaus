@@ -23,7 +23,7 @@ export default function cadastroFun () {
                     <ModalHeader className="flex flex-col gap-1 text-center"> Cadastro de Fornecedor </ModalHeader>
                     <ModalBody>
                       <div className="flex flex-col w-full">
-                        <Card className="max-w-full justify-items-center h-[520px] bg-slate-100">
+                        <Card className="max-w-full justify-items-center h-[520px]">
                           <CardBody className="overflow-hidden">
                             <Tabs
                               fullWidth
@@ -35,36 +35,44 @@ export default function cadastroFun () {
                                 <form>
                                   <div className="w-full flex flex-row gap-2 justify-items-stretch">
                                     <div>
-                                      <Input label="Nome Fantasia" type="Text" />
-                                      <Input label="Razão Social" type="Text" />
-                                      <Input label="CPF/CNPJ" type="Text"  />
-                                      <Input label="INSCR. Social/ RG" type="Text"  />
+                                      <Input label="Nome Fantasia" type="Text" labelPlacement="outside-left" className="mt-2 justify-between" color="white" size="" />
+                                      <Input label="Razão Social" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
+                                      <Input label="CPF/CNPJ" type="Text" labelPlacement="outside-left" className="mt-2 justify-between" />
+                                      <Input label="INSCR. Social/ RG" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
                                     </div>
                                     <div> 
-                                      <Input label="CEP" type={"Text"}  />
-                                      <Input label="Endereço" type="Text"  />
-                                      <Input label="Número" type="Text"  />
-                                      <Input label="Bairro" type="Text"  />
-                                      <Input label="Cidade" type="Text"  />
-                                      <Input label="UF" type="Text"  />
+                                      <Input label="CEP" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
+                                      <Input label="Endereço" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"   />
+                                      <Input label="Número" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
+                                      <Input label="Bairro" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
+                                      <Input label="Cidade" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
+                                      <Input label="UF" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
                                     </div>
                                   </div>
                                 </form>
                               </Tab>
                               <Tab key={"contato"} title={"Contato"}>
                                 <form>
-                                  <Input label="Telefone" type="Text"  />
-                                  <Input label="Celular" type="Text" />
-                                  <Input label="E-mail" type="Text" />
-                                  <Input label="Contato" type="Text" />
+                                  <div className="w-full flex flex-row gap-2 justify-items-stretch">
+                                    <div>
+                                      <Input label="Telefone" type="Text" labelPlacement="outside-left" className="mt-2 justify-between" />
+                                      <Input label="Celular" type="Text" labelPlacement="outside-left" className="mt-2 justify-between" />
+                                      <Input label="E-mail" type="Text" labelPlacement="outside-left" className="mt-2 justify-between" />
+                                      <Input label="Contato" type="Text" labelPlacement="outside-left" className="mt-2 justify-between" />
+                                    </div>
+                                  </div>
                                 </form>
                               </Tab>
                               <Tab key={"Outros"} title={"Outros"}>
                                 <form>
-                                  <Input label="Dados Bancarios" type="Text" />
-                                  <Input label="Tarara" type="Text" />
-                                  <Input label="Tarara" type="Text" />
-                                  <Input label="Tarara" type="Text" />
+                                  <div className="w-full flex flex-row gap-2 justify-items-stretch">
+                                    <div>
+                                      <Input label="Dados Bancarios" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
+                                      <Input label="Tarara" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
+                                      <Input label="Tarara" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
+                                      <Input label="Tarara" type="Text" labelPlacement="outside-left" className="mt-2 justify-between"  />
+                                    </div>
+                                  </div>
                                 </form>
                               </Tab>
                             </Tabs>
