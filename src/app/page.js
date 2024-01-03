@@ -95,7 +95,7 @@ export default function Home() {
             action="#"
             method="POST"
             className="mx-auto mt-16 max-w-6xl sm:mt-20">
-              <div className="flex flex-row flex space-x-96">
+              <div className="flex flex-row space-x-96">
                   {/* CADASTRO DE ITEM*/}
                 <div className={`grid grid-cols-2 gap-x-8 gap-y-px sm:grid-cols-2`}>
                   <div>
