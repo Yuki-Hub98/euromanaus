@@ -1,6 +1,6 @@
 "use client"
-import { useState } from "react";
-import { GoChevronDown,  FaWpforms} from "react-icons/go";
+import { useState} from "react";
+import { GoChevronDown } from "react-icons/go";
 
 const opcoesCadastro = ["Cadastro de Clientes", "Cadastro de Compras", "Cadastro de Financeiro", "Cadastro de Vendas"]
 const opcoesConsulta = [ "Contas a Pagar",  "Movimento", "Pedidos" , "Produto"]
@@ -16,7 +16,8 @@ const DropDownNav = (name, opcoes) =>{
             </button>
                 <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${drop ? 'max-h-60' : 'max-h-0'}`}><a href="http://localhost:3000/cadastro-fornecedor"></a>
                     {opcoes.map((op) => (
-                        <li key={op} className={"text-center font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"}><a href="http://localhost:3000/cadastro-fornecedor">{op}</a></li>
+                        <li key={op} className={"text-center font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"}>
+                            <a href="http://localhost:3000/cadastro-fornecedor">{op}</a></li>
 
                     ))}
                 </ul>
