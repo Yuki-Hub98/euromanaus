@@ -8,19 +8,17 @@ export default function CentroEstoque () {
 
     return (
         <>
-        <nav className="flex justify-between items-center px-4 py-2">
+        
         <div className="flex-grow">
             <input
             type="text"
-            className="w-3/4 bg-gray-700 text-gray-200 px-4 py-2 rounded-md"
+            className="w-3/4 bg-white px-4 py-2 rounded-md"
             placeholder="Search..."
             />
         </div>
         <div className="flex items-center">
             <h1>Centro de Estoque</h1>
         </div>
-            <Cadastro/>
-        </nav>
         </>
     )
 }

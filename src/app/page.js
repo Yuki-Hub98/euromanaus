@@ -4,9 +4,9 @@ export default function Home() {
     return (
         <>
             <div className="flex">
-            <main className="flex-grow ml-64 relative">
-                <Navbar />
-            </main>
+                <main className="flex-grow w-full relative">
+                    
+                </main>
             </div>
         </>
     )

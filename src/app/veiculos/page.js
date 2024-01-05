@@ -8,7 +8,6 @@ export default function Veiculos () {
 
     return (
         <>
-        <nav className="flex justify-between items-center px-4 py-2">
         <div className="flex-grow">
             <input
             type="text"
@@ -17,8 +16,6 @@ export default function Veiculos () {
             />
         </div>
         <div className="flex items-center"></div>
-            <Cadastro/>
-        </nav>
         </>
     )
 }

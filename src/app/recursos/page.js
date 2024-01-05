@@ -7,7 +7,6 @@ export default function Recursos () {
 
     return (
         <>
-        <nav className="flex justify-between items-center px-4 py-2">
         <div className="flex-grow">
             <input
             type="text"
@@ -20,8 +19,6 @@ export default function Recursos () {
                 Recursos
             </h1>
         </div>
-            <Cadastro/>
-        </nav>
         </>
     )
 }

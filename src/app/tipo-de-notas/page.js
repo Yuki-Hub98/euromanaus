@@ -7,7 +7,6 @@ export default function TiposNotas () {
 
     return (
         <>
-        <nav className="flex justify-between items-center px-4 py-2">
         <div className="flex-grow">
             <input
             type="text"
@@ -16,8 +15,6 @@ export default function TiposNotas () {
             />
         </div>
         <div className="flex items-center"></div>
-            <Cadastro/>
-        </nav>
         </>
     )
 }

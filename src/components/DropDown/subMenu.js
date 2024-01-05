@@ -23,6 +23,18 @@ const URL = (pag) =>{
     
 }
 
+const teste = () => {
+    return (
+        <>
+        <div>
+            <a href={URL(org)}>
+
+            </a>
+        </div>
+        </>
+    )
+}
+
 const SubMenu = (opcao) =>{
     const [subDrop, setSubDrop] = useState(false)
     switch (opcao.opcao) {

@@ -6,7 +6,6 @@ import Cadastro from '@/components/Cadastro';
 export default function Filial () {
     return (
         <>
-        <nav className="flex justify-between items-center px-4 py-2">
         <div className="flex-grow">
             <input
             type="text"
@@ -17,8 +16,6 @@ export default function Filial () {
         <div className="flex items-center">
             <h1>Filial</h1>
         </div>
-            <Cadastro/>
-        </nav>
         </>
     )
 }

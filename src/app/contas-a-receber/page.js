@@ -7,7 +7,6 @@ export default function ContasReceber () {
 
     return (
         <>
-        <nav className="flex justify-between items-center px-4 py-2">
         <div className="flex-grow">
             <input
             type="text"
@@ -18,8 +17,6 @@ export default function ContasReceber () {
         <div className="flex items-center">
             <h1>Contas a Receber</h1>
         </div>
-            <Cadastro/>
-        </nav>
         </>
     )
 }

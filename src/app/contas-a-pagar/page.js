@@ -7,7 +7,6 @@ export default function ContasPagar () {
 
     return (
         <>
-        <nav className="flex justify-between items-center px-4 py-2">
         <div className="flex-grow">
             <input
             type="text"
@@ -18,7 +17,6 @@ export default function ContasPagar () {
         <div className="flex items-center">
             <h1>Contas a Pagar</h1>
         </div>
-        </nav>
         </>
     )
 }

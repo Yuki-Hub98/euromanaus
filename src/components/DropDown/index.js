@@ -30,7 +30,7 @@ export async function getStaticProps(){
                             </li>
                         })}   
 */
-const style = "flex items-center p-2 w-full text-center font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+const style = "flex items-center p-2 w-full text-center font-normal text-white rounded-lg hover:bg-white dark:text-gray-900 hover:text-gray-700 group transition duration-75 group"
 const fornecedor = [
     {
         id: 1,

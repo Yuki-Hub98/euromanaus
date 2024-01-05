@@ -7,7 +7,6 @@ export default function Gerais () {
 
     return (
         <>
-        <nav className="flex justify-between items-center px-4 py-2">
         <div className="flex-grow">
             <input
             type="text"
@@ -18,8 +17,6 @@ export default function Gerais () {
         <div className="flex items-center">
             <h1>Gerais</h1>
         </div>
-            <Cadastro/>
-        </nav>
         </>
     )
 }
