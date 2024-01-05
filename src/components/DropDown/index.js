@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import {BiChevronDown} from "react-icons/bi";
 import {AiOutlineSearch} from "react-icons/ai"
+import { GoChevronDown } from "react-icons/go";
+import { SubMenu } from "./subMenu";
 /*
 
 export async function getStaticProps(){
@@ -28,6 +30,7 @@ export async function getStaticProps(){
                             </li>
                         })}   
 */
+const style = "flex items-center p-2 w-full text-center font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
 const fornecedor = [
     {
         id: 1,
@@ -81,4 +84,24 @@ const DropDown = ( conteudo ) =>{
         );
 }
 
-export { DropDown } 
+const DropDownNav = (values) =>{
+    const [dropPrincipal, setDropPrincipal] = useState(false);
+    return ( 
+        <>
+            <button type="button" onClick={() => setDropPrincipal(!dropPrincipal)} className={style}>
+            <span className="flex-1 ml-3 text-left whitespace-nowrap">{values?.name}</span>
+            <GoChevronDown/>
+            </button>
+                <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${dropPrincipal ? 'max-h-max' : 'max-h-0'}`}><a href="http://localhost:3000/cadastro-fornecedor"></a>
+                    {values?.opcoes?.map((op) => (
+                        <li key={op} className={"font-normal text-gray-900 rounded-lg transition duration-300"}>
+                            <SubMenu opcao={op}/>
+                        </li>
+
+                    ))}
+                </ul>
+        </>
+    )
+}
+
+export { DropDown, DropDownNav } 
