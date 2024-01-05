@@ -1,29 +1,7 @@
 "use client"
-import { useState} from "react";
-import { GoChevronDown } from "react-icons/go";
+import { DropDownNav } from "../DropDown";
 
-const opcoesCadastro = ["Cadastro de Clientes", "Cadastro de Compras", "Cadastro de Financeiro", "Cadastro de Vendas"]
-const opcoesConsulta = [ "Contas a Pagar",  "Movimento", "Pedidos" , "Produto"]
-const opcoesMovimento = ["Atualizações no Geral"]
-const style = "flex items-center p-2 w-full text-center font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-const DropDownNav = (name, opcoes) =>{
-    const [drop, setDrop] = useState(false);
-    return ( 
-        <>
-            <button type="button" onClick={() => setDrop(!drop)} className={style}>
-            <span className="flex-1 ml-3 text-left whitespace-nowrap">{name}</span>
-            <GoChevronDown/>
-            </button>
-                <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${drop ? 'max-h-60' : 'max-h-0'}`}><a href="http://localhost:3000/cadastro-fornecedor"></a>
-                    {opcoes.map((op) => (
-                        <li key={op} className={"text-center font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"}>
-                            <a href="http://localhost:3000/cadastro-fornecedor">{op}</a></li>
-
-                    ))}
-                </ul>
-        </>
-    )
-}
+const opcoesCadastro = ["Organização", "Fiscal", "Financeiro","Compras", "Industrial","Vendas", "Expedição"]
 
 const Sidebar = () => {
     
@@ -38,13 +16,15 @@ const Sidebar = () => {
                     </a>
                 </li>
                 <li>
-                    {DropDownNav("Cadastro",opcoesCadastro)}
+                    <DropDownNav name={"Cadastro"} opcoes={opcoesCadastro}/>
+                
                 </li>
                 <li>
-                    {DropDownNav("Consulta",opcoesConsulta)}
+                    <DropDownNav name={"Consulta"} opcoes={opcoesCadastro}/>
                 </li>
                 <li>
-                    {DropDownNav("Movimento", opcoesMovimento)}
+                    <DropDownNav name={"Movimento"} opcoes={opcoesCadastro}/>
+                
                 </li>
                 </ul>
                 <ul className="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
