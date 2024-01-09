@@ -9,7 +9,7 @@ export default function BarreiraCompras () {
     return (
         <>
         <div className="w-full relative">
-            <Navbar/>    
+            <h1>teste</h1>
         </div>  
 
         </>

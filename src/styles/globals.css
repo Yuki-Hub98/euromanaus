@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+[data-overlay-container=true] {
+  height: 100%;
+  width: 100%;
+}
+
 /*
 :root {
   --foreground-rgb: 0, 0, 0;

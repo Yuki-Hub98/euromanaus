@@ -12,11 +12,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className='flex'>
+      <body className={ `${inter.className} h-full` }>
+        <div className='flex h-screen overflow-hidden'>
           <Provider>
-              <Sidebar/>
-            {children}
+            <div className="flex h-screen overflow-hidden">
+                <Sidebar/>
+                <div className="relative max-h-full flex ml-[16rem] flex-1 flex-col overflow-y-auto overflow-x-hidden">
+                  <main>
+                    {children}
+                  </main>
+                </div>
+            </div>
           </Provider>
         </div>
       </body>

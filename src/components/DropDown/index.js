@@ -61,7 +61,7 @@ const DropDown = ( conteudo ) =>{
             <div>
                 <div
                 onClick={() => setOpen(!open)}
-                className="bg-white w-full p-2 border px-3.5 flex items-center cursor-pointer justify-center rounded"> 
+                className="bg-white w-full p-2 radius border px-3.5 flex items-center cursor-pointer justify-center rounded"> 
                     Select Country
                     <BiChevronDown size={20}/>
                 </div>

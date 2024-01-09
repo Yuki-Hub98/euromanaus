@@ -7,7 +7,7 @@ const Sidebar = () => {
     
     return (
         <>
-            <aside className="fixed top-0 left-0 w-64 h-full " aria-label="Sidenav">
+            <aside className="fixed top-0 left-0 w-64 h-full" aria-label="Sidenav">
             <div className="overflow-y-auto py-5 px-3 h-full bg-gray-700 dark:bg-gray-800 dark:border-gray-700">
                 <ul className="space-y-2">
                 <li>

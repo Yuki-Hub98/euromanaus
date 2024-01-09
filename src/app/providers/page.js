@@ -4,7 +4,7 @@ import {NextUIProvider} from '@nextui-org/react'
 
 export default function Providers({children}){
     return (
-        <NextUIProvider>
+        <NextUIProvider className='h-full'>
             {children}
         </NextUIProvider>
     )

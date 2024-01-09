@@ -2,6 +2,7 @@
 import React , {useState} from "react";
 import { Modal, Button, useDisclosure, ModalContent, ModalHeader, ModalBody, 
 ModalFooter,Input,Tabs, Tab, Card, CardBody } from "@nextui-org/react";
+import { DropDown } from "../DropDown";
 
 const Cadastro = () =>{
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -77,7 +78,6 @@ const Cadastro = () =>{
                         </ModalBody>
                         <ModalFooter>
                         <Button color="danger" variant="flat" onPress={onClose}>
-                            {console.log(onClose)}
                             Cancelar
                         </Button>
                         <Button color="primary" onPress={onClose}>
@@ -93,4 +93,94 @@ const Cadastro = () =>{
     )
 }
 
-export default Cadastro
+const CadastroArvore = (value) =>{
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const campos = (type) => {
+        switch (key) {
+            case value:
+                
+                break;
+        
+            default:
+                break;
+        }
+    }
+
+
+    console.log(value)
+    return( 
+    <>
+        <div className={`flex flex-col items-center w-[85rem]`}>
+            <div className='flex h-10 justify-center items-center w-96 '>
+                <h2>
+                    {value.name}
+                </h2>
+            </div>
+                <form>
+                    <div className='flex flex-row justify-around mt-3 w-[70rem] items-center'>
+                        <div className='flex flex-row mt-6 gap-3 items-center'>
+                            <Input className='w-96' label="Search"/>
+                                <Button>
+                                    Pesquisar
+                                </Button>
+                        </div>
+                        <div className='flex mt-6'>
+                            <Button onPress={onOpen}>
+                                Cadastrar
+                            </Button>
+                            <Modal 
+                                isOpen={isOpen}
+                                onOpenChange={onOpenChange}
+                                placement="top-center"
+                                size="md"
+                                className=' h-80'>
+                                <ModalContent>
+                                    {(onClose) => (
+                                        <>
+                                        <ModalHeader className="flex flex-col gap-1"> {value.name} </ModalHeader>
+                                            <ModalBody>
+                                                <div className="flex flex-col w-full">
+                                                    <div className="w-full flex flex-row gap-2">
+                                                        {value.type === 1 ? 
+                                                        <div>
+                                                            <Input label="Descrição" size='lg' type="Text" labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
+                                                        </div>
+                                                        
+                                                        :
+                                                        <div>
+                                                            <div className="flex justify-center relative">
+                                                            <DropDown/>
+                                                            </div>
+                                                            <Input label="Descrição" size='lg' type="Text" labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
+                                                        </div>
+                                                        }
+                                                        
+                                                    </div>
+                                                </div>
+                                                    </ModalBody>
+                                                    <ModalFooter>
+                                                        <Button color="danger" variant="flat" onPress={onClose}>
+                                                            Cancelar
+                                                        </Button>
+                                                        <Button color="primary" onPress={onClose}>
+                                                            Cadastrar
+                                                        </Button>
+                                                    </ModalFooter>
+                                                    </>
+                                                )}
+                                            </ModalContent>
+                                    </Modal>
+                                </div>
+                            </div>
+                        </form>
+                        <div className=' bg-slate-200 h-[40rem] rounded-md w-[75rem] mt-3'>
+                            <h1>
+                                Resultado
+                            </h1>
+                        </div>
+                    </div>
+    </>)
+    
+}
+
+export {Cadastro, CadastroArvore}
