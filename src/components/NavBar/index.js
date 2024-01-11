@@ -1,5 +1,7 @@
 "use client";
-import Cadastro from "../Cadastro";
+import { useState } from "react";
+import { CadastroArvore } from "@/components/Cadastro";
+
 const Navbar = () => {
     return (
         <>
@@ -40,4 +42,71 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+
+const NavArvore = (value) =>{
+    const [up, setUp] = useState(false);
+    const [opcao, setOpcao] = useState("")
+    const opcoes = (op) => {
+    
+        switch (op) {
+            case "Departamento":
+                return (
+                    <>
+                    <CadastroArvore name={"Departamento"} type={1} />
+                    </>
+                )
+            case "Linha":
+                return (
+                    <>
+                    <CadastroArvore name={"Linha"} type={2} />
+                    </>
+                )
+            case "Familia":
+                return (
+                    <>
+                    <CadastroArvore name={"Familia"} type={2} />
+                    </>
+                )
+            case "Grupo":
+                return (
+                    <>
+                    <CadastroArvore name={"Grupo"} type={2} />
+                    </>
+                )
+            case "Cor":
+                return (
+                    <>
+                    <CadastroArvore name={"Cor"} type={1} />
+                    </>
+                )
+            case "Especificação":
+                return (
+                    <>
+                    <CadastroArvore name={"Especificação"} type={1} />
+                    </>
+                )
+            default:
+                break;
+        }
+    }
+
+
+    return (
+        <>
+        <div className='flex justify-center h-9 bg-slate-400' >
+            <div className='flex flex-row justify-around gap-2 w-full'>
+                {value.name?.map((name) => (
+                    <button key={name} onClick={(e) => {setUp(!up), setOpcao(e.target.innerText)}}  className={`flex items-center justify-center h-9 w-64 p-2 cursor-pointer text-center font-normal text-white hover:bg-white  dark:text-gray-900   hover:text-gray-700 rounded-lg `}>
+                        <span>{name}</span>
+                    </button>
+                ))}
+            </div>
+        </div>
+        
+        <div className={`flex relative justify-center mt-2 ml-28 overflow-y-auto ${up ? 'max-h-max' : 'max-h-0'} w-[90rem] rounded-md bg-slate-300`}>
+            {opcoes(opcao)}
+        </div>
+        </>
+    )
+}
+export {Navbar, NavArvore}; 
