@@ -12,8 +12,6 @@ export default async function ArvoreProduto () {
     const linha = await Linha();
     const familia = await Familia();
 
-    console.log(linha)
-
 
     return (
         <>
