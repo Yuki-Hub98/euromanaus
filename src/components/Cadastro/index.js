@@ -104,6 +104,10 @@ const CadastroArvore = (value) =>{
         {value: "opcao 4", label:"opcao 4"}
     ] 
 
+    const dataTransform = value?.data?.map((data) => ( 
+        {'value': data?.descricao, 'label':data?.descricao}
+        ))
+
     return( 
     <>
         <div className={`flex flex-col items-center w-[85rem]`}>
@@ -147,7 +151,7 @@ const CadastroArvore = (value) =>{
                                                 :
                                                 <div>
                                                 <div className='flex justify-center w-96 relative'>
-                                                    <Select className='w-60 ml-3' options={op}/>
+                                                    <Select className='w-60 ml-3' options={dataTransform}/>
                                                 </div>
                                                     <Input label="Descrição" size='lg' type="Text" labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
                                                 </div>
