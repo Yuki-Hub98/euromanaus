@@ -97,12 +97,7 @@ const Cadastro = () =>{
 const CadastroArvore = (value) =>{
     
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    const op = [
-        {value: "opcao 1", label:"opcao 1"},
-        {value: "opcao 2", label:"opcao 2"},
-        {value: "opcao 3", label:"opcao 3"},
-        {value: "opcao 4", label:"opcao 4"}
-    ] 
+
 
     const dataTransform = value?.data?.map((data) => ( 
         {'value': data?.descricao, 'label':data?.descricao}
@@ -175,10 +170,17 @@ const CadastroArvore = (value) =>{
                     </div>
                 </form>
             </div>
-            <div className=' bg-slate-200 h-[40rem] mt-8 rounded-md w-[75rem]'>
-                <h1>
-                    Resultado
-                </h1>
+            <div className='bg-slate-200 h-[40rem] mt-8 rounded-md w-[75rem]'>
+                <div className=' flex flex-col bg-amber-200 w-[75rem] rounded justify-center'>
+                    {value?.dataSearchLinha?.map((data) => (
+                        <>
+                        <div className='flex gap-3' >
+                        <span className='bg-slate-200'>Departamento: {data.departamento}</span>
+                        <span className='bg-slate-200'>Descrição: {data.descricao}</span>
+                        </div>
+                        </>
+                    ))}
+                </div>
             </div>
         </div>
             
