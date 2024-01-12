@@ -3,6 +3,7 @@ import React , {useState} from "react";
 import { Modal, Button, useDisclosure, ModalContent, ModalHeader, ModalBody, 
 ModalFooter,Input,Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import Select from "react-select";
+import Tabela from "../Tabela";
 
 
 const Cadastro = () =>{
@@ -94,11 +95,28 @@ const Cadastro = () =>{
     )
 }
 
-const CadastroArvore = (value) =>{
+const CadastroArvore = async (value) =>{
     
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
 
+    const postTest = async (e) => {
+        e.preventDefault();
+        const response = await fetch("http://localhost:3000/api/posts/arvore-de-produto/departamento", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({data})
+        })
+    
+        const dataPost = await response.json()
+        return dataPost
+    
+    
+    }
+
+    
     const dataTransform = value?.data?.map((data) => ( 
         {'value': data?.descricao, 'label':data?.descricao}
         ))
@@ -171,16 +189,7 @@ const CadastroArvore = (value) =>{
                 </form>
             </div>
             <div className='bg-slate-200 h-[40rem] mt-8 rounded-md w-[75rem]'>
-                <div className=' flex flex-col bg-amber-200 w-[75rem] rounded justify-center'>
-                    {value?.dataSearchLinha?.map((data) => (
-                        <>
-                        <div className='flex gap-3' >
-                        <span className='bg-slate-200'>Departamento: {data.departamento}</span>
-                        <span className='bg-slate-200'>Descrição: {data.descricao}</span>
-                        </div>
-                        </>
-                    ))}
-                </div>
+                <Tabela data={value.dataGeral} name={value.name}/>
             </div>
         </div>
             
@@ -188,4 +197,4 @@ const CadastroArvore = (value) =>{
     
 }
 
-export {Cadastro, CadastroArvore}
+export { CadastroArvore, Cadastro}
