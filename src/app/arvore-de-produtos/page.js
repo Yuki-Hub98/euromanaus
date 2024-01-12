@@ -5,7 +5,6 @@ import Linha from "@/pages/api/arvore-produto/linha";
 import Familia from "@/pages/api/arvore-produto/familia";
 import { Grupo } from "@/pages/api/arvore-produto/grupo";
 import {Cor} from "@/pages/api/arvore-produto/cor";
-import { GET } from "../api/posts/route";
 
 
 const nav = ["Departamento", "Linha", "Familia", "Grupo", "Cor", "Especificação"]
@@ -23,7 +22,18 @@ const teste = async () =>{
 
 }
 
+const testePost = async (data) => {
 
+    const response = await fetch("http://localhost:3000/api/posts/arvore-de-produto", {
+        method:'POST',
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    }).then((response) => response.json())
+
+    return response
+}
 
 export default async function ArvoreProduto () {
 
@@ -35,7 +45,9 @@ export default async function ArvoreProduto () {
 
     const test = await teste()
 
-    
+    const t = await testePost({'descricao': 'teste numero 2'})
+
+    const te = await DepartamentoPost({'descricao': 'teste numero 2'})
     return (
         <>
         <div className="flex flex-col h-screen bg-slate-600 ">
