@@ -47,7 +47,6 @@ export default async function ArvoreProduto () {
 
     const t = await testePost({'descricao': 'teste numero 2'})
 
-    const te = await DepartamentoPost({'descricao': 'teste numero 2'})
     return (
         <>
         <div className="flex flex-col h-screen bg-slate-600 ">
