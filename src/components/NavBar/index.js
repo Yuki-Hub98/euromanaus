@@ -52,31 +52,31 @@ const NavArvore = (value) =>{
             case "Departamento":
                 return (
                     <>
-                    <CadastroArvore name={"Departamento"} data={value?.dataDepartamento} type={1} />
+                    <CadastroArvore name={"Departamento"} data={value?.dataDepartamento} dataGeral={value?.dataDepartamento} type={1} />
                     </>
                 )
             case "Linha":
                 return (
                     <>
-                    <CadastroArvore name={"Linha"} data={value?.dataDepartamento} dataSearchLinha={value?.dataLinha} type={2} />
+                    <CadastroArvore name={"Linha"} data={value?.dataDepartamento} dataGeral={value?.dataLinha} type={2} />
                     </>
                 )
             case "Familia":
                 return (
                     <>
-                    <CadastroArvore name={"Familia"} data={value?.dataLinha} type={2} />
+                    <CadastroArvore name={"Familia"} data={value?.dataLinha} dataGeral={value?.dataFamilia} type={2} />
                     </>
                 )
             case "Grupo":
                 return (
                     <>
-                    <CadastroArvore name={"Grupo"} data={value?.dataFamilia} type={2} />
+                    <CadastroArvore name={"Grupo"} data={value?.dataFamilia} dataGeral={value?.dataGrupo} type={2} />
                     </>
                 )
             case "Cor":
                 return (
                     <>
-                    <CadastroArvore name={"Cor"} type={1} />
+                    <CadastroArvore name={"Cor"} dataGeral={value?.dataCor} type={1} />
                     </>
                 )
             case "Especificação":
