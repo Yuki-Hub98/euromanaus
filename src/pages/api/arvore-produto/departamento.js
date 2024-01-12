@@ -7,4 +7,19 @@ const Departamento = async () =>{
 
 }
 
-export default Departamento
+
+const DepartamentoPost = async (data) =>{
+    const response = await fetch("http://localhost:8080/arvore-produto-departamento", {
+        method:"POST",
+        headers:{
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then((response) => response.json())
+
+    console.log(response)
+
+}
+
+
+export {Departamento, DepartamentoPost}
