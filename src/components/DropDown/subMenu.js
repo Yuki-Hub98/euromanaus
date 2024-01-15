@@ -64,7 +64,7 @@ const SubMenu = (opcao) =>{
                     <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${subDrop ? 'max-h-60' : 'max-h-0'}`}>
                         {fiscal.map((fisc) => (
                             <li key={fisc} className={` text-sm font-normal cursor-pointer text-gray-900 rounded-lg duration-300 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}>
-                            <span className=' flex-1 ml-11 text-left whitespace-nowrap'> <a  href={ URL(fisc)}>{fisc}</a> </span>
+                            <span className=' flex-1 ml-11 text-left whitespace-nowrap'> <a href={ URL(fisc)}>{fisc}</a> </span>
                         </li>
                         ))}
                     </ul>
