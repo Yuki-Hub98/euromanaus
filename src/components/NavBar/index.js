@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { CadastroArvore } from "@/components/Cadastro";
+import CadastroArvore  from "@/components/CadastroArvore";
 
 const Navbar = () => {
     return (
@@ -46,37 +46,37 @@ const Navbar = () => {
 const NavArvore = (value) =>{
     const [up, setUp] = useState(false);
     const [opcao, setOpcao] = useState("")
-    const opcoes = (op) => {
+    const opcoes = (op, opNav) => {
     
         switch (op) {
             case "Departamento":
                 return (
                     <>
-                    <CadastroArvore name={"Departamento"} data={value?.dataDepartamento} dataGeral={value?.dataDepartamento} type={1} />
+                    <CadastroArvore name={"Departamento"} opNav={opNav} type={1} />
                     </>
                 )
             case "Linha":
                 return (
                     <>
-                    <CadastroArvore name={"Linha"} data={value?.dataDepartamento} dataGeral={value?.dataLinha} type={2} />
+                    <CadastroArvore name={"Linha"} type={2} />
                     </>
                 )
             case "Familia":
                 return (
                     <>
-                    <CadastroArvore name={"Familia"} data={value?.dataLinha} dataGeral={value?.dataFamilia} type={2} />
+                    <CadastroArvore name={"Familia"} type={2} />
                     </>
                 )
             case "Grupo":
                 return (
                     <>
-                    <CadastroArvore name={"Grupo"} data={value?.dataFamilia} dataGeral={value?.dataGrupo} type={2} />
+                    <CadastroArvore name={"Grupo"} type={2} />
                     </>
                 )
             case "Cor":
                 return (
                     <>
-                    <CadastroArvore name={"Cor"} dataGeral={value?.dataCor} type={1} />
+                    <CadastroArvore name={"Cor"} type={1} />
                     </>
                 )
             case "Especificação":
@@ -104,7 +104,7 @@ const NavArvore = (value) =>{
         </div>
         
         <div className={`flex relative justify-center mt-2 ml-28 overflow-y-auto ${up ? 'max-h-max' : 'max-h-0'} w-[90rem] rounded-md bg-slate-300`}>
-            {opcoes(opcao)}
+            {opcoes(opcao, up)}
         </div>
         </>
     )

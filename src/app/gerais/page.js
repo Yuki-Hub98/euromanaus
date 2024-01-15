@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Cadastro from '@/components/Cadastro';
+import Cadastro from '@/components/CadastroArvore';
 
 export default function Gerais () {
 

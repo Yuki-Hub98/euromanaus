@@ -1,16 +1,16 @@
-"use client";
 
 import React from "react";
-import Navbar from "@/components/NavBar";
 
-export default function BarreiraCompras () {
+export default async function BarreiraCompras () {
 
 
     return (
         <>
-        <div className="w-full relative">
-            <h1>teste</h1>
-        </div>  
+        <div className="flex flex-col h-screen bg-slate-600 ">
+                <div className='flex justify-center mt-14 h-14 items-center gap-y-3'>
+                    
+                </div>  
+        </div>
 
         </>
     )
