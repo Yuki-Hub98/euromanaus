@@ -178,9 +178,9 @@ const CadastroArvore = (value) =>{
 
 
     const Search = async () => {
-        let teste = []
-        teste =  await GetArvoreProduto(value.name.toLowerCase())
-        return setTableData(teste)
+        let data = []
+        data =  await GetArvoreProduto(value.name.toLowerCase())
+        return setTableData(data)
 
     }
 
@@ -251,7 +251,7 @@ const CadastroArvore = (value) =>{
                                     <Button color="danger" variant="flat" onPress={onClose}>
                                         Cancelar
                                     </Button>
-                                    <Button type='submit' color='primary' onClick={() => dataFormate(value.name)} onPress={onClose}>
+                                    <Button type='submit' className='bg-[#50d71e]' onClick={() => dataFormate(value.name)} onPress={onClose}>
                                         Cadastrar
                                     </Button>
                                 </ModalFooter>
