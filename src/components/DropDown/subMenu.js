@@ -42,13 +42,13 @@ const SubMenu = (opcao) =>{
             return (
                 <>
                     <button type="button" onClick={() => setSubDrop(!subDrop)} className={`${style} text-sm`}>
-                        <span className="flex-1 ml-6 text-left ">Organização</span>
+                        <span className="flex-1 ml-6 text-left hover:text-[#edca62]">Organização</span>
                         <GoChevronDown/>
                     </button>
                     <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${subDrop ? 'max-h-60' : 'max-h-0'}`}>
                         {organizacao.map((org) => (
                             <li key={org} className={` text-sm font-normal cursor-pointer text-gray-900 rounded-lg duration-300 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}>
-                            <span className=' flex-1 ml-11 text-left whitespace-nowrap'> <a href={URL(org)}>{org}</a> </span>
+                            <span className=' flex-1 ml-11 text-left hover:text-[#edca62] whitespace-nowrap'> <a href={URL(org)}>{org}</a> </span>
                         </li>
                         ))}
                     </ul>
@@ -58,13 +58,13 @@ const SubMenu = (opcao) =>{
             return (
                 <>
                     <button type="button" onClick={() => setSubDrop(!subDrop)} className={`${style} text-sm`}>
-                        <span className="flex-1 ml-6 text-left whitespace-nowrap">Fiscal</span>
+                        <span className="flex-1 ml-6 text-left hover:text-[#edca62] whitespace-nowrap">Fiscal</span>
                         <GoChevronDown/>
                     </button>
                     <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${subDrop ? 'max-h-60' : 'max-h-0'}`}>
                         {fiscal.map((fisc) => (
                             <li key={fisc} className={` text-sm font-normal cursor-pointer text-gray-900 rounded-lg duration-300 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}>
-                            <span className=' flex-1 ml-11 text-left whitespace-nowrap'> <a href={ URL(fisc)}>{fisc}</a> </span>
+                            <span className=' flex-1 ml-11 text-left hover:text-[#edca62] whitespace-nowrap'> <a href={ URL(fisc)}>{fisc}</a> </span>
                         </li>
                         ))}
                     </ul>
@@ -74,13 +74,13 @@ const SubMenu = (opcao) =>{
             return(
                 <>
                     <button type="button" onClick={() => setSubDrop(!subDrop)} className={`${style} text-sm`}>
-                        <span className="flex-1 ml-6 text-left whitespace-nowrap">Financeiro</span>
+                        <span className="flex-1 ml-6 text-left hover:text-[#edca62] whitespace-nowrap">Financeiro</span>
                         <GoChevronDown/>
                     </button>
                     <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${subDrop ? 'max-h-60' : 'max-h-0'}`}>
                         {financeiro.map((finan) => (
                             <li key={finan} className={` text-sm font-normal cursor-pointer text-gray-900 rounded-lg duration-300 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}>
-                            <span className=' flex-1 ml-11 text-left whitespace-nowrap'> <a href={URL(finan)}>{finan}</a> </span>
+                            <span className=' flex-1 ml-11 text-left hover:text-[#edca62] whitespace-nowrap'> <a href={URL(finan)}>{finan}</a> </span>
                         </li>
                         ))}
                     </ul>
@@ -90,13 +90,13 @@ const SubMenu = (opcao) =>{
             return(
                 <>
                     <button type="button" onClick={() => setSubDrop(!subDrop)} className={`${style} text-sm`}>
-                        <span className="flex-1 ml-6 text-left whitespace-nowrap">Compras</span>
+                        <span className="flex-1 ml-6 text-left hover:text-[#edca62] whitespace-nowrap">Compras</span>
                         <GoChevronDown/>
                     </button>
                     <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${subDrop ? 'max-h-60' : 'max-h-0'}`}>
                         {compras.map((comp) => (
                             <li key={comp} className={` text-sm font-normal cursor-pointer text-gray-900 rounded-lg duration-300 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}>
-                            <span className=' flex-1 ml-11 text-left whitespace-nowrap'> <a href={URL(comp)}>{comp}</a> </span>
+                            <span className=' flex-1 ml-11 text-left hover:text-[#edca62] whitespace-nowrap'> <a href={URL(comp)}>{comp}</a> </span>
                         </li>
                         ))}
                     </ul>
@@ -107,13 +107,13 @@ const SubMenu = (opcao) =>{
             return(
                 <>
                 <button type="button" onClick={() => setSubDrop(!subDrop)} className={`${style} text-sm`}>
-                        <span className="flex-1 ml-6 text-left whitespace-nowrap">Industrial</span>
+                        <span className="flex-1 ml-6 text-left hover:text-[#edca62] whitespace-nowrap">Industrial</span>
                         <GoChevronDown/>
                     </button>
                     <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${subDrop ? 'max-h-60' : 'max-h-0'}`}>
                         {industrial.map((ind) => (
                             <li key={ind} className={` text-sm font-normal cursor-pointer text-gray-900 rounded-lg duration-300 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}>
-                            <span className=' flex-1 ml-11 text-left whitespace-nowrap'> <a  href={URL(ind)}>{ind}</a> </span>
+                            <span className=' flex-1 ml-11 text-left hover:text-[#edca62] whitespace-nowrap'> <a  href={URL(ind)}>{ind}</a> </span>
                         </li>
                         ))}
                     </ul>
@@ -123,13 +123,13 @@ const SubMenu = (opcao) =>{
             return(
                 <>
                     <button type="button" onClick={() => setSubDrop(!subDrop)} className={`${style} text-sm`}>
-                        <span className="flex-1 ml-6 text-left whitespace-nowrap">Vendas</span>
+                        <span className="flex-1 ml-6 text-left hover:text-[#edca62] whitespace-nowrap">Vendas</span>
                         <GoChevronDown/>
                     </button>
                     <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${subDrop ? 'max-h-60' : 'max-h-0'}`}>
                         {vendas.map((vend) => (
                             <li key={vend} className={` text-sm font-normal cursor-pointer text-gray-900 rounded-lg duration-300 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}>
-                            <span className=' flex-1 ml-11 text-left whitespace-nowrap'> <a  href={URL(vend)}>{vend}</a> </span>
+                            <span className=' flex-1 ml-11 text-left hover:text-[#edca62] whitespace-nowrap'> <a  href={URL(vend)}>{vend}</a> </span>
                         </li>
                         ))}
                     </ul>
@@ -139,13 +139,13 @@ const SubMenu = (opcao) =>{
             return(
                 <>
                     <button type="button" onClick={() => setSubDrop(!subDrop)} className={`${style} text-sm`}>
-                        <span className="flex-1 ml-6 text-left whitespace-nowrap">Expedição</span>
+                        <span className="flex-1 ml-6 text-left hover:text-[#edca62] whitespace-nowrap">Expedição</span>
                         <GoChevronDown/>
                     </button>
                     <ul className={`bg-white mt-2 overflow-y-auto max-h-0 ${subDrop ? 'max-h-60' : 'max-h-0'}`}>
                         {expedicao.map((expe) => (
                             <li key={expe} className={` text-sm font-normal cursor-pointer text-gray-900 rounded-lg duration-300 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}>
-                            <span className=' flex-1 ml-11 text-left whitespace-nowrap'> <a href={URL(expe)}>{expe}</a> </span>
+                            <span className=' flex-1 ml-11 text-left hover:text-[#edca62] whitespace-nowrap'> <a href={URL(expe)}>{expe}</a> </span>
                         </li>
                         ))}
                     </ul>
