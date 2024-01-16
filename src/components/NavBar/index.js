@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CadastroArvore  from "@/components/CadastroArvore";
+import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 
 const Navbar = () => {
     return (
@@ -46,7 +47,26 @@ const Navbar = () => {
 const NavArvore = (value) =>{
     const [up, setUp] = useState(false);
     const [opcao, setOpcao] = useState("")
+    const [dataModal, setDataModal] = useState()
+
+    const modalData = async (opcao) =>{
+        let data = []
+        data = await GetArvoreProduto(opcao)
+        return setDataModal(data)
+    }
+
     const opcoes = (op, opNav) => {
+
+        useEffect(() => {
+            if (op === "Linha") {
+                modalData("departamento")
+            }else if(op === "Familia"){
+                modalData("linha")
+            }else if(op === "Grupo"){
+                modalData("familia")
+            }
+        },[op])
+        
     
         switch (op) {
             case "Departamento":
@@ -56,21 +76,21 @@ const NavArvore = (value) =>{
                     </>
                 )
             case "Linha":
-                return (
+                return (                   
                     <>
-                    <CadastroArvore name={"Linha"} type={2} />
+                    <CadastroArvore name={"Linha"} dataModal={dataModal} type={2} />
                     </>
                 )
             case "Familia":
                 return (
                     <>
-                    <CadastroArvore name={"Familia"} type={2} />
+                    <CadastroArvore name={"Familia"} dataModal={dataModal} type={2} />
                     </>
                 )
             case "Grupo":
                 return (
                     <>
-                    <CadastroArvore name={"Grupo"} type={2} />
+                    <CadastroArvore name={"Grupo"} dataModal={dataModal} type={2} />
                     </>
                 )
             case "Cor":
@@ -93,17 +113,17 @@ const NavArvore = (value) =>{
 
     return (
         <>
-        <div className='flex justify-center h-9 bg-slate-400' >
+        <div className='flex justify-center h-9 bg-[#2b2b2a]' >
             <div className='flex flex-row justify-around gap-2 w-full'>
                 {value.name?.map((name) => (
-                    <button key={name} onClick={(e) => {setUp(!up), setOpcao(e.target.innerText)}}  className={`flex items-center justify-center h-9 w-64 p-2 cursor-pointer text-center font-normal text-white hover:bg-white  dark:text-gray-900   hover:text-gray-700 rounded-lg `}>
+                    <button key={name} onClick={(e) => {setUp(!up), setOpcao(e.target.innerText)}}  className={`flex items-center justify-center h-9 w-64 p-2 cursor-pointer text-center  font-normal text-[#D4D4D8]  hover: decoration-solid  dark:text-gray-900 hover:border-0 hover:text-[#edca62] rounded-lg `}>
                         <span>{name}</span>
                     </button>
                 ))}
             </div>
         </div>
         
-        <div className={`flex relative justify-center mt-2 ml-28 overflow-y-auto ${up ? 'max-h-max' : 'max-h-0'} w-[90rem] rounded-md bg-slate-300`}>
+        <div className={`flex relative justify-center mt-2 ml-28 overflow-y-auto ${up ? 'max-h-max' : 'max-h-0'} w-[90rem] rounded-md bg-[#2c2c2b]`}>
             {opcoes(opcao, up)}
         </div>
         </>
