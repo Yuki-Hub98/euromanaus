@@ -5,6 +5,7 @@ import { Modal, Button, useDisclosure, ModalContent, ModalHeader, ModalBody,
 ModalFooter, Input} from "@nextui-org/react";
 import Select from "react-select";
 import {GetArvoreProduto, PostArvoreProduto} from "@/app/actions/arvore-produto";
+import RegexToSave from "@/functions/regexToSave";
 
 
 const CadastroArvore = (value) =>{
@@ -207,7 +208,7 @@ const CadastroArvore = (value) =>{
             <div className='flex flex-row justify-around mt-3 w-[70rem] items-center bg-[#2c2c2b]'>
                 <form>
                 <div className='flex flex-row mt-6 gap-3 items-center'>
-                    <Input className='w-96' color="primary" label="Search"/>
+                    <Input className='w-96' onChange={(e) => console.log(RegexToSave(e.target.value))} color="primary" label="Search"/>
                     <Button color="primary" variant="ghost" onClick={() => Search()} >
                         Pesquisar
                     </Button>
@@ -242,14 +243,14 @@ const CadastroArvore = (value) =>{
                                         <div className="w-full flex flex-row gap-2">
                                             {value.type === 1 ? 
                                                 <div>
-                                                    <Input label="Descrição" size='lg' type="Text" onChange={(e) => setDataDescricao(e.target.value)} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
+                                                    <Input label="Descrição" size='lg' type="Text" onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
                                                 </div>
                                                 :
                                                 <div>
                                                 <div className='flex justify-center w-96 relative'>
                                                     <Select className='w-60 ml-3' onChange={(e) => setSelectData(e.value)} options={dataTransform}/>
                                                 </div>
-                                                    <Input label="Descrição" size='lg' type="Text" onChange={(e) => setDataDescricao(e.target.value)} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
+                                                    <Input label="Descrição" size='lg' type="Text" onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
                                                 </div>
                                             }
                                             
