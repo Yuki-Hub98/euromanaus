@@ -25,7 +25,7 @@ const CadastroArvore = (value) =>{
         }
     },[value])
     
-    const dataTransform = value?.data?.map((data) => ( 
+    const dataTransform = value?.dataModal?.map((data) => ( 
         {'value': data?.descricao, 'label':data?.descricao}
         ))
     
@@ -63,14 +63,14 @@ const CadastroArvore = (value) =>{
                         <table className="w-2/4 m-4 border-collapse">
                             <thead>
                                 <tr>
-                                    <th className='bg-gray-200 border p-2'>Descrição</th>
+                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Descrição</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data?.map((data) => (
                                     <>
                                         <tr key={data.descricao}>
-                                            <td key={data.descricao} className='border p-2'>{data.descricao}</td>
+                                            <td key={data.descricao} className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
                                         </tr>
                                     </>
                                 ))}
@@ -84,16 +84,16 @@ const CadastroArvore = (value) =>{
                         <table className="w-2/4 m-4 border-collapse">
                             <thead>
                                 <tr>
-                                    <th className='bg-gray-200 border p-2'>Departamento</th>
-                                    <th className='bg-gray-200 border p-2'>Descrição</th>
+                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Departamento</th>
+                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Descrição</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data?.map((data) => (
                                     <>
                                         <tr key={data.descricao}>
-                                            <td key={data.departamento} className='border p-2'>{data.departamento}</td>
-                                            <td key={data.descricao} className='border p-2'>{data.descricao}</td>
+                                            <td key={data.departamento} className='border p-2 text-[#2c2c2b]'>{data.departamento}</td>
+                                            <td key={data.descricao} className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
                                         </tr>
                                     </>
                                 ))}
@@ -108,16 +108,16 @@ const CadastroArvore = (value) =>{
                             <table className="w-2/4 m-4 border-collapse">
                                 <thead>
                                     <tr>
-                                        <th className='bg-gray-200 border p-2'>Linha</th>
-                                        <th className='bg-gray-200 border p-2'>Descrição</th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Linha</th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Descrição</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data?.map((data) => (
                                         <>
                                             <tr key={data.descricao}>
-                                                <td key={data.linha} className='border p-2'>{data.linha}</td>
-                                                <td key={data.descricao} className='border p-2'>{data.descricao}</td>
+                                                <td key={data.linha} className='border p-2 text-[#2c2c2b]'>{data.linha}</td>
+                                                <td key={data.descricao} className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
                                             </tr>
                                         </>
                                     ))}
@@ -132,16 +132,16 @@ const CadastroArvore = (value) =>{
                             <table className="w-2/4 m-4 border-collapse">
                                 <thead>
                                     <tr>
-                                        <th className='bg-gray-200 border p-2'>Familia</th>
-                                        <th className='bg-gray-200 border p-2'>Descrição</th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Familia</th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Descrição</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data?.map((data) => (
                                         <>
                                             <tr key={data.descricao}>
-                                                <td key={data.familia} className='border p-2'>{data.familia}</td>
-                                                <td key={data.descricao} className='border p-2'>{data.descricao}</td>
+                                                <td key={data.familia} className='border p-2 text-[#2c2c2b]'>{data.familia}</td>
+                                                <td key={data.descricao} className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
                                             </tr>
                                         </>
                                     ))}
@@ -155,14 +155,14 @@ const CadastroArvore = (value) =>{
                         <table className="w-2/4 m-4 border-collapse">
                                 <thead>
                                     <tr>
-                                        <th className='bg-gray-200 border p-2'>Descrição</th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Descrição</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data?.map((data) => (
                                         <>
                                             <tr key={data.descricao}>
-                                                <td key={data.descricao} className='border p-2'>{data.descricao}</td>
+                                                <td key={data.descricao} className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
                                             </tr>
                                         </>
                                     ))}
@@ -197,25 +197,25 @@ const CadastroArvore = (value) =>{
 
     return( 
     <>
-        <div className={`flex flex-col items-center w-[85rem]`}>
-            <div className='flex h-10 justify-center items-center w-96 '>
-                <h2>
+        <div className={`flex flex-col items-center bg-[#2c2c2b] w-[85rem]`}>
+            <div className='flex h-10 justify-center items-center w-96 font-bold '>
+                <h2 className='text-white'>
                     {value.name}
                 </h2>
             </div>
             
-            <div className='flex flex-row justify-around mt-3 w-[70rem] items-center'>
+            <div className='flex flex-row justify-around mt-3 w-[70rem] items-center bg-[#2c2c2b]'>
                 <form>
                 <div className='flex flex-row mt-6 gap-3 items-center'>
-                    <Input className='w-96' label="Search"/>
-                    <Button onClick={() => Search()} >
+                    <Input className='w-96' color="primary" label="Search"/>
+                    <Button color="primary" variant="ghost" onClick={() => Search()} >
                         Pesquisar
                     </Button>
                 </div>
                 </form>
                 <form>
                     <div className='flex mt-6'>
-                        <Button onPress={onOpen}>
+                        <Button color="primary" variant="ghost" onPress={onOpen}>
                             Cadastrar
                         </Button>
                         <Modal 
@@ -223,7 +223,16 @@ const CadastroArvore = (value) =>{
                             onOpenChange={onOpenChange}
                             placement="top-center"
                             size="md"
-                            className=' h-80'>
+                            className=' h-80'
+                            classNames={{
+                                body: "py-6",
+                                backdrop: "bg-[#D4D4D8]/50 backdrop-opacity-40",
+                                base: "border-[#292f46] bg-[#D4D4D8] dark:bg-[#19172c] text-[#2c2c2b]",
+                                header: "border-[#292f46]",
+                                footer: "border-[#292f46]",
+                                closeButton: "hover:bg-white/5 active:bg-white/10",
+                            }}
+                            >
                         <ModalContent>
                             {(onClose) => (
                                 <>
@@ -248,10 +257,10 @@ const CadastroArvore = (value) =>{
                                     </div>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="danger" variant="flat" onPress={onClose}>
+                                    <Button className='bg-sky-50' variant="flat" onPress={onClose}>
                                         Cancelar
                                     </Button>
-                                    <Button type='submit' className='bg-[#50d71e]' onClick={() => dataFormate(value.name)} onPress={onClose}>
+                                    <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20"  onClick={() => dataFormate(value.name)} onPress={onClose}>
                                         Cadastrar
                                     </Button>
                                 </ModalFooter>
@@ -262,8 +271,8 @@ const CadastroArvore = (value) =>{
                     </div>
                 </form>
             </div>
-            <div className='bg-slate-200 h-[40rem] mt-8 rounded-md w-[75rem]'>
-                <div className=' flex flex-col bg-white rounded items-center justify-center'>
+            <div className='bg-s[#2c2c2b] h-[40rem] mt-8 rounded-md w-[75rem]'>
+                <div className=' flex flex-col bg-[#D4D4D8] rounded items-center justify-center'>
                     {Tabela(value.name, tableData)}
                 </div>
             </div>
