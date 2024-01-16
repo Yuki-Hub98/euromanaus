@@ -1,14 +1,10 @@
+import axios from "axios"
 
 const Post = async (data, request) =>{
-    const response = await fetch(`http://localhost:8080/arvore-produto/${request}`, {
-        method:"POST",
-        headers:{
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then((response) => response.json())
+    const response = axios.post(`http://localhost:8080/arvore-produto/${request}`,data)
+    .then((response) => console.log("Resposta: ", response))
+    .catch((error) => console.log("Error: ", error))
 
-    console.log(response)
 
 }
 
