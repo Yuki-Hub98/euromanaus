@@ -6,6 +6,7 @@ ModalFooter, Input} from "@nextui-org/react";
 import Select from "react-select";
 import {GetArvoreProduto, PostArvoreProduto} from "@/app/actions/arvore-produto";
 import RegexToSave from "@/functions/regexToSave";
+import Warning from "../Warning";
 
 
 const CadastroArvore = (value) =>{
@@ -17,6 +18,8 @@ const CadastroArvore = (value) =>{
     const [selectData, setSelectData] = useState()
 
     const [tableData, setTableData] = useState()
+
+    const [status, setStatus] = useState();
 
     const [data, setData] = useState()
 
@@ -30,7 +33,7 @@ const CadastroArvore = (value) =>{
         {'value': data?.descricao, 'label':data?.descricao}
         ))
     
-    const dataFormate = (opcao) =>{
+    const FormateToPost = (opcao) =>{
         switch (opcao) {
             case 'Departamento':
                 setData({'descricao': dataDescricao})
@@ -178,23 +181,34 @@ const CadastroArvore = (value) =>{
     }
 
 
+    useEffect(() => {
+        if (data) {
+            Post(data)
+        }
+    },[data])
+
     const Search = async () => {
-        let data = []
-        data =  await GetArvoreProduto(value.name.toLowerCase())
+        const data =  await GetArvoreProduto(value.name.toLowerCase())
         return setTableData(data)
 
     }
 
+    const Post = async (data) => {
+        const teste = await PostArvoreProduto(data, value.name.toLowerCase());
+        setStatus(teste)
+        setDataDescricao(null)
+        
+    }
+
+    const CloseStatus = () => {
+        return setStatus(null);
+    }
+
     useEffect(() => {
-        if (data) {
-            PostArvoreProduto(data, value.name.toLowerCase())
-        }
 
-    },[data])
+    }, [tableData], [status])
 
-    useEffect(() => {
-
-    }, [tableData])
+    console.log("Status: ", status)
 
     return( 
     <>
@@ -208,7 +222,7 @@ const CadastroArvore = (value) =>{
             <div className='flex flex-row justify-around mt-3 w-[70rem] items-center bg-[#2c2c2b]'>
                 <form>
                 <div className='flex flex-row mt-6 gap-3 items-center'>
-                    <Input className='w-96' onChange={(e) => console.log(RegexToSave(e.target.value))} color="primary" label="Search"/>
+                    <Input className='w-96' onChange={(e) => RegexToSave(e.target.value)} color="primary" label="Search"/>
                     <Button color="primary" variant="ghost" onClick={() => Search()} >
                         Pesquisar
                     </Button>
@@ -243,7 +257,7 @@ const CadastroArvore = (value) =>{
                                         <div className="w-full flex flex-row gap-2">
                                             {value.type === 1 ? 
                                                 <div>
-                                                    <Input label="Descrição" size='lg' type="Text" onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
+                                                    <Input label="Descrição"  size='lg' type="Text" onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
                                                 </div>
                                                 :
                                                 <div>
@@ -258,21 +272,30 @@ const CadastroArvore = (value) =>{
                                     </div>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button className='bg-sky-50' variant="flat" onPress={onClose}>
+                                    <Button className='bg-sky-50' variant="flat" onClick={() => {setData(null), CloseStatus()}} onPress={onClose}>
                                         Cancelar
                                     </Button>
-                                    <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20"  onClick={() => dataFormate(value.name)} onPress={onClose}>
+                                    { dataDescricao ? (
+                                    <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => FormateToPost(value.name)} onPress={onClose}>
                                         Cadastrar
                                     </Button>
+                                    )
+                                    :
+                                    (
+                                    <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" isDisabled>
+                                        Cadastrar
+                                    </Button>
+                                    )}
                                 </ModalFooter>
                                 </>
                                 )}
                         </ModalContent>
                         </Modal>
+                        {status ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
                     </div>
                 </form>
             </div>
-            <div className='bg-s[#2c2c2b] h-[40rem] mt-8 rounded-md w-[75rem]'>
+            <div className='bg-s[#2c2c2b] h-[80rem] mt-8 rounded-md w-[75rem]'>
                 <div className=' flex flex-col bg-[#D4D4D8] rounded items-center justify-center'>
                     {Tabela(value.name, tableData)}
                 </div>
