@@ -7,6 +7,8 @@ import Select from "react-select";
 import {GetArvoreProduto, PostArvoreProduto} from "@/app/actions/arvore-produto";
 import RegexToSave from "@/functions/regexToSave";
 import Warning from "../Warning";
+import { CiEdit } from "react-icons/ci";
+import { RiDeleteBin2Line } from "react-icons/ri";
 
 
 const CadastroArvore = (value) =>{
@@ -58,7 +60,7 @@ const CadastroArvore = (value) =>{
         }
         
     }
-
+    
     const Tabela = (opcao, data) => {
         switch (opcao) {
             case "Departamento":
@@ -67,19 +69,21 @@ const CadastroArvore = (value) =>{
                         <table className="w-2/4 m-4 border-collapse">
                             <thead>
                                 <tr>
-                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Descrição</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-full'>Descrição</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody >
                                 {data?.map((data) => (
-                                    <>
-                                        <tr key={data.descricao}>
-                                            <td key={data.descricao} className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                        </tr>
-                                    </>
+                                    <tr key={data?.descricao}>
+                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
+                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
+                                        <td className='border p-2 text-[#2c2c2b]'>{data?.descricao}</td>
+                                    </tr>
                                 ))}
                             </tbody>
-                        </table>
+                        </table>                    
                     </>
                 )
             case "Linha":
@@ -88,18 +92,20 @@ const CadastroArvore = (value) =>{
                         <table className="w-2/4 m-4 border-collapse">
                             <thead>
                                 <tr>
-                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Departamento</th>
-                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Descrição</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Departamento</th>
+                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Descrição</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data?.map((data) => (
-                                    <>
-                                        <tr key={data.descricao}>
-                                            <td key={data.departamento} className='border p-2 text-[#2c2c2b]'>{data.departamento}</td>
-                                            <td key={data.descricao} className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                        </tr>
-                                    </>
+                                    <tr key={data?.descricao}>
+                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
+                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
+                                        <td  className='border p-2 text-[#2c2c2b]'>{data.departamento}</td>
+                                        <td  className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
+                                    </tr>
                                 ))}
                             </tbody>
                         </table>
@@ -112,18 +118,20 @@ const CadastroArvore = (value) =>{
                             <table className="w-2/4 m-4 border-collapse">
                                 <thead>
                                     <tr>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Linha</th>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Descrição</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Linha</th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Descrição</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data?.map((data) => (
-                                        <>
-                                            <tr key={data.descricao}>
-                                                <td key={data.linha} className='border p-2 text-[#2c2c2b]'>{data.linha}</td>
-                                                <td key={data.descricao} className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                            </tr>
-                                        </>
+                                        <tr key={data?.descricao}>
+                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
+                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
+                                            <td className='border p-2 text-[#2c2c2b]'>{data.linha}</td>
+                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
+                                        </tr>
                                     ))}
                                 </tbody>
                             </table>
@@ -136,18 +144,20 @@ const CadastroArvore = (value) =>{
                             <table className="w-2/4 m-4 border-collapse">
                                 <thead>
                                     <tr>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Familia</th>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Descrição</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Familia</th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Descrição</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data?.map((data) => (
-                                        <>
-                                            <tr key={data.descricao}>
-                                                <td key={data.familia} className='border p-2 text-[#2c2c2b]'>{data.familia}</td>
-                                                <td key={data.descricao} className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                            </tr>
-                                        </>
+                                        <tr data={data?.descricao}>
+                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
+                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
+                                            <td className='border p-2 text-[#2c2c2b]'>{data.familia}</td>
+                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
+                                        </tr>
                                     ))}
                                 </tbody>
                             </table>
@@ -159,16 +169,18 @@ const CadastroArvore = (value) =>{
                         <table className="w-2/4 m-4 border-collapse">
                                 <thead>
                                     <tr>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2'>Descrição</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-full'>Descrição</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data?.map((data) => (
-                                        <>
-                                            <tr key={data.descricao}>
-                                                <td key={data.descricao} className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                            </tr>
-                                        </>
+                                        <tr key={data?.descricao}>
+                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
+                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
+                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
+                                        </tr>
                                     ))}
                                 </tbody>
                             </table>
@@ -208,7 +220,6 @@ const CadastroArvore = (value) =>{
 
     }, [tableData], [status])
 
-    console.log("Status: ", status)
 
     return( 
     <>
