@@ -194,8 +194,8 @@ const CadastroArvore = (value) =>{
     }
 
     const Post = async (data) => {
-        const teste = await PostArvoreProduto(data, value.name.toLowerCase());
-        setStatus(teste)
+        const statusData = await PostArvoreProduto(data, value.name.toLowerCase());
+        setStatus(statusData)
         setDataDescricao(null)
         
     }
