@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const Get = async (request) =>{
-    const response = axios.get(`http://localhost:8080/arvore-produto/${request}`)
+    const response = await axios.get(`http://localhost:8080/arvore-produto/${request}`)
     .then((response) => response.data )
-    .catch(error => {console.log(error)})
+    .catch((error) => error.response)
 
-    const data = await response;
-    return data;
+    
+    return response
     
 }
 
