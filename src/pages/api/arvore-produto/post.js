@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const Post = async (data, request) =>{
+const Post = async (request, data) =>{
     
     const response = await axios.post(`http://localhost:8080/arvore-produto/${request}`, data)
     .then((response) => {
