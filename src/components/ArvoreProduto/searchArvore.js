@@ -21,7 +21,7 @@ const SearchArvore = (data) => {
                 break;
         }
     }
-    */
+    
     const FormateToGet = (opcao) => {
         switch (opcao) {
             case 'Departamento':
@@ -46,16 +46,18 @@ const SearchArvore = (data) => {
                 break;
         }
     }
-
-    
-    const Click = () => {
-        if (!dataSearchDesc) {
-            return data?.ReceiveGetData()
-        }else{
-            return FormateToGet(data?.name)
-        }
+*/
+    const FormateToGet = () => {
+        return setDataToGet({'descricao': dataSearchDesc})
     }
 
+    const Click = () => {
+        if (dataSearchDesc) {
+            return FormateToGet()
+        }else{
+            return data.ReceiveGetData();
+        }
+    }
     useEffect(() => {
         if (dataToGet) {
             return data.ReceiveGetData(dataToGet)

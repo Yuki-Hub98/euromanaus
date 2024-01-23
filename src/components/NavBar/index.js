@@ -113,19 +113,16 @@ const NavArvore = (value) =>{
 
     return (
         <>
-        <div className='flex justify-center h-9 bg-[#2b2b2a]' >
-            <div className='flex flex-row justify-around gap-2 w-full'>
+            <aside className='flex flex-col h-screen items-center gap-2 bg-[#2b2b2a] w-80'>
                 {value.name?.map((name) => (
                     <button key={name} onClick={(e) => {setUp(!up), setOpcao(e.target.innerText)}}  className={`flex items-center justify-center h-9 w-64 p-2 cursor-pointer text-center  font-normal text-[#D4D4D8]  hover: decoration-solid  dark:text-gray-900 hover:border-0 hover:text-[#edca62] rounded-lg `}>
                         <span>{name}</span>
                     </button>
                 ))}
+            </aside>
+            <div className={`flex  justify-center overflow-y-auto ${up ? 'max-w-max' : 'max-w-0'} w-full rounded-md bg-[#2c2c2b]`}>
+                {opcoes(opcao, up)}
             </div>
-        </div>
-        
-        <div className={`flex relative justify-center mt-2 ml-28 overflow-y-auto ${up ? 'max-h-max' : 'max-h-0'} w-[90rem] rounded-md bg-[#2c2c2b]`}>
-            {opcoes(opcao, up)}
-        </div>
         </>
     )
 }
