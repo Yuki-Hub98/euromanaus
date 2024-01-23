@@ -25,7 +25,7 @@ const SuccessAlert = (data) => {
 
     return (
         showAlert && (
-            <div className="fixed top-0 right-0 mt-4 mr-4 bg-[#2c2c2b] text-[#c2af23] p-4 rounded shadow-lg transform opacity-100 translate-y-0 transition-transform transition-opacity duration-300 ease-in-out">
+            <div className="fixed top-0 right-0 mt-4 mr-4 bg-[#2c2c2b] text-[#c2af23] p-4 rounded shadow-lg transform opacity-100 translate-y-0 transition-opacity duration-300 ease-in-out">
                 {data?.message} <strong>Sucesso!</strong> 
             </div>
         )
