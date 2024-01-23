@@ -20,6 +20,8 @@ const CadastroArvore = (value) =>{
 
     const [dataToPost, setDataToPost] = useState()
 
+    const nameRequest = value.name.toLowerCase() === "especificação" ? "especificacao" : value.name.toLowerCase()
+
     useEffect(() => {
         if (!value.opNav) {
             setTableData(null)
@@ -152,6 +154,30 @@ const CadastroArvore = (value) =>{
                         
                         </>
                     )
+                    case "Especificação":
+                    return(
+                        <>
+                        <table className="w-2/4 m-4 border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-full'>Descrição</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data?.map((data) => (
+                                        <tr key={data?.descricao}>
+                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
+                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
+                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        
+                        </>
+                    )
             default:
                 break;
         }
@@ -172,13 +198,13 @@ const CadastroArvore = (value) =>{
 
     const Search = async (dataGet) => {
         if (!dataGet) {
-            const data =  await GetArvoreProduto(value.name.toLowerCase())
+            const data =  await GetArvoreProduto(nameRequest)
             return setTableData(data)
         }
     }
 
     const Resgister = async (data) => {
-        const statusData = await PostArvoreProduto(data, value.name.toLowerCase());
+        const statusData = await PostArvoreProduto(data, nameRequest);
         setStatus(statusData)
         
     }
