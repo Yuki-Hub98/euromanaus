@@ -8,6 +8,19 @@ const PesquisaArvore = (data) => {
     const [dataSearchDesc, setDataSearchDesc] = useState();
     const [dataSearchOut, setDataSearchOut] = useState();
 
+    const section = (name) => {
+        switch (name) {
+            case "Linha":
+                return "Departamento"
+            case "Familia":
+                return "Linha"
+            case "Grupo":
+                return "Familia"
+            default:
+                break;
+        }
+    }
+    
     const FormateToGet = (opcao) => {
         switch (opcao) {
             case 'Departamento':
@@ -60,7 +73,7 @@ const PesquisaArvore = (data) => {
                 </>
                 :
                 <>
-                    <Input className='w-80'  labelPlacement={'outside'} onChange={(e) => setDataSearchOut(RegexToSave(e.target.value))} color="primary" label="Outro"/>
+                    <Input className='w-80'  labelPlacement={'outside'} onChange={(e) => setDataSearchOut(RegexToSave(e.target.value))} color="primary" label={section(data?.data?.name)}/>
                     <Input className='w-80'  labelPlacement={'outside'} onChange={(e) => setDataSearchDesc(RegexToSave(e.target.value))} color="primary" label="Descrição"/>
                 </>
                 }
