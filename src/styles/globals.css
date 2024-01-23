@@ -6,7 +6,21 @@
   height: 100%;
   width: 100%;
 }
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background-color: #2c2c2b;
+}
 
+::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #6c5c09;
+}
 /*
 :root {
   --foreground-rgb: 0, 0, 0;
