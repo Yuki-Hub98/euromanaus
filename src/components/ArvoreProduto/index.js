@@ -197,14 +197,16 @@ const ArvoreProduto = (value) =>{
     },[dataToPost])
 
     const Search = async (dataGet) => {
-        if (!dataGet) {
+        if (dataGet) {
+            
+        }else{
             const data =  await GetArvoreProduto(nameRequest)
             return setTableData(data)
         }
     }
 
     const Resgister = async (data) => {
-        const statusData = await PostArvoreProduto(data, nameRequest);
+        const statusData = await PostArvoreProduto(nameRequest, data);
         setStatus(statusData)
         
     }
@@ -237,7 +239,7 @@ const ArvoreProduto = (value) =>{
                     {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
                 </div>
             </div>
-            <div className='bg-s[#2c2c2b] h-[80rem] mt-8 rounded-md w-[75rem]'>
+            <div className='bg-s[#2c2c2b] h-[80rem] mt-8 rounded-md w-[75rem] overflow-auto'>
                 <div className=' flex flex-col bg-[#D4D4D8] rounded items-center justify-center'>
                     {Tabela(value.name, tableData)}
                 </div>
