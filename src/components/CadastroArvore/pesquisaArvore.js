@@ -6,8 +6,9 @@ import RegexToSave from "@/functions/regexToSave";
 const PesquisaArvore = (data) => {
     const [dataToGet, setDataToGet] = useState();
     const [dataSearchDesc, setDataSearchDesc] = useState();
+    
+    /*
     const [dataSearchOut, setDataSearchOut] = useState();
-
     const section = (name) => {
         switch (name) {
             case "Linha":
@@ -20,7 +21,7 @@ const PesquisaArvore = (data) => {
                 break;
         }
     }
-    
+    */
     const FormateToGet = (opcao) => {
         switch (opcao) {
             case 'Departamento':
@@ -65,7 +66,10 @@ const PesquisaArvore = (data) => {
         <form>
         <div className='flex flex-row gap-3 justify-items-center items-center'>
             <div className='flex flex-col '>
-                {data?.data?.type === 1 ? 
+                <div className='pb-6'>
+                    <Input className='w-80'  labelPlacement={'outside'} onChange={(e) => setDataSearchDesc(RegexToSave(e.target.value))} color="primary" label="Descrição"/>
+                </div>
+                {/*{data?.data?.type === 1 ? 
                 <>
                 <div className='pb-6'>
                     <Input className='w-80'  labelPlacement={'outside'} onChange={(e) => setDataSearchDesc(RegexToSave(e.target.value))} color="primary" label="Descrição"/>
@@ -76,7 +80,7 @@ const PesquisaArvore = (data) => {
                     <Input className='w-80'  labelPlacement={'outside'} onChange={(e) => setDataSearchOut(RegexToSave(e.target.value))} color="primary" label={section(data?.data?.name)}/>
                     <Input className='w-80'  labelPlacement={'outside'} onChange={(e) => setDataSearchDesc(RegexToSave(e.target.value))} color="primary" label="Descrição"/>
                 </>
-                }
+                } */}
                 
             </div>
             <Button color="primary" variant="ghost" onClick={() => Click()} >
