@@ -3,7 +3,7 @@ import React , {useEffect, useState} from "react";
 import {Button,  Input} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
 
-const PesquisaArvore = (data) => {
+const SearchArvore = (data) => {
     const [dataToGet, setDataToGet] = useState();
     const [dataSearchDesc, setDataSearchDesc] = useState();
     
@@ -91,4 +91,4 @@ const PesquisaArvore = (data) => {
     )
 }
 
-export default PesquisaArvore
+export default SearchArvore

@@ -1,14 +1,14 @@
 "use client";
 
 import React , {useEffect, useState} from "react";
-import {Button, useDisclosure, Input} from "@nextui-org/react";
+import {Button, useDisclosure} from "@nextui-org/react";
 import {GetArvoreProduto, PostArvoreProduto} from "@/app/actions/arvore-produto";
 import Warning from "../Warning";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import CadastroModal from "./cadastroArvore";
+import RegisterModal from "./registerArvore";
 import SuccessAlert from "../SuccessAlert";
-import PesquisaArvore from "./pesquisaArvore";
+import SearchArvore from "./searchArvore";
 
 const CadastroArvore = (value) =>{
     
@@ -228,12 +228,12 @@ const CadastroArvore = (value) =>{
                 </h2>
             </div>
             <div className='flex flex-row justify-around mt-3 w-[70rem] items-center bg-[#2c2c2b]'>
-                <PesquisaArvore data={value} ReceiveGetData={ReceiveGetData}/>
+                <SearchArvore data={value} ReceiveGetData={ReceiveGetData}/>
                 <div className='flex'>
                     <Button color="primary" variant="ghost" onPress={onOpen}>
                         Cadastrar
                     </Button>
-                    <CadastroModal data={value} isOpen={isOpen} dataModal={value?.dataModal} onOpenChange={onOpenChange} ReceivePostData={ReceivePostData} CloseStatus={CloseStatus}/>
+                    <RegisterModal data={value} isOpen={isOpen} dataModal={value?.dataModal} onOpenChange={onOpenChange} ReceivePostData={ReceivePostData} CloseStatus={CloseStatus}/>
                     {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
                 </div>
             </div>

@@ -5,7 +5,7 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 import Select from "react-select";
 import RegexToSave from "@/functions/regexToSave";
 
-const CadastroModal = (data) => {
+const RegisterModal = (data) => {
 
     const [dataToPost, setDataToPost] = useState();
     const [selectData, setSelectData] = useState();
@@ -114,4 +114,4 @@ const CadastroModal = (data) => {
     
 }
 
-export default CadastroModal
+export default RegisterModal
