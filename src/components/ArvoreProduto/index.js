@@ -12,19 +12,21 @@ import SearchArvore from "./searchArvore";
 
 const ArvoreProduto = (value) =>{
     
-    const { isOpen , onOpen , onOpenChange } = useDisclosure()
+    const { isOpen , onOpen , onOpenChange } = useDisclosure();
 
-    const [tableData, setTableData] = useState()
+    const [tableData, setTableData] = useState();
 
     const [status, setStatus] = useState();
 
-    const [dataToPost, setDataToPost] = useState()
+    const [dataToPost, setDataToPost] = useState();
 
-    const nameRequest = value.name.toLowerCase() === "especificação" ? "especificacao" : value.name.toLowerCase()
+    const [dataToGet, setDataToGet] = useState();
+
+    const nameRequest = value.name.toLowerCase() === "especificação" ? "especificacao" : value.name.toLowerCase();
 
     useEffect(() => {
         if (!value.opNav) {
-            setTableData(null)
+            setTableData(null);
         }
     },[value])
     
@@ -187,18 +189,26 @@ const ArvoreProduto = (value) =>{
     }
 
     const ReceiveGetData = (data) => {
-        return Search(data)
+        if (data) {
+            return setDataToGet(data)
+        }else{
+            return Search(data)
+        }
     }
 
     useEffect(() => {
         if (dataToPost) {
             Resgister(dataToPost)
+        } 
+        if (dataToGet) {
+            Search(dataToGet)
         }
-    },[dataToPost])
+    },[dataToPost, dataToGet])
 
     const Search = async (dataGet) => {
         if (dataGet) {
-            
+            const data =  await GetArvoreProduto(nameRequest, dataGet)
+            return setTableData(data)
         }else{
             const data =  await GetArvoreProduto(nameRequest)
             return setTableData(data)
@@ -229,7 +239,7 @@ const ArvoreProduto = (value) =>{
                     {value.name}
                 </h2>
             </div>
-            <div className='flex flex-row justify-around mt-3 w-[70rem] items-center bg-[#2c2c2b]'>
+            <div className='flex flex-row justify-around w-[70rem] items-center bg-[#2c2c2b]'>
                 <SearchArvore data={value} ReceiveGetData={ReceiveGetData}/>
                 <div className='flex'>
                     <Button color="primary" variant="ghost" onPress={onOpen}>
