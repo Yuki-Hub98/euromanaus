@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Cadastro from '@/components/CadastroArvore';
+import Cadastro from '@/components/ArvoreProduto';
 
 export default function Promocao () {
 

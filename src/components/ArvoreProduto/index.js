@@ -6,11 +6,11 @@ import {GetArvoreProduto, PostArvoreProduto} from "@/app/actions/arvore-produto"
 import Warning from "../Warning";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import RegisterModal from "./registerArvore";
+import RegisterModal from "./registerModalArvore";
 import SuccessAlert from "../SuccessAlert";
 import SearchArvore from "./searchArvore";
 
-const CadastroArvore = (value) =>{
+const ArvoreProduto = (value) =>{
     
     const { isOpen , onOpen , onOpenChange } = useDisclosure()
 
@@ -248,4 +248,4 @@ const CadastroArvore = (value) =>{
     
 }
 
-export default CadastroArvore 
+export default ArvoreProduto 

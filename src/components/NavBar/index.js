@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import CadastroArvore  from "@/components/CadastroArvore";
+import ArvoreProduto  from "@/components/ArvoreProduto";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 
 const Navbar = () => {
@@ -72,37 +72,37 @@ const NavArvore = (value) =>{
             case "Departamento":
                 return (
                     <>
-                    <CadastroArvore name={"Departamento"} opNav={opNav} type={1} />
+                    <ArvoreProduto name={"Departamento"} opNav={opNav} type={1} />
                     </>
                 )
             case "Linha":
                 return (                   
                     <>
-                    <CadastroArvore name={"Linha"} dataModal={dataModal} type={2} />
+                    <ArvoreProduto name={"Linha"} dataModal={dataModal} type={2} />
                     </>
                 )
             case "Familia":
                 return (
                     <>
-                    <CadastroArvore name={"Familia"} dataModal={dataModal} type={2} />
+                    <ArvoreProduto name={"Familia"} dataModal={dataModal} type={2} />
                     </>
                 )
             case "Grupo":
                 return (
                     <>
-                    <CadastroArvore name={"Grupo"} dataModal={dataModal} type={2} />
+                    <ArvoreProduto name={"Grupo"} dataModal={dataModal} type={2} />
                     </>
                 )
             case "Cor":
                 return (
                     <>
-                    <CadastroArvore name={"Cor"} type={1} />
+                    <ArvoreProduto name={"Cor"} type={1} />
                     </>
                 )
             case "Especificação":
                 return (
                     <>
-                    <CadastroArvore name={"Especificação"} type={1} />
+                    <ArvoreProduto name={"Especificação"} type={1} />
                     </>
                 )
             default:

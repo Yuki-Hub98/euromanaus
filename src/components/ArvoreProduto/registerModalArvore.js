@@ -1,7 +1,7 @@
 "use client";
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody, 
-    ModalFooter, Input, useDisclosure} from "@nextui-org/react";
+    ModalFooter, Input } from "@nextui-org/react";
 import Select from "react-select";
 import RegexToSave from "@/functions/regexToSave";
 
