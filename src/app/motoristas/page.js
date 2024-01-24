@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Cadastro from '@/components/ArvoreProduto';
+import Cadastro from '@/components/ArvoreProdutoAntigo';
 
 export default function Motoristas () {
 

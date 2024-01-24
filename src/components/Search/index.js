@@ -66,11 +66,8 @@ const SearchArvore = (data) => {
 
     return(
         <form>
-        <div className='flex flex-row gap-3 justify-items-center items-center'>
-            <div className='flex flex-col '>
-                <div className='pb-6'>
-                    <Input className='w-80'  labelPlacement={'outside'} onChange={(e) => setDataSearchDesc(RegexToSave(e.target.value))} color="primary" label="Descrição"/>
-                </div>
+        <div className='flex flex-row h-12 justify-items-center items-center'>
+                <Input className='w-80' labelPlacement={"outside-left"} onChange={(e) => setDataSearchDesc(RegexToSave(e.target.value))} color="primary" label="Descrição"/>
                 {/*{data?.data?.type === 1 ? 
                 <>
                 <div className='pb-6'>
@@ -84,8 +81,7 @@ const SearchArvore = (data) => {
                 </>
                 } */}
                 
-            </div>
-            <Button color="primary" variant="ghost" onClick={() => Click()} >
+            <Button color="primary" size="sm" variant="ghost" onClick={() => Click()} >
                 Pesquisar
             </Button>
         </div>

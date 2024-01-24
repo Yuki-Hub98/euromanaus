@@ -1,16 +1,16 @@
 import React from "react";
-import { NavArvore } from "@/components/NavBar";
+import ArvoreProduto from "@/components/ArvoreProduto";
 
 
 const nav = ["Departamento", "Linha", "Familia", "Grupo", "Cor", "Especificação"]
 
 
-export default async function ArvoreProduto () {
+export default async function ArvoreDeProduto () {
 
     return (
         <>
-        <div className="flex flex-row h-screen bg-[#2b2b2a] ">
-            <NavArvore name={nav}/>
+        <div className="flex flex-col pl-2 h-screen bg-[#0000008e] ">
+            <ArvoreProduto name={nav}/>
         </div>
         </>
     )

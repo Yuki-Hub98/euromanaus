@@ -1,189 +1,28 @@
 "use client";
-
+import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import React , {useEffect, useState} from "react";
 import {Button, useDisclosure} from "@nextui-org/react";
 import {GetArvoreProduto, PostArvoreProduto} from "@/app/actions/arvore-produto";
 import Warning from "../Warning";
-import { CiEdit } from "react-icons/ci";
-import { RiDeleteBin2Line } from "react-icons/ri";
-import RegisterModal from "./registerModalArvore";
+import RegisterModal from "../RegisterModal";
+import SearchArvore from "../Search";
 import SuccessAlert from "../SuccessAlert";
-import SearchArvore from "./searchArvore";
 
 const ArvoreProduto = (value) =>{
-    
+
     const { isOpen , onOpen , onOpenChange } = useDisclosure();
-
     const [tableData, setTableData] = useState();
-
     const [status, setStatus] = useState();
-
     const [dataToPost, setDataToPost] = useState();
-
     const [dataToGet, setDataToGet] = useState();
+    const nameRequest = ''
 
-    const nameRequest = value.name.toLowerCase() === "especificação" ? "especificacao" : value.name.toLowerCase();
-
-    useEffect(() => {
-        if (!value.opNav) {
-            setTableData(null);
-        }
-    },[value])
-    
-    const Tabela = (opcao, data) => {
-        switch (opcao) {
-            case "Departamento":
-                return(
-                    <>
-                        <table className="w-2/4 m-4 border-collapse">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-full'>Descrição</th>
-                                </tr>
-                            </thead>
-                            <tbody >
-                                {data?.map((data) => (
-                                    <tr key={data?.descricao}>
-                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                        <td className='border p-2 text-[#2c2c2b]'>{data?.descricao}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>                    
-                    </>
-                )
-            case "Linha":
-                return(
-                    <>
-                        <table className="w-2/4 m-4 border-collapse">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Departamento</th>
-                                    <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Descrição</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data?.map((data) => (
-                                    <tr key={data?.descricao}>
-                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                        <td  className='border p-2 text-[#2c2c2b]'>{data.departamento}</td>
-                                        <td  className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </>
-                )
-
-                case "Familia":
-                    return(
-                        <>
-                            <table className="w-2/4 m-4 border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Linha</th>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Descrição</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data?.map((data) => (
-                                        <tr key={data?.descricao}>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.linha}</td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </>
-                    )
-
-                case "Grupo":
-                    return(
-                        <>
-                            <table className="w-2/4 m-4 border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Familia</th>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-1/2'>Descrição</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data?.map((data) => (
-                                        <tr data={data?.descricao}>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.familia}</td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </>
-                    )
-                case "Cor":
-                    return(
-                        <>
-                        <table className="w-2/4 m-4 border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-full'>Descrição</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data?.map((data) => (
-                                        <tr key={data?.descricao}>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        
-                        </>
-                    )
-                    case "Especificação":
-                    return(
-                        <>
-                        <table className="w-2/4 m-4 border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th className='bg-[#edca62b4] border text-[#2c2c2b] p-2 w-full'>Descrição</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data?.map((data) => (
-                                        <tr key={data?.descricao}>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        
-                        </>
-                    )
-            default:
-                break;
-        }
+    const modalData = async (opcao) =>{
+        let data = []
+        data = await GetArvoreProduto(opcao)
+        return setDataModal(data)
     }
+
     const ReceivePostData = (data) => {
         return setDataToPost(data)
     }
@@ -229,35 +68,103 @@ const ArvoreProduto = (value) =>{
 
     }, [tableData], [status])
 
+    const opcoes = (op, opNav) => {
 
-    return( 
-    <>
-        <div className={`flex flex-col items-center bg-[#2c2c2b] w-[85rem]`}>
-            { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com"/> </> ): (null) }
-            <div className='flex h-10 justify-center items-center w-96 font-bold '>
-                <h2 className='text-white'>
-                    {value.name}
-                </h2>
+        useEffect(() => {
+            if (op === "Linha") {
+                modalData("departamento")
+            }else if(op === "Familia"){
+                modalData("linha")
+            }else if(op === "Grupo"){
+                modalData("familia")
+            }
+        },[op])
+        
+        /*
+        switch (op) {
+            case "Departamento":
+                return (
+                    <>
+                    <ArvoreProduto name={"Departamento"} opNav={opNav} type={1} />
+                    </>
+                )
+            case "Linha":
+                return (                   
+                    <>
+                    <ArvoreProduto name={"Linha"} dataModal={dataModal} type={2} />
+                    </>
+                )
+            case "Familia":
+                return (
+                    <>
+                    <ArvoreProduto name={"Familia"} dataModal={dataModal} type={2} />
+                    </>
+                )
+            case "Grupo":
+                return (
+                    <>
+                    <ArvoreProduto name={"Grupo"} dataModal={dataModal} type={2} />
+                    </>
+                )
+            case "Cor":
+                return (
+                    <>
+                    <ArvoreProduto name={"Cor"} type={1} />
+                    </>
+                )
+            case "Especificação":
+                return (
+                    <>
+                    <ArvoreProduto name={"Especificação"} type={1} />
+                    </>
+                )
+            default:
+                break;
+        }
+        */
+    }
+
+    return (
+        <>
+            <div className='w-80 h-6 absolute top-2'>
+                <Breadcrumbs color='primary'>
+                    <BreadcrumbItem>Cadastro</BreadcrumbItem>
+                    <BreadcrumbItem>Compras</BreadcrumbItem>
+                    <BreadcrumbItem>Arvore de Produto</BreadcrumbItem>
+                </Breadcrumbs>
             </div>
-            <div className='flex flex-row justify-around w-[70rem] items-center bg-[#2c2c2b]'>
-                <SearchArvore data={value} ReceiveGetData={ReceiveGetData}/>
-                <div className='flex'>
-                    <Button color="primary" variant="ghost" onPress={onOpen}>
+            { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com"/> </> ): (null) }
+            <div className='flex flex-row pl-2 h-1/4 border rounded-md mt-8 w-full gap-2 bg-[#0000008e]'>
+                <div className='flex flex-col justify-center items-center'>
+                    <SearchArvore data={value} ReceiveGetData={ReceiveGetData}/>
+                </div>
+                <div className='flex items-center'>
+                    <Button color="primary" size="sm" variant="ghost" onPress={onOpen}>
                         Cadastrar
                     </Button>
                     <RegisterModal data={value} isOpen={isOpen} dataModal={value?.dataModal} onOpenChange={onOpenChange} ReceivePostData={ReceivePostData} CloseStatus={CloseStatus}/>
                     {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
                 </div>
             </div>
-            <div className='bg-s[#2c2c2b] h-[80rem] mt-8 rounded-md w-[75rem] overflow-auto'>
-                <div className=' flex flex-col bg-[#D4D4D8] rounded items-center justify-center'>
-                    {Tabela(value.name, tableData)}
-                </div>
-            </div>
-        </div>
-            
-    </>)
-    
-}
+            <div className='flex h-4/5 w-full flex-row'>
+                <aside className='flex flex-col h-full w-40 border rounded-md bg-[#0000008e] left-64 '>
+                    {value.name?.map((name) => (
+                        <button key={name} onClick={(e) => {setOpcao(e.target.innerText)}}  className={`flex h-9 w-64 p-2 cursor-pointer text-center  font-normal text-[#D4D4D8]  hover: decoration-solid  dark:text-gray-900 hover:border-0 hover:text-[#edca62] rounded-lg `}>
+                            <span>{name}</span>
+                        </button>
+                    ))}
+                </aside>
+                <div className='flex w-full h-50 flex-col'>
+                    <div className='w-full h-full bg-[#F7F7F7]'>
 
-export default ArvoreProduto 
+                    </div>
+                    <div className='w-full h-10 bg-[#D4D4D8]'>
+                        teste teste teste teste
+                    </div>
+                </div>
+                
+            </div>
+        </>
+    )
+}
+export default ArvoreProduto; 

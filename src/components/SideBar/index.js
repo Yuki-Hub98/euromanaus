@@ -7,8 +7,8 @@ const Sidebar = () => {
     
     return (
         <>
-            <aside className="fixed top-0 left-0 w-64 h-full" aria-label="Sidenav">
-            <div className="overflow-y-auto py-5 px-3 h-full bg-[#2b2b2a] dark:bg-gray-800 dark:border-gray-700">
+            <aside className="fixed pt-10 bg-[#1E1E1F] w-64 h-screen" aria-label="Sidenav">
+            <div className="overflow-y-auto py-5 px-3 h-full bg-[#1E1E1F] dark:bg-gray-800 dark:border-gray-700">
                 <ul className="space-y-2">
                 <li>
                     <a href="http://localhost:3000/" className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-[white] dark:text-gray-900 hover:text-[#edca62] group">

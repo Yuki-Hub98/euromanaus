@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
       <body className={ `${inter.className} h-full` }>
         <div className='flex h-screen overflow-hidden'>
           <Provider>
-            <div className="flex h-screen overflow-hidden">
+            <div className="flex h-screen bg-[#000000] overflow-hidden">
                 <Sidebar/>
                 <div className="relative max-h-full flex ml-[16rem] flex-1 flex-col overflow-y-auto overflow-x-hidden">
                   <main className="purple-dark text-foreground bg-background">
