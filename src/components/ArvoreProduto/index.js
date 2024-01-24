@@ -7,8 +7,9 @@ import Warning from "../Warning";
 import RegisterModal from "../RegisterModal";
 import SearchArvore from "../Search";
 import SuccessAlert from "../SuccessAlert";
+import MiniSideBar from "../MiniSideBar";
 
-const ArvoreProduto = (value) =>{
+const ArvoreProduto = (data) =>{
 
     const { isOpen , onOpen , onOpenChange } = useDisclosure();
     const [tableData, setTableData] = useState();
@@ -136,25 +137,19 @@ const ArvoreProduto = (value) =>{
             { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com"/> </> ): (null) }
             <div className='flex flex-row pl-2 h-1/4 border rounded-md mt-8 w-full gap-2 bg-[#0000008e]'>
                 <div className='flex flex-col justify-center items-center'>
-                    <SearchArvore data={value} ReceiveGetData={ReceiveGetData}/>
+                    <SearchArvore data={data} ReceiveGetData={ReceiveGetData}/>
                 </div>
                 <div className='flex items-center'>
                     <Button color="primary" size="sm" variant="ghost" onPress={onOpen}>
                         Cadastrar
                     </Button>
-                    <RegisterModal data={value} isOpen={isOpen} dataModal={value?.dataModal} onOpenChange={onOpenChange} ReceivePostData={ReceivePostData} CloseStatus={CloseStatus}/>
+                    <RegisterModal data={data} isOpen={isOpen} dataModal={data?.dataModal} onOpenChange={onOpenChange} ReceivePostData={ReceivePostData} CloseStatus={CloseStatus}/>
                     {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
                 </div>
             </div>
             <div className='flex h-4/5 w-full flex-row'>
-                <aside className='flex flex-col h-full w-40 border rounded-md bg-[#0000008e] left-64 '>
-                    {value.name?.map((name) => (
-                        <button key={name} onClick={(e) => {setOpcao(e.target.innerText)}}  className={`flex h-9 w-64 p-2 cursor-pointer text-center  font-normal text-[#D4D4D8]  hover: decoration-solid  dark:text-gray-900 hover:border-0 hover:text-[#edca62] rounded-lg `}>
-                            <span>{name}</span>
-                        </button>
-                    ))}
-                </aside>
-                <div className='flex w-full h-50 flex-col'>
+                <MiniSideBar name={data?.name}/>
+                <div className='flex w-full h-50 flex-col rounded-md'>
                     <div className='w-full h-full bg-[#F7F7F7]'>
 
                     </div>
