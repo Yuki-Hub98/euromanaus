@@ -3,10 +3,10 @@ import React , {useEffect, useState} from "react";
 import {Button,  Input} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
 
-const SearchArvore = (data) => {
+const SearchArvore = (props) => {
     const [dataToGet, setDataToGet] = useState();
     const [dataSearchDesc, setDataSearchDesc] = useState();
-    
+
     /*
     const [dataSearchOut, setDataSearchOut] = useState();
     const section = (name) => {
@@ -47,22 +47,25 @@ const SearchArvore = (data) => {
         }
     }
 */
-    const FormateToGet = () => {
-        return setDataToGet({'descricao': dataSearchDesc})
+    const Clear = () => {
+        setDataToGet(null)
+        setDataSearchDesc(null)
     }
 
     const Click = () => {
         if (dataSearchDesc) {
-            return FormateToGet()
+            return setDataToGet({'descricao': dataSearchDesc})
         }else{
-            return data.ReceiveGetData();
+            return props?.ReceiveGet(props?.data?.option);
         }
     }
+
     useEffect(() => {
         if (dataToGet) {
-            return data.ReceiveGetData(dataToGet)
+            props?.ReceiveGet(props?.data?.option, dataToGet);
+            Clear();
         }
-    },[dataToGet])
+    })
 
     return(
         <form>
@@ -81,7 +84,7 @@ const SearchArvore = (data) => {
                 </>
                 } */}
                 
-            <Button color="primary" size="sm" variant="ghost" onClick={() => Click()} >
+            <Button color="primary" size="sm" variant="ghost" onClick={() =>  Click()} >
                 Pesquisar
             </Button>
         </div>
