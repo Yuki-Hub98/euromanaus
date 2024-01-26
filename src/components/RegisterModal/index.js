@@ -1,40 +1,33 @@
-"use client";
+"use Client";
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody, 
     ModalFooter, Input } from "@nextui-org/react";
 import Select from "react-select";
 import RegexToSave from "@/functions/regexToSave";
 
-const RegisterModal = (data) => {
+const RegisterModal = (props) => {
 
     const [dataToPost, setDataToPost] = useState();
     const [selectData, setSelectData] = useState();
     const [dataDescricao, setDataDescricao] = useState();
-    
 
-    const dataTransform = data?.dataModal?.map((data) => ( 
+    const dataTransform = props?.dataModal?.map((data) => ( 
         {'value': data?.descricao, 'label':data?.descricao}
         ))
     
-    const FormateToPost = (opcao) =>{
-        switch (opcao) {
-            case 'Departamento':
-                setDataToPost({'descricao': dataDescricao})
-                break;
-            case 'Linha':
+    const FormateToPost = (op) =>{
+        if (op === 'departamento' || op === 'cor' || op === 'especificacao') {
+            return setDataToPost({'descricao': dataDescricao})
+        }
+        switch (op) {  
+            case 'linha':
                 setDataToPost({'departamento': selectData, 'descricao': dataDescricao})
                 break;
-            case 'Familia':
+            case 'familia':
                 setDataToPost({'linha': selectData, 'descricao': dataDescricao})
                 break;
-            case 'Grupo':
+            case 'grupo':
                 setDataToPost({'familia': selectData, 'descricao': dataDescricao})
-                break;
-            case 'Cor':
-                setDataToPost({'descricao': dataDescricao})
-                break;
-            case 'Especificação':
-                setDataToPost({'descricao': dataDescricao})
                 break;
             default:
                 break;
@@ -42,18 +35,59 @@ const RegisterModal = (data) => {
         
     }
 
+    const toClean = () => {
+        setDataDescricao(null)
+        setDataToPost(null)
+        return;
+    }
+
     useEffect(() => {
         if (dataToPost) {
-            setDataDescricao(null)
-            return data?.ReceivePostData(dataToPost)  
+            props?.ReceivePost(props?.name, dataToPost)
+            return toClean()
         }
-    }, [dataToPost])
-    
+    })
+
+    const TypeButton = (type) => {
+
+        if(type === 'departamento' || type === 'cor' || type === 'especificacao'){
+            return 1 
+        }else if (type === "linha" || type === "familia" || type === "grupo") {
+            return 2
+        }   
+    }
+
+    const buttons = (type) => {
+        switch (type) {
+            case 1:
+                return(
+                    <>
+                    <div>
+                        <Input label="Descrição"  size='lg' type="Text" onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
+                    </div>
+                    </>
+                )
+            case 2:
+                return(
+                    <>
+                    <div className="h-full">
+                    <div className='flex justify-center w-96 relative'>
+                        <Select className='w-60 ml-3' onChange={(e) => setSelectData(e.value)} options={dataTransform}/>
+                    </div>
+                        <Input label="Descrição" size='lg' type="Text" onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
+                    </div>
+                    </>
+                )
+            default:
+                break;
+        }
+    }
+
     return (
         <>
         <Modal 
-            isOpen={data?.isOpen}
-            onOpenChange={data?.onOpenChange}
+            isOpen={props?.isOpen}
+            onOpenChange={props?.onOpenChange}
             placement="top-center"
             size="md"
             className='h-3/6'
@@ -69,31 +103,20 @@ const RegisterModal = (data) => {
             <ModalContent>
                 {(onClose) => (
                     <>
-                    <ModalHeader className="flex flex-col gap-1"> {data?.data?.name} </ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1"> {props?.name?.toUpperCase()} </ModalHeader>
                     <ModalBody>
                     <div className="flex flex-col w-full">
                         <div className="w-full flex flex-row gap-2">
-                            {data?.data?.type === 1 ? 
-                                <div>
-                                <Input label="Descrição"  size='lg' type="Text" onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
-                                </div>
-                                :
-                                <div>
-                                <div className='flex justify-center  w-96 relative'>
-                                    <Select className='w-60 ml-3' onChange={(e) => setSelectData(e.value)} options={dataTransform}/>
-                                </div>
-                                <Input label="Descrição" size='lg' type="Text" onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
-                                </div>
-                            }
+                            {buttons(TypeButton(props?.name))}
                         </div>
                     </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button className='bg-sky-50' variant="flat" onClick={() => {setDataToPost(null), data?.CloseStatus()}} onPress={onClose} >
+                        <Button className='bg-sky-50' variant="flat" onClick={(e) => {console.log("e: ",e),setDataToPost(null)}} onPress={onClose} >
                             Cancelar
                         </Button>
                             { dataDescricao ? (
-                                <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {FormateToPost(data?.data?.name)}} onPress={onClose} >
+                                <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={(e) => {FormateToPost(props?.name)}} onPress={onClose} >
                                     Cadastrar
                                 </Button>
                             )
