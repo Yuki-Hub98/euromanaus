@@ -54,7 +54,7 @@ const Warning = (data) => {
                                         </div>
                                     </ModalBody>
                                     <ModalFooter>
-                                    <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {setOnOpen(false), data.CloseStatus()}}>
+                                    <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {setOnOpen(false), data?.CloseStatus()}}>
                                         Ok
                                     </Button>
                                 </ModalFooter>
