@@ -1,157 +1,136 @@
 "use client";
 import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import React , {useEffect, useState} from "react";
-import {Button, useDisclosure} from "@nextui-org/react";
 import {GetArvoreProduto, PostArvoreProduto} from "@/app/actions/arvore-produto";
-import Warning from "../Warning";
-import RegisterModal from "../RegisterModal";
-import SearchArvore from "../Search";
 import SuccessAlert from "../SuccessAlert";
 import MiniSideBar from "../MiniSideBar";
+import TopButtons from "../TopButtons";
+import Warning from "../Warning";
+import Table from "../Table";
 
-const ArvoreProduto = (data) =>{
+const ArvoreProduto = (props) =>{
 
-    const { isOpen , onOpen , onOpenChange } = useDisclosure();
+    const [option, setOption] = useState('departamento');
     const [tableData, setTableData] = useState();
     const [status, setStatus] = useState();
-    const [dataToPost, setDataToPost] = useState();
-    const [dataToGet, setDataToGet] = useState();
-    const nameRequest = ''
+    const [dataPost, setDataPost] = useState();
+    const [dataGet, setDataGet] = useState();
+    const [dataModal, setDataModal] = useState();
+    const [nameRequestMiniSideBar, setNameRequestMiniSideBar] = useState();
+    const [requestMiniSideBar, setRequestMiniSideBar] = useState(false)
+    const [nameRequest, setNameRequest] = useState()
+    
 
-    const modalData = async (opcao) =>{
-        let data = []
-        data = await GetArvoreProduto(opcao)
-        return setDataModal(data)
+    const ChosenOption = (option, request) => {
+        const op = option.toLowerCase() === "especificação" ? "especificacao" : option.toLowerCase()
+        if (request) {
+            setRequestMiniSideBar(request)
+        }
+        setNameRequestMiniSideBar(op);
+        setTableData(null)
+        return setOption(op)
     }
 
-    const ReceivePostData = (data) => {
-        return setDataToPost(data)
+    const PostData = (nameRequest, data) => {
+        setDataPost(data)
+        setNameRequest(nameRequest)
     }
 
-    const ReceiveGetData = (data) => {
+    const GetData = (nameRequest, data) => {
         if (data) {
-            return setDataToGet(data)
+            setNameRequest(nameRequest)
+            setDataGet(data)
         }else{
-            return Search(data)
+            return Search(nameRequest)
         }
     }
 
     useEffect(() => {
-        if (dataToPost) {
-            Resgister(dataToPost)
-        } 
-        if (dataToGet) {
-            Search(dataToGet)
+        if(dataPost) {
+            Resgister(nameRequest, dataPost)
         }
-    },[dataToPost, dataToGet])
-
-    const Search = async (dataGet) => {
+        
         if (dataGet) {
-            const data =  await GetArvoreProduto(nameRequest, dataGet)
-            return setTableData(data)
-        }else{
-            const data =  await GetArvoreProduto(nameRequest)
-            return setTableData(data)
+            Search(nameRequest, dataGet)
         }
+
+        if (requestMiniSideBar) {
+            switch (nameRequestMiniSideBar) {
+                case 'linha':
+                    modalData('departamento')
+                    break;
+                case 'familia':
+                    modalData('linha')
+                    break;
+                case 'grupo':
+                    modalData('familia')
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+    })
+    
+    const Clear = () => {
+        setDataPost(null)
+        setDataGet(null)
+        setNameRequest(null)
     }
 
-    const Resgister = async (data) => {
-        const statusData = await PostArvoreProduto(nameRequest, data);
-        setStatus(statusData)
+    const modalData = async (opcao) =>{
+        if (opcao){
+            const data = await GetArvoreProduto(opcao)
+            setDataModal(data)
+            setRequestMiniSideBar(false)
+        }
         
     }
 
+    const Resgister = async (nameRequest, data) => {
+        if(data){
+            const statusData = await PostArvoreProduto(nameRequest, data);
+            setStatus(statusData)
+            return Clear()
+            
+        }
+    }
+
+    const Search = async (nameRequest, dataGet) => {
+        if (dataGet) {
+            const data =  await GetArvoreProduto(nameRequest, dataGet)
+            setTableData(data)
+            return Clear()
+            
+        }else{
+            const data =  await GetArvoreProduto(nameRequest)
+            setTableData(data)
+            return Clear()
+        }
+    }
+    
     const CloseStatus = () => {
         return setStatus(null);
     }
 
-    useEffect(() => {
-
-    }, [tableData], [status])
-
-    const opcoes = (op, opNav) => {
-
-        useEffect(() => {
-            if (op === "Linha") {
-                modalData("departamento")
-            }else if(op === "Familia"){
-                modalData("linha")
-            }else if(op === "Grupo"){
-                modalData("familia")
-            }
-        },[op])
-        
-        /*
-        switch (op) {
-            case "Departamento":
-                return (
-                    <>
-                    <ArvoreProduto name={"Departamento"} opNav={opNav} type={1} />
-                    </>
-                )
-            case "Linha":
-                return (                   
-                    <>
-                    <ArvoreProduto name={"Linha"} dataModal={dataModal} type={2} />
-                    </>
-                )
-            case "Familia":
-                return (
-                    <>
-                    <ArvoreProduto name={"Familia"} dataModal={dataModal} type={2} />
-                    </>
-                )
-            case "Grupo":
-                return (
-                    <>
-                    <ArvoreProduto name={"Grupo"} dataModal={dataModal} type={2} />
-                    </>
-                )
-            case "Cor":
-                return (
-                    <>
-                    <ArvoreProduto name={"Cor"} type={1} />
-                    </>
-                )
-            case "Especificação":
-                return (
-                    <>
-                    <ArvoreProduto name={"Especificação"} type={1} />
-                    </>
-                )
-            default:
-                break;
-        }
-        */
-    }
-
     return (
         <>
-            <div className='w-80 h-6 absolute top-2'>
+            <div className='w-full h-6 absolute top-2'>
                 <Breadcrumbs color='primary'>
                     <BreadcrumbItem>Cadastro</BreadcrumbItem>
                     <BreadcrumbItem>Compras</BreadcrumbItem>
-                    <BreadcrumbItem>Arvore de Produto</BreadcrumbItem>
+                    <BreadcrumbItem>Árvore de Produto</BreadcrumbItem>
+                    <BreadcrumbItem>{option?.charAt(0).toUpperCase() + option?.slice(1)}</BreadcrumbItem>
                 </Breadcrumbs>
             </div>
             { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com"/> </> ): (null) }
-            <div className='flex flex-row pl-2 h-1/4 border rounded-md mt-8 w-full gap-2 bg-[#0000008e]'>
-                <div className='flex flex-col justify-center items-center'>
-                    <SearchArvore data={data} ReceiveGetData={ReceiveGetData}/>
-                </div>
-                <div className='flex items-center'>
-                    <Button color="primary" size="sm" variant="ghost" onPress={onOpen}>
-                        Cadastrar
-                    </Button>
-                    <RegisterModal data={data} isOpen={isOpen} dataModal={data?.dataModal} onOpenChange={onOpenChange} ReceivePostData={ReceivePostData} CloseStatus={CloseStatus}/>
-                    {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
-                </div>
-            </div>
-            <div className='flex h-4/5 w-full flex-row'>
-                <MiniSideBar name={data?.name}/>
-                <div className='flex w-full h-50 flex-col rounded-md'>
-                    <div className='w-full h-full bg-[#F7F7F7]'>
-
+            <TopButtons title={option?.charAt(0).toUpperCase() + option?.slice(1)} option={option} PostData={PostData} GetData={GetData} dataModal={dataModal}/>
+            {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
+            <div className='flex h-4/5 overflow-y-auto w-full flex-row'>
+                <MiniSideBar ChosenOption={ChosenOption}  name={props?.name} />
+                <div className='flex w-full overflow-y-auto h-50 flex-col rounded-md'>
+                    <div className='w-full overflow-y-auto h-full bg-[#F7F7F7]'>
+                        <Table data={tableData} name={option} />
                     </div>
                     <div className='w-full h-10 bg-[#D4D4D8]'>
                         teste teste teste teste
