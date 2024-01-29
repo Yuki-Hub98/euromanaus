@@ -19,6 +19,7 @@ const ArvoreProduto = (props) =>{
     const [nameRequestMiniSideBar, setNameRequestMiniSideBar] = useState();
     const [requestMiniSideBar, setRequestMiniSideBar] = useState(false)
     const [nameRequest, setNameRequest] = useState()
+    const [valueTable, setValueTable] = useState()
     
 
     const ChosenOption = (option, request) => {
@@ -30,6 +31,12 @@ const ArvoreProduto = (props) =>{
         setTableData(null)
         return setOption(op)
     }
+
+    const ValueTable = (value) => {
+        setValueTable(value)
+    }
+
+    console.log(valueTable)
 
     const PostData = (nameRequest, data) => {
         setDataPost(data)
@@ -126,14 +133,16 @@ const ArvoreProduto = (props) =>{
             { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com"/> </> ): (null) }
             <TopButtons title={option?.charAt(0).toUpperCase() + option?.slice(1)} option={option} PostData={PostData} GetData={GetData} dataModal={dataModal}/>
             {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
-            <div className='flex h-4/5 overflow-y-auto w-full flex-row'>
+            <div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
                 <MiniSideBar ChosenOption={ChosenOption}  name={props?.name} />
-                <div className='flex w-full overflow-y-auto h-50 flex-col rounded-md'>
-                    <div className='w-full overflow-y-auto h-full bg-[#F7F7F7]'>
-                        <Table data={tableData} name={option} />
+                <div className='flex w-full overflow-y-auto h-50 flex-col rounded'>
+                    <div className='w-full top-0 overflow-y-auto h-full bg-[#EDEDED]'>
+                        <Table data={tableData} name={option} ValueTable={ValueTable}/>
                     </div>
-                    <div className='w-full h-10 bg-[#D4D4D8]'>
-                        teste teste teste teste
+                    <div className='w-full h-10 bg-[#CFCFCF]'>
+                        <span className='text-black'>
+                            teste teste teste teste
+                        </span>
                     </div>
                 </div>
                 
