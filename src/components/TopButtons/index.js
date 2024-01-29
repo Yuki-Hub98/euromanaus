@@ -8,7 +8,6 @@ import { usePathname } from "next/navigation";
 const TopButtons = (props) => {
     const router = usePathname()
     const { isOpen , onOpen , onOpenChange } = useDisclosure();
-    const [closeStatus, setCloseStatus] = useState();
     const [receivePostData, setReceivePostData] = useState();
     const [receiveGetData, setReceiveGetData] = useState();
     const [nameRequest, setNameRequest] = useState();
@@ -69,13 +68,13 @@ const TopButtons = (props) => {
         }
     }
 
-
+//#2c2c2b #0000008e
 
 
     return(
-        <div className='flex flex-row pl-2 h-1/4 border rounded-md mt-8 w-full gap-2 bg-[#0000008e]'>
-            <div className='absolute w-44'>
-                <h1>{props?.title}</h1>
+        <div className='flex flex-row pl-2 h-1/4 shadow-2xl mt-8 rounded w-full gap-2 bg-[#1E1E1F]'>
+            <div className='absolute pl-2 w-full'>
+                <h1 className='font-bold text-[#D4D4D8]'>{props?.title}</h1>
             </div>
             {OptionPage(router)}
         </div>
