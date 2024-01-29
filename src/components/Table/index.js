@@ -1,27 +1,95 @@
-import { CiEdit } from "react-icons/ci";
-import { RiDeleteBin2Line } from "react-icons/ri";
+"use client"
+
+import { useState, useEffect } from "react";
 
 const Table = (props) => {
+    const [focusedRow, setFocusedRow] = useState(null);
+    const [focusedCol, setFocusedCol] = useState(null);
+    const [markedRowIndex, setMarkedRowIndex] = useState(null);
+    const [markedCellValue, setMarkedCellValue] = useState(null);
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'ArrowUp') {
+        setFocusedRow((prevRow) => (prevRow !== null ? Math.max(prevRow - 1, 0) : 0));
+        } else if (event.key === 'ArrowDown') {
+        setFocusedRow((prevRow) =>
+            prevRow !== null ? Math.min(prevRow + 1, props?.data.length - 1) : 0
+        );
+        } else if (event.key === 'ArrowLeft') {
+        setFocusedCol((prevCol) => (prevCol !== null ? Math.max(prevCol - 1, 0) : 0));
+        } else if (event.key === 'ArrowRight') {
+        setFocusedCol((prevCol) =>
+            prevCol !== null ? Math.min(prevCol + 1, Object.keys(props?.data[0]).length - 1) : 0
+        );
+        }
+    };
+
+    const handleCellClick = (rowIndex, colIndex) => {
+        setFocusedRow(rowIndex);
+        setFocusedCol(colIndex);
+    
+        const colName = props ? Object.keys(props?.data[0])[colIndex] : null;
+        const clickedCellValue = props?.data[rowIndex][colName];
+        setMarkedCellValue(clickedCellValue);
+        
+    };
+
+    useEffect(() => {
+        if (focusedRow !== null && focusedCol !== null) {
+        const colName = props ? Object.keys(props?.data[0])[focusedCol] : null
+        const markedValue = props?.data[focusedRow][colName];
+        setMarkedCellValue(markedValue);
+        }
+    }, [focusedRow, focusedCol, props]);
+
+    useEffect(() => {
+        if (markedCellValue) {
+            return props?.ValueTable(markedCellValue)
+        }
+    },[props, markedCellValue])
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        };
+    });
+
 
     const TableTemp = (option, data) => {
+
         switch (option) {
             case "departamento":
                 return(
                     <>
-                        <table className="w-1/3 border-collapse overflow-x-auto">
+                        <table className="w-1/3 border overflow-x-auto">
                             <thead>
-                                <tr>
-                                    <th className='sticky top-0'></th>
-                                    <th className='sticky top-0'></th>
-                                    <th className='bg-[#edca62b4] border sticky top-0 text-[#2c2c2b] p-2 w-full'>Descrição</th>
+                                <tr >
+                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    <th key={index} className='bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
+                                        {col}
+                                    </th>
+                                    )) : null}
                                 </tr>
                             </thead>
                             <tbody >
-                                {data?.map((data) => (
-                                    <tr key={data?.descricao}>
-                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                        <td className='border p-2 border-[#d9d9d9] text-[#2c2c2b]'>{data?.descricao}</td>
+                                {data?.map((item, rowIndex) => (
+                                    <tr
+                                        key={rowIndex}
+                                        tabIndex={0}
+                                        onFocus={() => {
+                                            setFocusedRow(rowIndex);
+                                            setFocusedCol(null);
+                                        }}
+                                        className={`border outline-none border-[#d9d9d9] ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        <td
+                                            onClick={() => handleCellClick(rowIndex, colIndex)}
+                                            key={colIndex}
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            {value}
+                                        </td>
+                                        )): null}
                                     </tr>
                                 ))}
                             </tbody>
@@ -31,126 +99,189 @@ const Table = (props) => {
             case "linha":
                 return(
                     <>
-                        <table className="w-2/4 border-collapse">
+                        <table className="w-1/3 border overflow-x-auto">
                             <thead>
-                                <tr>
-                                    <th className='sticky top-0'></th>
-                                    <th className='sticky top-0'></th>
-                                    <th className='bg-[#edca62b4] border sticky top-0 text-[#2c2c2b] p-2 w-1/2'>Departamento</th>
-                                    <th className='bg-[#edca62b4] border sticky top-0 text-[#2c2c2b] p-2 w-1/2'>Descrição</th>
+                                <tr >
+                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    <th key={index} className='bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
+                                        {col}
+                                    </th>
+                                    )) : null}
                                 </tr>
                             </thead>
-                            <tbody>
-                                {data?.map((data) => (
-                                    <tr key={data?.descricao}>
-                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                        <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                        <td  className='border p-2 text-[#2c2c2b]'>{data.departamento}</td>
-                                        <td  className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
+                            <tbody >
+                                {data?.map((item, rowIndex) => (
+                                    <tr
+                                        key={rowIndex}
+                                        tabIndex={0}
+                                        onFocus={() => {
+                                            setFocusedRow(rowIndex);
+                                            setFocusedCol(null);
+                                        }}
+                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        <td
+                                            onClick={() => handleCellClick(rowIndex, colIndex)}
+                                            key={colIndex}
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            {value}
+                                        </td>
+                                        )): null}
                                     </tr>
                                 ))}
                             </tbody>
-                        </table>
+                        </table>       
                     </>
                 )
 
                 case "familia":
                     return(
                         <>
-                            <table className="w-2/4 border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th className='sticky top-0'></th>
-                                        <th className='sticky top-0'></th>
-                                        <th className='bg-[#edca62b4] sticky top-0 border text-[#2c2c2b] p-2 w-1/2'>Linha</th>
-                                        <th className='bg-[#edca62b4] sticky top-0 border text-[#2c2c2b] p-2 w-1/2'>Descrição</th>
+                        <table className="w-1/3 border overflow-x-auto">
+                            <thead>
+                                <tr >
+                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    <th key={index} className='bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
+                                        {col}
+                                    </th>
+                                    )) : null}
+                                </tr>
+                            </thead>
+                            <tbody >
+                                {data?.map((item, rowIndex) => (
+                                    <tr
+                                        key={rowIndex}
+                                        tabIndex={0}
+                                        onFocus={() => {
+                                            setFocusedRow(rowIndex);
+                                            setFocusedCol(null);
+                                        }}
+                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        <td
+                                            onClick={() => handleCellClick(rowIndex, colIndex)}
+                                            key={colIndex}
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            {value}
+                                        </td>
+                                        )): null}
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {data?.map((data) => (
-                                        <tr key={data?.descricao}>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.linha}</td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                ))}
+                            </tbody>
+                        </table>       
                         </>
                     )
 
                 case "grupo":
                     return(
                         <>
-                            <table className="w-2/4 border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th className='sticky top-0'></th>
-                                        <th className='sticky top-0'></th>
-                                        <th className='bg-[#edca62b4] sticky top-0 border text-[#2c2c2b] p-2 w-1/2'>Familia</th>
-                                        <th className='bg-[#edca62b4] sticky top-0 border text-[#2c2c2b] p-2 w-1/2'>Descrição</th>
+                        <table className="w-1/3 border overflow-x-auto">
+                            <thead>
+                                <tr >
+                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    <th key={index} className='bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
+                                        {col}
+                                    </th>
+                                    )) : null}
+                                </tr>
+                            </thead>
+                            <tbody >
+                                {data?.map((item, rowIndex) => (
+                                    <tr
+                                        key={rowIndex}
+                                        tabIndex={0}
+                                        onFocus={() => {
+                                            setFocusedRow(rowIndex);
+                                            setFocusedCol(null);
+                                        }}
+                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        <td
+                                            onClick={() => handleCellClick(rowIndex, colIndex)}
+                                            key={colIndex}
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            {value}
+                                        </td>
+                                        )): null}
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {data?.map((data) => (
-                                        <tr key={data?.descricao}>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.familia}</td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                ))}
+                            </tbody>
+                        </table>       
                         </>
                     )
                 case "cor":
                     return(
                         <>
-                        <table className="w-1/3 border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th className='sticky top-0'></th>
-                                        <th className='sticky top-0'></th>
-                                        <th className='bg-[#edca62b4] sticky top-0 border text-[#2c2c2b] p-2 w-full'>Descrição</th>
+                    <table className="w-1/3 border overflow-x-auto">
+                            <thead>
+                                <tr >
+                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    <th key={index} className='bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
+                                        {col}
+                                    </th>
+                                    )) : null}
+                                </tr>
+                            </thead>
+                            <tbody >
+                                {data?.map((item, rowIndex) => (
+                                    <tr
+                                        key={rowIndex}
+                                        tabIndex={0}
+                                        onFocus={() => {
+                                            setFocusedRow(rowIndex);
+                                            setFocusedCol(null);
+                                        }}
+                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        <td
+                                            onClick={() => handleCellClick(rowIndex, colIndex)}
+                                            key={colIndex}
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            {value}
+                                        </td>
+                                        )): null}
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {data?.map((data) => (
-                                        <tr key={data?.descricao}>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                            <td className='border p-2  text-[#2c2c2b]'>{data.descricao}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                ))}
+                            </tbody>
+                        </table>       
                         
                         </>
                     )
                     case "especificacao":
                     return(
                         <>
-                        <table className="w-1/3 border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th className='sticky top-0'></th>
-                                        <th className='sticky top-0'></th>
-                                        <th className='bg-[#edca62b4] border sticky top-0 text-[#2c2c2b] p-2 w-full'>Descrição</th>
+                        <table className="w-1/3 border overflow-x-auto">
+                            <thead>
+                                <tr >
+                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    <th key={index} className='bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
+                                        {col}
+                                    </th>
+                                    )) : null}
+                                </tr>
+                            </thead>
+                            <tbody >
+                                {data?.map((item, rowIndex) => (
+                                    <tr
+                                        key={rowIndex}
+                                        tabIndex={0}
+                                        onFocus={() => {
+                                            setFocusedRow(rowIndex);
+                                            setFocusedCol(null);
+                                        }}
+                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        <td
+                                            onClick={() => handleCellClick(rowIndex, colIndex)}
+                                            key={colIndex}
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            {value}
+                                        </td>
+                                        )): null}
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {data?.map((data) => (
-                                        <tr key={data?.descricao}>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><RiDeleteBin2Line color='#f53300'/></td>
-                                            <td onClick={(e) => console.log(e)} className='cursor-pointer'><CiEdit color='#2c2c2b'/></td>
-                                            <td className='border p-2 text-[#2c2c2b]'>{data.descricao}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        
+                                ))}
+                            </tbody>
+                        </table>
                         </>
                     )
             default:
