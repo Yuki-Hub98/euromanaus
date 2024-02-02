@@ -10,6 +10,7 @@ const EditModal = (props) => {
     const [dataToPut, setDataToPut] = useState();
     //const [selectData, setSelectData] = useState();
     const [dataDescricao, setDataDescricao] = useState();
+    const { ReceivePut } = props
 
     /*
     const dataTransform = props?.dataModal?.map((data) => ( 
@@ -66,10 +67,10 @@ const EditModal = (props) => {
 
     useEffect(() => {
         if (dataToPut) {
-            props?.ReceivePut(props?.name, dataToPut)
+            ReceivePut(props?.name, dataToPut)
             return toClean();
         }
-    }, [props, dataToPut])
+    })
 
     const TypeButton = (type) => {
 

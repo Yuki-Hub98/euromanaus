@@ -10,6 +10,7 @@ const RegisterModal = (props) => {
     const [dataToPost, setDataToPost] = useState();
     const [selectData, setSelectData] = useState();
     const [dataDescricao, setDataDescricao] = useState();
+    const {ReceivePost} = props
 
     const dataTransform = props?.dataModal?.map((data) => ( 
         {'value': data?.descricao, 'label':data?.descricao}
@@ -43,7 +44,7 @@ const RegisterModal = (props) => {
 
     useEffect(() => {
         if (dataToPost) {
-            props?.ReceivePost(props?.name, dataToPost)
+            ReceivePost(props?.name, dataToPost)
             return toClean()
         }
     })

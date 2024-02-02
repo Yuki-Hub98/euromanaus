@@ -60,7 +60,6 @@ export default function ArvoreDeProduto () {
         setNameRequest(nameRequest)
 
     }
-    
 
     useEffect(() => {
         if(dataPost) {

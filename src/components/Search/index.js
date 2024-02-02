@@ -6,7 +6,7 @@ import RegexToSave from "@/functions/regexToSave";
 const SearchArvore = (props) => {
     const [dataToGet, setDataToGet] = useState();
     const [dataSearchDesc, setDataSearchDesc] = useState();
-
+    const {ReceiveGet} = props
     /*
     const [dataSearchOut, setDataSearchOut] = useState();
     const section = (name) => {
@@ -56,13 +56,13 @@ const SearchArvore = (props) => {
         if (dataSearchDesc) {
             return setDataToGet({'descricao': dataSearchDesc})
         }else{
-            return props?.ReceiveGet(props?.data?.option);
+            return ReceiveGet(props?.data?.option);
         }
     }
 
     useEffect(() => {
         if (dataToGet) {
-            props?.ReceiveGet(props?.data?.option, dataToGet);
+            ReceiveGet(props?.data?.option, dataToGet);
             Clear();
         }
     })

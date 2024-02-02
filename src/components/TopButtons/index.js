@@ -16,7 +16,7 @@ const TopButtons = (props) => {
     const [nameRequestGet, setNameRequestGet] = useState();
     const [nameRequestPut, setNameRequestPut] = useState();
     const [open, setOpen] = useState(false)
-
+    const {PostData, GetData, PutData } = props
     const modal = (value) =>{
         return setOpen(value)
     }
@@ -49,27 +49,27 @@ const TopButtons = (props) => {
 
     useEffect(() => {
         if (receivePostData) {
-            props?.PostData(nameRequest, receivePostData)
+            PostData(nameRequest, receivePostData)
             return toClean()
         }
-    },[props, nameRequest, receivePostData])
+    })
 
     useEffect(() => {
         if (receivePutData) {
-            props?.PutData(nameRequestPut, receivePutData)
+            PutData(nameRequestPut, receivePutData)
             return toClean();
         }
-    }, [props, nameRequestPut, receivePutData])
+    })
 
     useEffect(() => {
         if (receiveGetData && nameRequestGet) {
-            props?.GetData(nameRequestGet, receiveGetData);
+            GetData(nameRequestGet, receiveGetData);
             return toClean();
         }else if (nameRequestGet) {
-            props?.GetData(nameRequestGet);
+            GetData(nameRequestGet);
             return toClean();
         }
-    },[props,receiveGetData, nameRequestGet])
+    })
 
     const OptionPage = (page) => {
         switch (page) {
