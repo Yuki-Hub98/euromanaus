@@ -1,12 +1,10 @@
 "use client"
-
 import { useState, useEffect } from "react";
 
 const Table = (props) => {
     const [focusedRow, setFocusedRow] = useState(null);
     const [focusedCol, setFocusedCol] = useState(null);
-    const [markedRowIndex, setMarkedRowIndex] = useState(null);
-    const [markedCellValue, setMarkedCellValue] = useState(null);
+    const [markedCellValue, setMarkedCellValue] = useState();
 
     const handleKeyDown = (event) => {
         if (event.key === 'ArrowUp') {
@@ -24,28 +22,35 @@ const Table = (props) => {
         }
     };
 
+    const Clear =() =>{
+        setMarkedCellValue(null)
+        return;
+    }
+
+    const updateMarkedRowValues = (rowIndex) => {
+        setMarkedCellValue(props?.data[rowIndex]);
+    };
+
     const handleCellClick = (rowIndex, colIndex) => {
-        setFocusedRow(rowIndex);
-        setFocusedCol(colIndex);
-    
-        const colName = props ? Object.keys(props?.data[0])[colIndex] : null;
-        const clickedCellValue = props?.data[rowIndex][colName];
-        setMarkedCellValue(clickedCellValue);
-        
+            // Manter a célula marcada após o clique
+            setFocusedRow(rowIndex);
+            setFocusedCol(colIndex);
+
+            // Marcar apenas os valores da linha
+            setMarkedCellValue(props?.data[rowIndex]);
     };
 
     useEffect(() => {
-        if (focusedRow !== null && focusedCol !== null) {
-        const colName = props ? Object.keys(props?.data[0])[focusedCol] : null
-        const markedValue = props?.data[focusedRow][colName];
-        setMarkedCellValue(markedValue);
-        }
-    }, [focusedRow, focusedCol, props]);
+            if (focusedRow !== null) {
+            updateMarkedRowValues(focusedRow);
+            }
+    });
 
     useEffect(() => {
         if (markedCellValue) {
-            return props?.ValueTable(markedCellValue)
+            props?.ValueTable(markedCellValue)
         }
+        Clear();
     },[props, markedCellValue])
 
     useEffect(() => {
@@ -54,7 +59,6 @@ const Table = (props) => {
         window.removeEventListener('keydown', handleKeyDown);
         };
     });
-
 
     const TableTemp = (option, data) => {
 
@@ -65,11 +69,13 @@ const Table = (props) => {
                         <table className="w-1/3 border overflow-x-auto">
                             <thead>
                                 <tr >
-                                    { data ? Object.keys(data[0]).map((col, index) => (
-                                    <th key={index} className='bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
-                                        {col}
-                                    </th>
-                                    )) : null}
+                                    {data ? 
+                                    (Object.keys(data[0]).map((col, index) => (
+                                        <th key={index} className='bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
+                                            {col}
+                                        </th>
+                                        ))) : null}
+                                    
                                 </tr>
                             </thead>
                             <tbody >
@@ -81,15 +87,17 @@ const Table = (props) => {
                                             setFocusedRow(rowIndex);
                                             setFocusedCol(null);
                                         }}
-                                        className={`border outline-none border-[#d9d9d9] ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
-                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        className={`border outline-none border-[#d9d9d9] ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                        >
+                                        { item ? (Object.values(item).map((value, colIndex) => (
                                         <td
                                             onClick={() => handleCellClick(rowIndex, colIndex)}
                                             key={colIndex}
-                                            className={`border outline-none cursor-pointer border-[#d9d9d9] ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                            >
                                             {value}
                                         </td>
-                                        )): null}
+                                        ))): null}
                                     </tr>
                                 ))}
                             </tbody>
@@ -102,11 +110,11 @@ const Table = (props) => {
                         <table className="w-1/3 border overflow-x-auto">
                             <thead>
                                 <tr >
-                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    { data ? (Object.keys(data[0]).map((col, index) => (
                                     <th key={index} className='bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
                                         {col}
                                     </th>
-                                    )) : null}
+                                    ))) : null}
                                 </tr>
                             </thead>
                             <tbody >
@@ -118,15 +126,17 @@ const Table = (props) => {
                                             setFocusedRow(rowIndex);
                                             setFocusedCol(null);
                                         }}
-                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
-                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                        >
+                                        { item ? (Object.values(item).map((value, colIndex) => (
                                         <td
                                             onClick={() => handleCellClick(rowIndex, colIndex)}
                                             key={colIndex}
-                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                            >
                                             {value}
                                         </td>
-                                        )): null}
+                                        ))): null}
                                     </tr>
                                 ))}
                             </tbody>
@@ -140,11 +150,11 @@ const Table = (props) => {
                         <table className="w-1/3 border overflow-x-auto">
                             <thead>
                                 <tr >
-                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    { data ? (Object.keys(data[0]).map((col, index) => (
                                     <th key={index} className='bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
                                         {col}
                                     </th>
-                                    )) : null}
+                                    ))) : null}
                                 </tr>
                             </thead>
                             <tbody >
@@ -156,15 +166,17 @@ const Table = (props) => {
                                             setFocusedRow(rowIndex);
                                             setFocusedCol(null);
                                         }}
-                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
-                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                        >
+                                        { item ? (Object.values(item).map((value, colIndex) => (
                                         <td
                                             onClick={() => handleCellClick(rowIndex, colIndex)}
                                             key={colIndex}
-                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                            >
                                             {value}
                                         </td>
-                                        )): null}
+                                        ))): null}
                                     </tr>
                                 ))}
                             </tbody>
@@ -178,11 +190,11 @@ const Table = (props) => {
                         <table className="w-1/3 border overflow-x-auto">
                             <thead>
                                 <tr >
-                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    { data ? (Object.keys(data[0]).map((col, index) => (
                                     <th key={index} className='bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
                                         {col}
                                     </th>
-                                    )) : null}
+                                    ))) : null}
                                 </tr>
                             </thead>
                             <tbody >
@@ -194,15 +206,17 @@ const Table = (props) => {
                                             setFocusedRow(rowIndex);
                                             setFocusedCol(null);
                                         }}
-                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
-                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                        >
+                                        { item ? (Object.values(item).map((value, colIndex) => (
                                         <td
                                             onClick={() => handleCellClick(rowIndex, colIndex)}
                                             key={colIndex}
-                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                            >
                                             {value}
                                         </td>
-                                        )): null}
+                                        ))): null}
                                     </tr>
                                 ))}
                             </tbody>
@@ -215,11 +229,11 @@ const Table = (props) => {
                     <table className="w-1/3 border overflow-x-auto">
                             <thead>
                                 <tr >
-                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    { data ? (Object.keys(data[0]).map((col, index) => (
                                     <th key={index} className='bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
                                         {col}
                                     </th>
-                                    )) : null}
+                                    ))) : null}
                                 </tr>
                             </thead>
                             <tbody >
@@ -231,15 +245,17 @@ const Table = (props) => {
                                             setFocusedRow(rowIndex);
                                             setFocusedCol(null);
                                         }}
-                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
-                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                        >
+                                        { item ? (Object.values(item).map((value, colIndex) => (
                                         <td
                                             onClick={() => handleCellClick(rowIndex, colIndex)}
                                             key={colIndex}
-                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                            >
                                             {value}
                                         </td>
-                                        )): null}
+                                        ))): null}
                                     </tr>
                                 ))}
                             </tbody>
@@ -253,11 +269,11 @@ const Table = (props) => {
                         <table className="w-1/3 border overflow-x-auto">
                             <thead>
                                 <tr >
-                                    { data ? Object.keys(data[0]).map((col, index) => (
+                                    { data ? (Object.keys(data[0]).map((col, index) => (
                                     <th key={index} className='bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] p-2 w-1/2'>
                                         {col}
                                     </th>
-                                    )) : null}
+                                    ))) : null}
                                 </tr>
                             </thead>
                             <tbody >
@@ -269,15 +285,17 @@ const Table = (props) => {
                                             setFocusedRow(rowIndex);
                                             setFocusedCol(null);
                                         }}
-                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
-                                        { item ? Object.values(item).map((value, colIndex) => (
+                                        className={`border outline-none border-[#d9d9d9] h-3 w-1/2 ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                        >
+                                        { item ? (Object.values(item).map((value, colIndex) => (
                                         <td
                                             onClick={() => handleCellClick(rowIndex, colIndex)}
                                             key={colIndex}
-                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] h-3 w-1/2 ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                            >
                                             {value}
                                         </td>
-                                        )): null}
+                                        ))): null}
                                     </tr>
                                 ))}
                             </tbody>
