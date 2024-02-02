@@ -3,6 +3,7 @@
 import Get from "@/pages/api/arvore-produto/get";
 import Post from "@/pages/api/arvore-produto/post";
 import Put from "@/pages/api/arvore-produto/put";
+import Del from "@/pages/api/arvore-produto/del";
 
 const PostArvoreProduto = async (request, data) => {
     const post = await Post(request, data)
@@ -19,4 +20,9 @@ const PutArvoreProduto = async (request, data) => {
     return put
 }
 
-export { PostArvoreProduto, GetArvoreProduto, PutArvoreProduto}
+const DelArvoreProduto = async (request, data) => {
+    const del = await Del(request, data)
+    return del
+}
+
+export { PostArvoreProduto, GetArvoreProduto, PutArvoreProduto, DelArvoreProduto}
