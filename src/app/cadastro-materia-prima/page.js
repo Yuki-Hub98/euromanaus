@@ -1,5 +1,4 @@
 "use client";
-import { DropDown } from "../../components/DropDown";
 import React, { useState, useEffect } from "react";
 import {AiOutlinePlus} from 'react-icons/ai';
 
@@ -121,7 +120,6 @@ export default function CadMateriaPrima() {
                         Fornecedor
                     </label>
                     <div className="relative mt-2.5">
-                        <DropDown/>
                     </div>
                   </div>
                   <div className="sm:col-span-2">
@@ -150,7 +148,6 @@ export default function CadMateriaPrima() {
                     </label>
                     <div className="mt-2.5 grid grid-cols-2 gap-x-44 items-center">
                       <div className="w-44">
-                        <DropDown />
                       </div>
                         <div type="button" className=" flex w-8 h-8 text-white bg-blue-700 hover:bg-blue-800 rounded-lg items-center justify-center cursor-pointer">
                             <AiOutlinePlus size={18}/>
@@ -165,7 +162,6 @@ export default function CadMateriaPrima() {
                       Unidade Util na Produção
                     </label>
                     <div className="relative mt-2.5">
-                      <DropDown />
                     </div>
                   </div>
                   <div>
@@ -176,7 +172,6 @@ export default function CadMateriaPrima() {
                       Unidade de Entrada
                     </label>
                     <div className="relative mt-2.5">
-                      <DropDown />
                     </div>
                   </div>
                   <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -223,7 +218,6 @@ export default function CadMateriaPrima() {
                         Tipo de Máteria Prima
                     </label>
                     <div className="relative mt-2.5">
-                      <DropDown />
                     </div>
                   </div>
                   <div>
