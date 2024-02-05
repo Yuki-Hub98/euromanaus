@@ -16,7 +16,7 @@ const TopButtons = (props) => {
     const [nameRequestGet, setNameRequestGet] = useState();
     const [nameRequestPut, setNameRequestPut] = useState();
     const [open, setOpen] = useState(false)
-    const {PostData, GetData, PutData } = props
+    const {PostData, GetData, PutData, DeleteData} = props
     const modal = (value) =>{
         return setOpen(value)
     }
@@ -97,7 +97,19 @@ const TopButtons = (props) => {
                         }
                         <EditModal name={props?.option} valueTable={props?.valueTable} ReceivePut={ReceivePut} isOpen={open} modal={modal}
                         tableData={props?.tableData} onOpenChange={onOpenChange} />
-                    </div> 
+                    </div>
+                    <div className='flex items-center'>
+                        {props?.valueTable ? 
+                            <Button color="primary" size='sm' variant="ghost" onClick={() => DeleteData(props?.option, props?.valueTable)}>
+                                Deletar
+                            </Button>
+                            :
+                            <Button color="primary" size="sm" variant="ghost" isDisabled>
+                                Deletar
+                            </Button>
+                        }
+                    </div>
+                    
                     </>
                 )
         

@@ -1,12 +1,13 @@
 "use client"
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import React , {useEffect, useState} from "react";
-import {GetArvoreProduto, PostArvoreProduto, PutArvoreProduto} from "@/app/actions/arvore-produto";
+import {GetArvoreProduto, PostArvoreProduto, PutArvoreProduto, DelArvoreProduto} from "@/app/actions/arvore-produto";
 import SuccessAlert from "../../components/SuccessAlert";
 import MiniSideBar from "../../components/MiniSideBar";
 import TopButtons from "../../components/TopButtons";
 import Warning from "../../components/Warning";
 import Table from "../../components/Table";
+import { data } from "autoprefixer";
 
 
 const nav = ["Departamento", "Linha", "Familia", "Grupo", "Cor", "Especificação"]
@@ -20,6 +21,7 @@ export default function ArvoreDeProduto () {
     const [dataGet, setDataGet] = useState();
     const [dataPut, setDataPut] = useState();
     const [dataModal, setDataModal] = useState();
+    const [dataDelete, setDataDelete] = useState();
     const [nameRequestMiniSideBar, setNameRequestMiniSideBar] = useState();
     const [requestMiniSideBar, setRequestMiniSideBar] = useState(false);
     const [nameRequest, setNameRequest] = useState();
@@ -61,6 +63,11 @@ export default function ArvoreDeProduto () {
 
     }
 
+    const DeleteData = (nameRequest, data) =>{
+        setDataDelete(data)
+        setNameRequest(nameRequest)
+    }
+
     useEffect(() => {
         if(dataPost) {
             Resgister(nameRequest, dataPost)
@@ -72,6 +79,10 @@ export default function ArvoreDeProduto () {
 
         if (dataPut){
             Edit(nameRequest, dataPut)    
+        }
+
+        if (dataDelete) {
+            Delete(nameRequest, dataDelete)
         }
 
         if (requestMiniSideBar) {
@@ -96,6 +107,7 @@ export default function ArvoreDeProduto () {
         setDataPost(null)
         setDataGet(null)
         setDataPut(null)
+        setDataDelete(null)
         setNameRequest(null)
     }
 
@@ -106,6 +118,14 @@ export default function ArvoreDeProduto () {
             setRequestMiniSideBar(false)
         }
         
+    }
+
+    const Delete = async (nameRequest, data) =>{
+        if (data) {
+            const dataStatus = await DelArvoreProduto(nameRequest, data)
+            setStatus(dataStatus)
+            return Clear();
+        }
     }
 
     const Edit = async (nameRequest, data)=>{
@@ -154,9 +174,8 @@ export default function ArvoreDeProduto () {
                 </Breadcrumbs>
             </div>
             { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com"/> </> ): (null) }
-            <TopButtons title={option} option={option}
-            valueTable={valueTable} PostData={PostData} GetData={GetData} PutData={PutData} dataModal={dataModal} 
-            tableData={tableData}  />
+            <TopButtons title={option} option={option} valueTable={valueTable} PostData={PostData} GetData={GetData} PutData={PutData}
+            DeleteData={DeleteData} dataModal={dataModal} tableData={tableData}/>
             {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
             <div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
                 <MiniSideBar ChosenOption={ChosenOption}  name={nav} />
