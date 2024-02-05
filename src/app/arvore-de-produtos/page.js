@@ -7,7 +7,6 @@ import MiniSideBar from "../../components/MiniSideBar";
 import TopButtons from "../../components/TopButtons";
 import Warning from "../../components/Warning";
 import Table from "../../components/Table";
-import { data } from "autoprefixer";
 
 
 const nav = ["Departamento", "Linha", "Familia", "Grupo", "Cor", "Especificação"]
