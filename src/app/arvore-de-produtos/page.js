@@ -173,7 +173,8 @@ export default function ArvoreDeProduto () {
                     <BreadcrumbItem className='capitalize'>{option}</BreadcrumbItem>
                 </Breadcrumbs>
             </div>
-            { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com"/> </> ): <SuccessAlert CloseStatus={CloseStatus} message="Deletado com"/> }
+            { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com"/> </> ): (null) }
+            { status?.del ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Deletado com"/> </> ): (null) }
             <TopButtons title={option} option={option} valueTable={valueTable} PostData={PostData} GetData={GetData} PutData={PutData}
             DeleteData={DeleteData} dataModal={dataModal} tableData={tableData}/>
             {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
