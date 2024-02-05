@@ -4,7 +4,7 @@ import { GoChevronDown } from "react-icons/go";
 const organizacao = ["Empresa", "Filial"]
 const fiscal = ["Tipo de Notas"]
 const financeiro = ["Caixa", "Contas a Pagar", "Contas a Receber", "Gerais"]
-const compras = ["Árvore de Produtos", "Fonecedor",  "Produtos"]
+const compras = ["Árvore de Produtos", "Fornecedor",  "Produtos"]
 const industrial = ["Centro de Estoque", "Recursos", "Etapa de Produção", "Ficha Técnica"]
 const vendas = ["Consultor", "Clientes", "Promoção", "Barreira de Compras", "Procedencia"]
 const expedicao = ["Veículos", "Motoristas"]
