@@ -101,11 +101,11 @@ const TopButtons = (props) => {
                     <div className='flex items-center'>
                         {props?.valueTable ? 
                             <Button color="primary" size='sm' variant="ghost" onClick={() => DeleteData(props?.option, props?.valueTable)}>
-                                Deletar
+                                Excluir
                             </Button>
                             :
                             <Button color="primary" size="sm" variant="ghost" isDisabled>
-                                Deletar
+                                Excluir
                             </Button>
                         }
                     </div>
