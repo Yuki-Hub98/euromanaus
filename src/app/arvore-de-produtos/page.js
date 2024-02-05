@@ -3,10 +3,10 @@ import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import React , {useEffect, useState} from "react";
 import {GetArvoreProduto, PostArvoreProduto, PutArvoreProduto, DelArvoreProduto} from "@/app/actions/arvore-produto";
 import SuccessAlert from "../../components/SuccessAlert";
-import MiniSideBar from "../../components/MiniSideBar";
 import TopButtons from "../../components/TopButtons";
 import Warning from "../../components/Warning";
 import Table from "../../components/Table";
+import MiniSideBarNav from "../../components/MiniSideBarNav";
 
 
 const nav = ["Departamento", "Linha", "Familia", "Grupo", "Cor", "Especificação"]
@@ -178,7 +178,7 @@ export default function ArvoreDeProduto () {
             DeleteData={DeleteData} dataModal={dataModal} tableData={tableData}/>
             {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
             <div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
-                <MiniSideBar ChosenOption={ChosenOption}  name={nav} />
+                <MiniSideBarNav ChosenOption={ChosenOption}  name={nav} />
                 <div className='flex w-full overflow-y-auto h-50 flex-col rounded'>
                     <div className='w-full top-0 overflow-y-auto h-full bg-[#EDEDED]'>
                         <Table data={tableData} name={option} ValueTable={ValueTable} />

@@ -2,7 +2,7 @@
 import React , {useEffect, useState} from "react";
 import { usePathname } from "next/navigation";
 
-const MiniSideBar = (props) => {
+const MiniSideBarNav = (props) => {
     const router = usePathname()
     const [option, setOption] = useState();
 
@@ -31,4 +31,4 @@ const MiniSideBar = (props) => {
     )
 }
 
-export default MiniSideBar
+export default MiniSideBarNav
