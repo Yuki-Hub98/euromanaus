@@ -1,11 +1,13 @@
 'use client';
-
 import {NextUIProvider} from '@nextui-org/react'
+import { RecoilRoot } from 'recoil'
 
-export default function Providers({children}){
+export default function Provider({children}){
     return (
-        <NextUIProvider className='h-full'>
-            {children}
-        </NextUIProvider>
+        <RecoilRoot>
+            <NextUIProvider className='h-full'>
+                {children}
+            </NextUIProvider>
+        </RecoilRoot>
     )
 }
