@@ -69,7 +69,7 @@ const SearchArvore = (props) => {
 
     return(
         <form>
-        <div className='flex flex-row h-12 justify-items-center items-center'>
+        <div className='h-12 flex flex-row justify-items-center items-center'>
                 <Input className='w-80' labelPlacement={"outside-left"} onChange={(e) => setDataSearchDesc(RegexToSave(e.target.value))} color="primary" label="Descrição"/>
                 {/*{data?.data?.type === 1 ? 
                 <>

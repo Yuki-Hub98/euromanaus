@@ -95,7 +95,7 @@ const EditModal = (props) => {
                 return(
                     <>
                     <div className="h-full">
-                        <div className='flex justify-center gap-y-5 w-96 relative'>
+                        <div className='w-96 gap-y-5 flex justify-center  relative'>
                             <h1 className='font-bold'>{RenderSelect(props?.valueTable)}</h1>
                         </div>
                         <Input label="Descrição" value={dataDescricao} size='lg' type="Text" onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
@@ -129,7 +129,7 @@ const EditModal = (props) => {
                     <>
                     <ModalHeader className="flex flex-col gap-1"> {props?.name?.toUpperCase()} </ModalHeader>
                     <ModalBody>
-                    <div className="flex flex-col w-full">
+                    <div className="w-full flex flex-col">
                         <div className="w-full flex flex-row gap-2">
                             {buttons(TypeButton(props?.name))}
                         </div>

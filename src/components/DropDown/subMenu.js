@@ -10,7 +10,7 @@ const vendas = ["Consultor", "Clientes", "Promoção", "Barreira de Compras", "P
 const expedicao = ["Veículos", "Motoristas"]
 
 
-const style = "flex items-center p-2 w-full text-center font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+const style = "w-full flex items-center p-2  text-center font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
 
 const URL = (pag) =>{
     let url = `http://localhost:3000/`

@@ -163,7 +163,7 @@ export default function ArvoreDeProduto () {
 
     return (
         <>
-        <div className="flex flex-col pl-2 h-screen bg-[#0000008e] ">
+        <div className="h-screen flex flex-col pl-2 bg-[#0000008e] ">
         <div className='w-full h-6 absolute top-2'>
                 <Breadcrumbs color='primary'>
                     <BreadcrumbItem>Cadastro</BreadcrumbItem>
@@ -174,13 +174,13 @@ export default function ArvoreDeProduto () {
             </div>
             { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com"/> </> ): (null) }
             { status?.del ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Deletado com"/> </> ): (null) }
-            <TopButtons title={option} option={option} valueTable={valueTable} PostData={PostData} GetData={GetData} PutData={PutData}
+            <TopButtons title={option} size={"md"} h={'h-3/6'} option={option} valueTable={valueTable} PostData={PostData} GetData={GetData} PutData={PutData}
             DeleteData={DeleteData} dataModal={dataModal} tableData={tableData}/>
             {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
-            <div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
+            <div className=' w-full flex h-4/5 overflow-y-auto mt-1.5 flex-row'>
                 <MiniSideBarNav ChosenOption={ChosenOption}  name={nav} />
-                <div className='flex w-full overflow-y-auto h-50 flex-col rounded'>
-                    <div className='w-full top-0 overflow-y-auto h-full bg-[#EDEDED]'>
+                <div className='w-full flex h-50 overflow-y-auto  flex-col rounded'>
+                    <div className='w-full h-full top-0 overflow-y-auto  bg-[#EDEDED]'>
                         <Table data={tableData} name={option} ValueTable={ValueTable} />
                     </div>
                     <div className='w-full h-10 bg-[#CFCFCF]'>

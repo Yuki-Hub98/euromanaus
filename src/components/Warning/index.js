@@ -41,7 +41,7 @@ const Warning = (data) => {
                                 <>
                                     <ModalHeader> Warning </ModalHeader>
                                     <ModalBody>
-                                        <div className="flex flex-col w-full">
+                                        <div className="w-full flex flex-col ">
                                             <div>
                                                 <span>Codigo: {status?.status}</span>
                                             </div>

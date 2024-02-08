@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { GoChevronDown } from "react-icons/go";
 import { SubMenu } from "./subMenu";
 
-const style = "flex items-center p-2 w-full text-center font-normal text-white rounded-lg hover:bg-white dark:text-gray-900 hover:text-[#edca62] group transition duration-75 group"
+const style = "w-full flex items-center p-2  text-center font-normal text-white rounded-lg hover:bg-white dark:text-gray-900 hover:text-[#edca62] group transition duration-75 group"
 const DropDownNav = (values) =>{
     const [dropPrincipal, setDropPrincipal] = useState(false);
     return ( 
