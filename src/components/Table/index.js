@@ -71,7 +71,7 @@ const Table = (props) => {
                                 <tr >
                                     {data ? 
                                     (Object.keys(data[0]).map((col, index) => (
-                                        <th key={index} className='p-2 w-1/2 bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] '>
+                                        <th key={index} className='p-2 bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] '>
                                             {col}
                                         </th>
                                         ))) : null}
@@ -111,7 +111,7 @@ const Table = (props) => {
                             <thead>
                                 <tr >
                                     { data ? (Object.keys(data[0]).map((col, index) => (
-                                    <th key={index} className='p-2 w-1/2 bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b]'>
+                                    <th key={index} className='p-2 bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b]'>
                                         {col}
                                     </th>
                                     ))) : null}
@@ -151,7 +151,7 @@ const Table = (props) => {
                             <thead>
                                 <tr >
                                     { data ? (Object.keys(data[0]).map((col, index) => (
-                                    <th key={index} className='p-2 w-1/2 bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] '>
+                                    <th key={index} className='p-2 bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] '>
                                         {col}
                                     </th>
                                     ))) : null}
@@ -191,7 +191,7 @@ const Table = (props) => {
                             <thead>
                                 <tr >
                                     { data ? (Object.keys(data[0]).map((col, index) => (
-                                    <th key={index} className=' p-2 w-1/2 bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b]'>
+                                    <th key={index} className=' p-2 bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b]'>
                                         {col}
                                     </th>
                                     ))) : null}
@@ -230,7 +230,7 @@ const Table = (props) => {
                             <thead>
                                 <tr >
                                     { data ? (Object.keys(data[0]).map((col, index) => (
-                                    <th key={index} className='p-2 w-1/2 bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] '>
+                                    <th key={index} className='p-2 bg-[#CFCFCF] border sticky top-0 text-[#2c2c2b] '>
                                         {col}
                                     </th>
                                     ))) : null}
@@ -270,7 +270,7 @@ const Table = (props) => {
                             <thead>
                                 <tr >
                                     { data ? (Object.keys(data[0]).map((col, index) => (
-                                    <th key={index} className='w-1/2 bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] p-2 '>
+                                    <th key={index} className=' bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] p-2 '>
                                         {col}
                                     </th>
                                     ))) : null}
@@ -301,6 +301,47 @@ const Table = (props) => {
                             </tbody>
                         </table>
                         </>
+                    )
+                    case "cep":
+                    return(
+                        <>
+                        <table className="table-auto border overflow-x-auto">
+                            <thead>
+                                <tr >
+                                    {data ? 
+                                    (Object.keys(data[0]).map((col, index) => (
+                                        <th key={index} className='p-2 bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] '>
+                                            {col}
+                                        </th>
+                                        ))) : null}
+                                    
+                                </tr>
+                            </thead>
+                            <tbody >
+                                {data?.map((item, rowIndex) => (
+                                    <tr
+                                        key={rowIndex}
+                                        tabIndex={0}
+                                        onFocus={() => {
+                                            setFocusedRow(rowIndex);
+                                            setFocusedCol(null);
+                                        }}
+                                        className={`border outline-none border-[#d9d9d9] ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                        >
+                                        { item ? (Object.values(item).map((value, colIndex) => (
+                                        <td
+                                            onClick={() => handleCellClick(rowIndex, colIndex)}
+                                            key={colIndex}
+                                            className={`border outline-none cursor-pointer border-[#d9d9d9] ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                                            >
+                                            {value}
+                                        </td>
+                                        ))): null}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>                    
+                    </>
                     )
             default:
                 break;
