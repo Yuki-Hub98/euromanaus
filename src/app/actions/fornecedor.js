@@ -1,3 +1,4 @@
+"useServer";
 import Cep from "@/pages/api/fornecedor/cep";
 
 const GetCep = async (data) => {

@@ -10,7 +10,8 @@ const FormRegister = (props) => {
     dataRepresentante, 
     dataFornecedor,
     request,
-    fill
+    fill,
+    SetData
     } = props
 
     return(
@@ -18,8 +19,8 @@ const FormRegister = (props) => {
         <form className="w-full flex flex-col ">
             <RegisterPessoa type={type} handleChange={handleChange} dataFornecedor={dataFornecedor} 
             dataRepresentante={dataRepresentante}/>
-            <RegisterEndereco type={type} handleChange={handleChange} fillToCep={fill} req={request} dataFornecedor={dataFornecedor} 
-            dataRepresentante={dataRepresentante}/>
+            <RegisterEndereco type={type} handleChange={handleChange} dataRepresentante={dataRepresentante} fillToCep={fill} 
+            req={request} dataFornecedor={dataFornecedor} SetData={SetData}/>
             <RegisterContato type={type} handleChange={handleChange} dataFornecedor={dataFornecedor} 
             dataRepresentante={dataRepresentante} />
         </form>

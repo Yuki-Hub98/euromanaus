@@ -145,7 +145,7 @@ const RerenciaCep = (props) =>{
                         </Button>
                         <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {SetCeptoData(valueTable)}} 
                                 onPress={onClose} >
-                            Consultar
+                            Concluir
                         </Button>
                     </ModalFooter>
                     </>

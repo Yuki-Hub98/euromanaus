@@ -5,6 +5,7 @@ import Select from "react-select";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
 import { GetCep } from "@/app/actions/fornecedor";
+import FormDadosBancarios from "../FormDadosBancarios";
 
 const RegisterModal = (props) => {
     const [dataToPost, setDataToPost] = useState();
@@ -44,9 +45,9 @@ const RegisterModal = (props) => {
             return 3
         }   
     }
-
-    const Fill = (re) => {
-        if (re) {
+    const Fill  = async (re) => {
+        const request = await re
+        if (request) {
             if (cep1) {
                 setData(prevState => ({
                     ...prevState,
@@ -113,8 +114,6 @@ const RegisterModal = (props) => {
         }
     }
 
-    console.log(data)
-
     const buttons = (type) => {
         switch (type) {
             case 1:
@@ -154,40 +153,15 @@ const RegisterModal = (props) => {
                         selectedKey={slected}
                         onSelectionChange={setSelected}>
                             <Tab key={"Fornecedor"} title="DadosFronecedor" className="w-full bg-[#D4D4D8]">
-                                <FormRegister type={slected} dataFornecedor={data} fill={Fill} request={request} handleChange={handleChange} />
+                                <FormRegister type={slected} dataFornecedor={data} fill={Fill}
+                                request={request} handleChange={handleChange} SetData={setData} />
                             </Tab>
                             <Tab key={"Representante"} title="Dados Representantes" className="h-3/6 bg-[#D4D4D8]">
-                                <FormRegister type={slected} dataRepresentante={data} fill={Fill} request={request} handleChange={handleChange} />
+                                <FormRegister type={slected} dataRepresentante={data} fill={Fill} 
+                                request={request} handleChange={handleChange} SetData={setData} />
                             </Tab>
                             <Tab key={"Financeiro"} title="Dados Financeiros" className="h-3/6 bg-[#D4D4D8]">
-                                <div className="w-9/12 p-2">
-                                    <h1 className="font-bold">Dados Bancarios</h1>
-                                    <div className="w-full flex flex-row  gap-2 mt-2 mb-1 p-2 items-center"> 
-                                        <div className="w-5/12 flex flex-row gap-5 items-center">
-                                            <label className='text-xs'>Cod. Banco</label>
-                                            <Input className="w-14 p-1" size="sm" labelPlacement="outside" name="codBanco" 
-                                                onChange={(e) => {handleChange(e)}}/>
-                                        </div>
-                                        <label className='text-xs'>Banco</label>
-                                        <Input className="w-40" size="sm"  labelPlacement="outside" name="celular" 
-                                            onChange={(e) => {handleChange(e)}}/>
-                                    </div>
-                                    <div className="flex flex-row w-full gap-10 mb-1 p-2 items-center"> 
-                                        <label className='text-xs'>Agência</label>
-                                        <Input className="w-40 pl-1" size="sm"  labelPlacement="outside" name="celular" 
-                                            onChange={(e) => {handleChange(e)}}/>
-                                    </div>
-                                    <div className="flex flex-row w-full gap-[3.5rem] mb-1 p-2 items-center"> 
-                                        <label className='text-xs'>Conta</label>
-                                        <Input className="w-40" size="sm"  labelPlacement="outside" name="celular" 
-                                            onChange={(e) => {handleChange(e)}}/>
-                                    </div>
-                                    <div className="flex flex-row w-full gap-2 mb-1 p-2 items-center"> 
-                                        <label className='text-xs'>Orgão Emissor</label>
-                                        <Input className="w-40" size="sm"  labelPlacement="outside" name="celular" 
-                                            onChange={(e) => {handleChange(e)}}/>
-                                    </div>
-                                </div>
+                                <FormDadosBancarios handleChange={handleChange} />
                             </Tab>
                         </Tabs>
                     </CardBody>
