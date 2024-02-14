@@ -86,7 +86,10 @@ const RegisterModal = (props) => {
                 default:
                     break;
             }
-            setDataToPost(data) 
+            setDataToPost(data)
+        }
+        if (data?.razaoSocialFornecedor) {
+            setDataToPost(data)
         }
     },[props, data])
 

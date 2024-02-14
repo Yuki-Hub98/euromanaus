@@ -7,6 +7,25 @@ import RegisterModal from "../RegisterModal";
 const MiniSideBarButtons = (props) => {
     const router = usePathname()
     const { isOpen , onOpen , onOpenChange } = useDisclosure();
+    const [receivePostData, setReceivePostData] = useState();
+    const [nameRequest, setNameRequest] = useState();
+    const { PostData } = props
+
+    const ReceivePost = ( nameRequest ,data) => {
+        setNameRequest(nameRequest)
+        setReceivePostData(data)
+    }
+
+    const toClean = () => {
+        setReceivePostData(null)
+    }
+
+    useEffect(() => {
+        if (receivePostData) {
+            PostData(nameRequest, receivePostData)
+            return toClean()
+        }
+    })
 
     const optionPage = (page) => {
         switch (page) {
@@ -17,7 +36,8 @@ const MiniSideBarButtons = (props) => {
                     <Button color="primary" size="sm" variant="ghost" onPress={onOpen}>
                         Cadastrar
                     </Button>
-                    <RegisterModal isOpen={isOpen} size={"4xl"} h={"w-3/5"} name={"fornecedor"} onOpenChange={onOpenChange}/>
+                    <RegisterModal isOpen={isOpen} size={"4xl"} h={"w-3/5"} name={props?.name} 
+                    ReceivePost={ReceivePost} onOpenChange={onOpenChange}/>
                     <Button color="primary" size="sm" variant="ghost">
                         Editar
                     </Button>
