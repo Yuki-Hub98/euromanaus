@@ -82,7 +82,7 @@ const RerenciaCep = (props) =>{
                 cepRepresentante: dataToCep?.cep,
                 enderecoRepresentante: dataToCep?.logradouro,
                 bairroRepresentante: dataToCep?.bairro,
-                cidadeRepresentante: dataToCep?.localidade,
+                cidadeRepresentante: dataToCep?.cidade,
                 ufRepresentante: dataToCep?.uf
                 
             }))
