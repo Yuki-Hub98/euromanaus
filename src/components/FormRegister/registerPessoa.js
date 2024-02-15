@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import {Input} from "@nextui-org/react";
+import CpfCnpj from "@/functions/formatCpfCnpj";
 const RegisterPessoa = (props) => {
     const {type, 
     handleChange, 
     dataFornecedor, 
     dataRepresentante
     } = props
+
+    const [cpfCnpj, setCpfCnpj] = useState('')
+    
+    const FormatCpfCnpj = (e) => {
+        setCpfCnpj(CpfCnpj(e?.target?.value.replace(/\D/g, '')))
+        handleChange(e, cpfCnpj)
+    }
 
     const renderInput = (op) => {
         switch (op) {
@@ -20,14 +28,14 @@ const RegisterPessoa = (props) => {
                     </div>
                     <div className="w-full flex flex-row gap-[2.18rem] pl-1 mb-2 items-center">
                         <label form="nomeFantasia" className=' text-xs' >Fantasia<sup>*</sup></label>
-                            <Input className="w-96 pl-1" isRequired  size="sm" value={dataFornecedor?.nomeFantasiaFornecedor || ''} labelPlacement="outside" name={`nomeFantasia${type}`}
-                            autoComplete="off" placeholder=" " onChange={(e) => {handleChange(e)}}/>
+                        <Input className="w-96 pl-1" isRequired size="sm" value={dataFornecedor?.nomeFantasiaFornecedor || ''} labelPlacement="outside" name={`nomeFantasia${type}`}
+                        autoComplete="off" placeholder=" " onChange={(e) => {handleChange(e)}}/>
                     </div>
                     <div className="w-full flex flex-row gap-[2rem] mb-2 items-center">
                         <div className="w-[60%] flex flex-row items-center pl-1 gap-7">
                             <label className='text-xs'>CPF/CNPJ<sup>*</sup></label>
-                            <Input className="w-96 pl-0.5" isRequired  size="sm" value={dataFornecedor?.cpfCnpjFornecedor || ''} labelPlacement="outside" name={`cpfCnpj${type}`}
-                            autoComplete="off" onChange={(e) => {handleChange(e)}}/>
+                            <Input className="w-96 pl-0.5" isRequired size="sm" value={dataFornecedor?.cpfCnpjFornecedor || cpfCnpj} labelPlacement="outside" 
+                            name={`cpfCnpj${type}`} autoComplete="off" onChange={(e) => {FormatCpfCnpj(e)}}/>
                         </div>
                         <label className='text-xs pl-6'>IE/RG<sup>*</sup></label>
                         <Input className="w-[9rem]" isRequired  size="sm" value={dataFornecedor?.ieRgFornecedor || ''} labelPlacement="outside" name={`ieRg${type}`}
@@ -66,7 +74,7 @@ const RegisterPessoa = (props) => {
                             <div className="w-[60%] flex flex-row items-center pl-1 gap-7">
                                 <label className='text-xs'>CPF/CNPJ<sup>*</sup></label>
                                 <Input className="w-96 pl-0.5" isRequired size="sm" value={dataRepresentante?.cpfCnpjRepresentante || ''} labelPlacement="outside" name={`cpfCnpj${type}`}
-                                autoComplete="off" onChange={(e) => {handleChange(e)}}/>
+                                autoComplete="off" onChange={(e) => {FormatCpfCnpj(e)}}/>
                             </div>
                             <label className='text-xs pl-6'>IE/RG<sup>*</sup></label>
                             <Input className="w-[9rem]" size="sm" isRequired value={dataRepresentante?.ieRgRepresentante || ''} labelPlacement="outside" name={`ieRg${type}`}
