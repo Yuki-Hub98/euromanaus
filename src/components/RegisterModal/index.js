@@ -6,6 +6,7 @@ import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
 import { GetCep } from "@/app/actions/fornecedor";
 import FormDadosBancarios from "../FormDadosBancarios";
+import formatCpfCnpj from "@/functions/formatCpfCnpj";
 
 const RegisterModal = (props) => {
     const [dataToPost, setDataToPost] = useState();
@@ -28,12 +29,18 @@ const RegisterModal = (props) => {
         return;
     }
 
-    const handleChange = (e) => {
+    const handleChange = (e, cpfCnpj) => {
         const { name, value } = e.target;
         setData(prevState => ({
             ...prevState,
             [name]: RegexToSave(value)
+        }));
+        if ((name === "cpfCnpjFornecedor" && cpfCnpj) || (name === "cpfCnpjRepresentante" && cpfCnpj)) {
+            setData(prevState => ({
+                ...prevState,
+                [name]: cpfCnpj
             }));
+        }
     };
 
     const TypeButton = (type) => {
