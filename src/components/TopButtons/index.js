@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import RegisterModal from "../RegisterModal";
-import SearchArvore from "../Search";
+import Search from "../Search";
 import {Button, Input, useDisclosure} from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import EditModal from "../EditModal";
@@ -77,7 +77,7 @@ const TopButtons = (props) => {
                 return(
                     <>
                     <div className='flex flex-col justify-center items-center'>
-                        <SearchArvore data={props} ReceiveGet={ReceiveGet} />
+                        <Search data={props} ReceiveGet={ReceiveGet} />
                     </div>
                     <div className='flex items-center'>
                         <Button color="primary" size="sm" variant="ghost" onPress={onOpen}>
@@ -116,23 +116,7 @@ const TopButtons = (props) => {
             case"/fornecedor":
                 return(
                     <>
-                    <div className='flex flex-row justify-center items-center gap-2'>
-                        <Input  className='w-64' type="email"
-                        label="Nome"
-                        labelPlacement={"outside"}
-                        placeholder=" "
-                        onChange={(e) => setDataSearchDesc(RegexToSave(e.target.value))} color="primary"/>
-                        <Input  className='w-64' type="email"
-                        label="CPF/CNPJ"
-                        labelPlacement={"outside"}
-                        placeholder=" "
-                        onChange={(e) => setDataSearchDesc(RegexToSave(e.target.value))} color="primary"/>
-                        <div className="pt-6">
-                        <Button color="primary" size='sm' variant="ghost" className="">
-                            Pesquisar
-                        </Button>
-                        </div>
-                    </div>
+                    <Search data={props} ReceiveGet={ReceiveGet} />
                     </>
                 )
             default:
