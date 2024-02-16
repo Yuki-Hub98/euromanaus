@@ -8,16 +8,23 @@ const MiniSideBarButtons = (props) => {
     const router = usePathname()
     const { isOpen , onOpen , onOpenChange } = useDisclosure();
     const [receivePostData, setReceivePostData] = useState();
+    const [receivePutData, setReceivePutData] = useState();
     const [nameRequest, setNameRequest] = useState();
-    const { PostData } = props
+    const { PostData, PutData, DeleteData, valueTable } = props
 
     const ReceivePost = ( nameRequest ,data) => {
         setNameRequest(nameRequest)
         setReceivePostData(data)
     }
 
+    const ReceivePut = (nameRequest, data) =>{
+        setReceivePutData(data)
+        setNameRequest(nameRequest)
+    }
+
     const toClean = () => {
         setReceivePostData(null)
+        setReceivePutData(null)
     }
 
     useEffect(() => {
@@ -27,6 +34,12 @@ const MiniSideBarButtons = (props) => {
         }
     })
 
+    useEffect(() => {
+        if (receivePutData) {
+            PutData(nameRequest, receivePutData)
+            return toClean()
+        }
+    })
     const optionPage = (page) => {
         switch (page) {
             case"/fornecedor":
@@ -41,9 +54,16 @@ const MiniSideBarButtons = (props) => {
                     <Button color="primary" size="sm" variant="ghost">
                         Editar
                     </Button>
-                    <Button color="primary" size="sm" variant="ghost">
-                        Excluir
-                    </Button>
+                    {valueTable ? 
+                        <Button color="primary" size="sm" variant="ghost" onClick={() => DeleteData(props?.name, valueTable)}>
+                            Excluir
+                        </Button>
+                        :
+                        <Button color="primary" size="sm" isDisabled variant="ghost">
+                            Excluir
+                        </Button>
+                    }
+                    
                     </div>
                 </>)
             default:
