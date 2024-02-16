@@ -5,7 +5,7 @@ import SuccessAlert from "../../components/SuccessAlert";
 import TopButtons from "@/components/TopButtons";
 import MiniSideBarButtons from "@/components/MiniSideBarButtons";
 import TableRender from "@/components/TableRender";
-import { PostFornecedor, GetFornecedor } from "../actions/fornecedor";
+import { PostFornecedor, GetFornecedor, PutFornecedor, DelFornecedor } from "../actions/fornecedor";
 
 export default function Fornecedor () {
     const option = "fornecedor"
@@ -33,6 +33,18 @@ export default function Fornecedor () {
         
     }
 
+    const PutData = (nameRequest, data) =>{
+        if (data) {
+            Edit(nameRequest, data);
+        }
+    }
+
+    const DeleteData = (nameRequest, data) => {
+        if (data) {
+            Delete(nameRequest, data)
+        }
+    }
+
     const Resgister = async (nameRequest, data) =>{
         if (data) {
             const statusData = await PostFornecedor(nameRequest, data);
@@ -49,6 +61,21 @@ export default function Fornecedor () {
             setTableData(data)
         }
     } 
+
+    const Edit = async (nameRequest, data)=>{
+        if (data) {
+            const statusData = await PutFornecedor(nameRequest, data);
+            setStatus(statusData)
+        }
+    }
+
+    const Delete = async (nameRequest, data) => {
+        if (data) {
+            const statusData = await DelFornecedor(nameRequest, data);
+            setStatus(statusData)
+            setValueTable(null)
+        }
+    }
 
     const CloseStatus = () => {
         return setStatus(null);
@@ -68,7 +95,7 @@ export default function Fornecedor () {
                 { status?.del ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Deletado com com Sucesso !"/> </> ): (null) }
             <TopButtons title={option} option={option} GetData={GetData} />
             <div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
-                <MiniSideBarButtons name={option} PostData={PostData}/>
+                <MiniSideBarButtons name={option} valueTable={valueTable} PostData={PostData} PutData={PutData} DeleteData={DeleteData} />
                 <div className='w-full flex overflow-y-auto h-50 flex-col rounded'>
                     <TableRender data={tableData} name={option} ValueTable={ValueTable} />
                     <div className='w-full h-10 bg-[#CFCFCF]'>
