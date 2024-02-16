@@ -1,5 +1,6 @@
 "use server";
 import Cep from "@/pages/api/fornecedor/cep";
+import Get from "@/pages/api/fornecedor/get";
 import Post from "@/pages/api/fornecedor/post";
 
 const GetCep = async (data) => {
@@ -12,4 +13,9 @@ const PostFornecedor = async (request, data) => {
     return post
 }
 
-export {GetCep, PostFornecedor}
+const GetFornecedor = async (request, data) => {
+    const get = await Get(request, data);
+    return get
+}
+
+export {GetCep, PostFornecedor, GetFornecedor}
