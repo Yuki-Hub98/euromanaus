@@ -10,7 +10,7 @@
   width: 12px;
 }
 ::-webkit-scrollbar-track {
-  background-color: #2c2c2b;
+  background-color: #EDEDED;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -21,6 +21,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: #6c5c09;
 }
+
 /*
 :root {
   --foreground-rgb: 0, 0, 0;
