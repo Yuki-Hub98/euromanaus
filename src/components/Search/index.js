@@ -46,7 +46,6 @@ const Search = (props) => {
         }
     }
 
-    console.log(dataSearchDesc)
     const Click = () => {
         if (dataSearchDesc) {
             return setDataToGet(dataSearchDesc)
