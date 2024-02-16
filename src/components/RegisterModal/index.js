@@ -6,7 +6,6 @@ import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
 import { GetCep } from "@/app/actions/fornecedor";
 import FormDadosBancarios from "../FormDadosBancarios";
-import formatCpfCnpj from "@/functions/formatCpfCnpj";
 
 const RegisterModal = (props) => {
     const [dataToPost, setDataToPost] = useState();
@@ -162,7 +161,7 @@ const RegisterModal = (props) => {
                         }}
                         selectedKey={slected}
                         onSelectionChange={setSelected}>
-                            <Tab key={"Fornecedor"} title="DadosFronecedor" className="w-full bg-[#D4D4D8]">
+                            <Tab key={"Fornecedor"} title="Dados Fronecedor" className="w-full bg-[#D4D4D8]">
                                 <FormRegister type={slected} dataFornecedor={data} fill={Fill}
                                 request={request} handleChange={handleChange} SetData={setData} />
                             </Tab>
