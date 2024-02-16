@@ -5,7 +5,7 @@ import {GetArvoreProduto, PostArvoreProduto, PutArvoreProduto, DelArvoreProduto}
 import SuccessAlert from "../../components/SuccessAlert";
 import TopButtons from "../../components/TopButtons";
 import Warning from "../../components/Warning";
-import Table from "../../components/Table";
+import TableRender from "../../components/TableRender";
 import MiniSideBarNav from "../../components/MiniSideBarNav";
 
 
@@ -16,16 +16,10 @@ export default function ArvoreDeProduto () {
     const [option, setOption] = useState('departamento');
     const [tableData, setTableData] = useState();
     const [status, setStatus] = useState();
-    const [dataPost, setDataPost] = useState();
-    const [dataGet, setDataGet] = useState();
-    const [dataPut, setDataPut] = useState();
     const [dataModal, setDataModal] = useState();
-    const [dataDelete, setDataDelete] = useState();
     const [nameRequestMiniSideBar, setNameRequestMiniSideBar] = useState();
     const [requestMiniSideBar, setRequestMiniSideBar] = useState(false);
-    const [nameRequest, setNameRequest] = useState();
     const [valueTable, setValueTable] = useState();
-    
 
     const ChosenOption = (option, request) => {
         const op = option.toLowerCase() === "especificação" ? "especificacao" : option.toLowerCase()
@@ -43,47 +37,33 @@ export default function ArvoreDeProduto () {
     }
 
     const PostData = (nameRequest, data) => {
-        setDataPost(data)
-        setNameRequest(nameRequest)
+        if (data) {
+            Resgister(nameRequest, data)
+        }
     }
 
     const GetData = (nameRequest, data) => {
         if (data) {
-            setNameRequest(nameRequest)
-            setDataGet(data)
+            Search(nameRequest, data)
         }else{
             return Search(nameRequest)
         }
     }
 
     const PutData = (nameRequest, data)=>{
-        setDataPut(data)
-        setNameRequest(nameRequest)
+        if (data) {
+            Edit(nameRequest, data)
+        }
 
     }
 
     const DeleteData = (nameRequest, data) =>{
-        setDataDelete(data)
-        setNameRequest(nameRequest)
+        if (data) {
+            Delete(nameRequest, data)
+        }
     }
 
     useEffect(() => {
-        if(dataPost) {
-            Resgister(nameRequest, dataPost)
-        }
-        
-        if (dataGet) {
-            Search(nameRequest, dataGet)
-        }
-
-        if (dataPut){
-            Edit(nameRequest, dataPut)    
-        }
-
-        if (dataDelete) {
-            Delete(nameRequest, dataDelete)
-        }
-
         if (requestMiniSideBar) {
             switch (nameRequestMiniSideBar) {
                 case 'linha':
@@ -98,17 +78,8 @@ export default function ArvoreDeProduto () {
                 default:
                     break;
             }
-            
         }
     })
-    
-    const Clear = () => {
-        setDataPost(null)
-        setDataGet(null)
-        setDataPut(null)
-        setDataDelete(null)
-        setNameRequest(null)
-    }
 
     const modalData = async (opcao) =>{
         if (opcao){
@@ -123,7 +94,6 @@ export default function ArvoreDeProduto () {
         if (data) {
             const dataStatus = await DelArvoreProduto(nameRequest, data)
             setStatus(dataStatus)
-            return Clear();
         }
     }
 
@@ -131,7 +101,6 @@ export default function ArvoreDeProduto () {
         if (data) {
             const statusData = await PutArvoreProduto(nameRequest, data);
             setStatus(statusData)
-            return Clear();
         }
     }
 
@@ -139,7 +108,6 @@ export default function ArvoreDeProduto () {
         if(data){
             const statusData = await PostArvoreProduto(nameRequest, data);
             setStatus(statusData)
-            return Clear();
             
         }
     }
@@ -148,12 +116,10 @@ export default function ArvoreDeProduto () {
         if (dataGet) {
             const data =  await GetArvoreProduto(nameRequest, dataGet)
             setTableData(data)
-            return Clear();
             
         }else{
             const data =  await GetArvoreProduto(nameRequest)
             setTableData(data)
-            return Clear();
         }
     }
     
@@ -172,17 +138,15 @@ export default function ArvoreDeProduto () {
                     <BreadcrumbItem className='capitalize'>{option}</BreadcrumbItem>
                 </Breadcrumbs>
             </div>
-            { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com"/> </> ): (null) }
-            { status?.del ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Deletado com"/> </> ): (null) }
+            { status?.descricao ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com Sucesso !"/> </> ): (null) }
+            { status?.del ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Deletado com Sucesso !"/> </> ): (null) }
             <TopButtons title={option} size={"md"} h={'h-3/6'} option={option} valueTable={valueTable} PostData={PostData} GetData={GetData} PutData={PutData}
             DeleteData={DeleteData} dataModal={dataModal} tableData={tableData}/>
             {status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
             <div className=' w-full flex h-4/5 overflow-y-auto mt-1.5 flex-row'>
                 <MiniSideBarNav ChosenOption={ChosenOption}  name={nav} />
                 <div className='w-full flex h-50 overflow-y-auto  flex-col rounded'>
-                    <div className='w-full h-full top-0 overflow-y-auto  bg-[#EDEDED]'>
-                        <Table data={tableData} name={option} ValueTable={ValueTable} />
-                    </div>
+                    <TableRender data={tableData} name={option} ValueTable={ValueTable} />
                     <div className='w-full h-10 bg-[#CFCFCF]'>
                         <span className='text-black'>
                             teste teste teste teste
