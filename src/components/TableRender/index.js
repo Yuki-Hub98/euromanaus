@@ -4,57 +4,71 @@ import Table from "../Table";
 const TableRender = (props) => {
     const {ValueTable, data} = props
 
+    const TableAssert = (data, tableValue, style) => {
+        return(
+            <>
+            {data?.length !=0 ? 
+                <Table data={data} vTable={tableValue} style={style} />
+            : 
+                <div className="flex h-96 justify-center items-center">
+                    <h1 className="text-[#2c2c2b] font-bold"> Objeto sem Cadastro </h1>
+                </div>
+            }
+            </>
+        )
+    }
+
     const TableTemp = (option, data) => {
 
         switch (option) {
             case "departamento":
                 return(
                     <>
-                    <Table vTable={ValueTable} style={"w-1/3"} data={data}/>
+                    {TableAssert(data, ValueTable, "w-1/3")}
                     </>
                 )
             case "linha":
                 return(
                     <>
-                    <Table vTable={ValueTable} style={"w-1/3"} data={data}/>
+                    {TableAssert(data, ValueTable, "w-1/3")}
                     </>
                 )
             case "familia":
                 return(
                     <>
-                    <Table vTable={ValueTable} style={"w-1/3"} data={data}/> 
+                    {TableAssert(data, ValueTable, "w-1/3")}
                     </>
                 )
             case "grupo":
                 return(
                     <>
-                    <Table vTable={ValueTable} style={"w-1/3"} data={data}/>
+                    {TableAssert(data, ValueTable, "w-1/3")}
                     </>
                 )
             case "cor":
                 return(
                     <>
-                    <Table vTable={ValueTable} style={"w-1/3"} data={data}/>
+                    {TableAssert(data, ValueTable, "w-1/3")}
                     </>
                 )
             case "especificacao":
                 return(
                     <>
-                    <Table vTable={ValueTable} style={"w-1/3"} data={data}/>
+                    {TableAssert(data, ValueTable, "w-1/3")}
                     </>
                 )
             case "cep":
                 return(
                     <>
-                    <Table vTable={ValueTable} style={"table-auto whitespace-nowrap"} data={data}/>
+                    {TableAssert(data, ValueTable, "table-auto whitespace-nowrap")}
                     </>
                 )
             case "fornecedor":
                 return(
                     <>
-                    <Table vTable={ValueTable} style={"table-auto whitespace-nowrap"} data={data}/>
+                    {TableAssert(data, ValueTable, "table-auto whitespace-nowrap")}
                     </>
-                    )
+                )
                 default:
                     break;
         }

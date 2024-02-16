@@ -6,7 +6,7 @@ const Table = (props) => {
     const [focusedRow, setFocusedRow] = useState(null);
     const [focusedCol, setFocusedCol] = useState(null);
     const [markedCellValue, setMarkedCellValue] = useState();
-
+    const {data} = props
     const handleKeyDown = (event) => {
         if (event.key === 'ArrowUp') {
         setFocusedRow((prevRow) => (prevRow !== null ? Math.max(prevRow - 1, 0) : 0));
@@ -64,48 +64,41 @@ const Table = (props) => {
 
     return(
         <>
-            {props?.data?.length !=0 ? 
-                    <table className={`${props?.style} overflow-x-auto`}>
-                        <thead>
-                            <tr >
-                                {props?.data ? 
-                                (Object.keys(props?.data[0]).map((col, index) => (
-                                    <th key={index} className='p-2 bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] '>
-                                        {FormatTable(col)}
-                                    </th>
-                                ))) : null}
-                                    
-                            </tr>
-                        </thead>
-                        <tbody >
-                            {props?.data?.map((item, rowIndex) => (
-                                <tr
-                                    key={rowIndex}
-                                    tabIndex={0}
-                                    onFocus={() => {
-                                        setFocusedRow(rowIndex);
-                                        setFocusedCol(null);
-                                    }}
-                                    className={`border outline-none border-[#d9d9d9] ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
-                                    >
-                                    { item ? (Object.values(item).map((value, colIndex) => (
-                                    <td
-                                        onClick={() => handleCellClick(rowIndex, colIndex)}
-                                        key={colIndex}
-                                        className={`border outline-none cursor-pointer border-[#d9d9d9] ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
-                                        >
-                                        {value}
-                                    </td>
-                                    ))): null}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                : 
-                    <div className="flex h-96 justify-center items-center">
-                        <h1 className="text-[#2c2c2b] font-bold"> Objeto sem Cadastro </h1>
-                    </div>
-            }                   
+            <table className={`${props?.style} overflow-x-auto`}>
+                <thead>
+                    <tr >
+                        {data ? 
+                        (Object.keys(props?.data[0]).map((col, index) => (
+                            <th key={index} className='p-2 bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] '>
+                                {FormatTable(col)}
+                            </th>
+                        ))) : null}
+                    </tr>
+                </thead>
+            <tbody >
+                {data?.map((item, rowIndex) => (
+                    <tr
+                        key={rowIndex}
+                        tabIndex={0}
+                        onFocus={() => {
+                        setFocusedRow(rowIndex);
+                        setFocusedCol(null);
+                        }}
+                        className={`border outline-none border-[#d9d9d9] ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                        >
+                    { item ? (Object.values(item).map((value, colIndex) => (
+                        <td
+                            onClick={() => handleCellClick(rowIndex, colIndex)}
+                            key={colIndex}
+                            className={`border outline-none cursor-pointer border-[#d9d9d9] ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+                            >
+                            {value}
+                        </td>
+                    ))): null}
+                    </tr>
+                ))}
+                </tbody>
+            </table>
         </>
     )
 }
