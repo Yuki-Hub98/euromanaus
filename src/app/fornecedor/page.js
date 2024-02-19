@@ -5,6 +5,7 @@ import SuccessAlert from "../../components/SuccessAlert";
 import TopButtons from "@/components/TopButtons";
 import MiniSideBarButtons from "@/components/MiniSideBarButtons";
 import TableRender from "@/components/TableRender";
+import Warning from "@/components/Warning";
 import { PostFornecedor, GetFornecedor, PutFornecedor, DelFornecedor } from "../actions/fornecedor";
 
 export default function Fornecedor () {
@@ -94,6 +95,7 @@ export default function Fornecedor () {
 				{ status?.razaoSocialFornecedor ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com Sucesso !"/> </> ): (null) }
 				{ status?.del ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Deletado com com Sucesso !"/> </> ): (null) }
 			<TopButtons title={option} option={option} GetData={GetData} />
+			{status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
 			<div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
 				<MiniSideBarButtons  name={option} valueTable={valueTable} PostData={PostData} PutData={PutData} DeleteData={DeleteData} />
 				<div className='w-full flex overflow-y-auto h-50 flex-col rounded'>
