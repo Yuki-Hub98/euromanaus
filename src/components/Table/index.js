@@ -3,104 +3,104 @@ import { useState, useEffect } from "react";
 import FormatTable from "@/functions/formatTable";
 
 const Table = (props) => {
-    const [focusedRow, setFocusedRow] = useState(null);
-    const [focusedCol, setFocusedCol] = useState(null);
-    const [markedCellValue, setMarkedCellValue] = useState();
-    const {data} = props
-    const handleKeyDown = (event) => {
-        if (event.key === 'ArrowUp') {
-        setFocusedRow((prevRow) => (prevRow !== null ? Math.max(prevRow - 1, 0) : 0));
-        } else if (event.key === 'ArrowDown') {
-        setFocusedRow((prevRow) =>
-            prevRow !== null ? Math.min(prevRow + 1, props?.data.length - 1) : 0
-        );
-        } else if (event.key === 'ArrowLeft') {
-        setFocusedCol((prevCol) => (prevCol !== null ? Math.max(prevCol - 1, 0) : 0));
-        } else if (event.key === 'ArrowRight') {
-        setFocusedCol((prevCol) =>
-            prevCol !== null ? Math.min(prevCol + 1, Object.keys(props?.data[0]).length - 1) : 0
-        );
-        }
-    };
+		const [focusedRow, setFocusedRow] = useState(null);
+		const [focusedCol, setFocusedCol] = useState(null);
+		const [markedCellValue, setMarkedCellValue] = useState();
+		const {data} = props
+		const handleKeyDown = (event) => {
+				if (event.key === 'ArrowUp') {
+				setFocusedRow((prevRow) => (prevRow !== null ? Math.max(prevRow - 1, 0) : 0));
+				} else if (event.key === 'ArrowDown') {
+				setFocusedRow((prevRow) =>
+						prevRow !== null ? Math.min(prevRow + 1, props?.data.length - 1) : 0
+				);
+				} else if (event.key === 'ArrowLeft') {
+				setFocusedCol((prevCol) => (prevCol !== null ? Math.max(prevCol - 1, 0) : 0));
+				} else if (event.key === 'ArrowRight') {
+				setFocusedCol((prevCol) =>
+						prevCol !== null ? Math.min(prevCol + 1, Object.keys(props?.data[0]).length - 1) : 0
+				);
+				}
+		};
 
-    const Clear =() =>{
-        setMarkedCellValue(null)
-        return;
-    }
+		const Clear =() =>{
+				setMarkedCellValue(null)
+				return;
+		}
 
-    const updateMarkedRowValues = (rowIndex) => {
-        setMarkedCellValue(props?.data[rowIndex]);
-    };
+		const updateMarkedRowValues = (rowIndex) => {
+				setMarkedCellValue(props?.data[rowIndex]);
+		};
 
-    const handleCellClick = (rowIndex, colIndex) => {
-            // Manter a célula marcada após o clique
-            setFocusedRow(rowIndex);
-            setFocusedCol(colIndex);
+		const handleCellClick = (rowIndex, colIndex) => {
+						// Manter a célula marcada após o clique
+						setFocusedRow(rowIndex);
+						setFocusedCol(colIndex);
 
-            // Marcar apenas os valores da linha
-            setMarkedCellValue(props?.data[rowIndex]);
-    };
+						// Marcar apenas os valores da linha
+						setMarkedCellValue(props?.data[rowIndex]);
+		};
 
-    useEffect(() => {
-        if (focusedRow !== null) {
-            updateMarkedRowValues(focusedRow);
-        }
-        
-    });
+		useEffect(() => {
+				if (focusedRow !== null) {
+						updateMarkedRowValues(focusedRow);
+				}
+				
+		});
 
-    useEffect(() => {
-        if (markedCellValue) {
-            props?.vTable(markedCellValue)
-        }
-        Clear();
-    },[props,markedCellValue])
+		useEffect(() => {
+				if (markedCellValue) {
+						props?.vTable(markedCellValue)
+				}
+				Clear();
+		},[props,markedCellValue])
 
-    useEffect(() => {
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-        window.removeEventListener('keydown', handleKeyDown);
-        };
-    });
+		useEffect(() => {
+				window.addEventListener('keydown', handleKeyDown);
+				return () => {
+				window.removeEventListener('keydown', handleKeyDown);
+				};
+		});
 
-    return(
-        <>
-            <table className={`${props?.style} overflow-x-auto`}>
-                <thead>
-                    <tr >
-                        {data ? 
-                        (Object.keys(props?.data[0]).map((col, index) => (
-                            <th key={index} className='p-2 bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] '>
-                                {FormatTable(col)}
-                            </th>
-                        ))) : null}
-                    </tr>
-                </thead>
-            <tbody >
-                {data?.map((item, rowIndex) => (
-                    <tr
-                        key={rowIndex}
-                        tabIndex={0}
-                        onFocus={() => {
-                        setFocusedRow(rowIndex);
-                        setFocusedCol(null);
-                        }}
-                        className={`border outline-none border-[#d9d9d9] ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
-                        >
-                    { item ? (Object.values(item).map((value, colIndex) => (
-                        <td
-                            onClick={() => handleCellClick(rowIndex, colIndex)}
-                            key={colIndex}
-                            className={`border outline-none cursor-pointer border-[#d9d9d9] ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
-                            >
-                            {value}
-                        </td>
-                    ))): null}
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        </>
-    )
+		return(
+				<>
+						<table className={`${props?.style} overflow-x-auto`}>
+								<thead>
+										<tr >
+												{data ? 
+												(Object.keys(props?.data[0]).map((col, index) => (
+														<th key={index} className='p-2 bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] '>
+																{FormatTable(col)}
+														</th>
+												))) : null}
+										</tr>
+								</thead>
+						<tbody >
+								{data?.map((item, rowIndex) => (
+										<tr
+												key={rowIndex}
+												tabIndex={0}
+												onFocus={() => {
+												setFocusedRow(rowIndex);
+												setFocusedCol(null);
+												}}
+												className={`border outline-none border-[#d9d9d9] ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+												>
+										{ item ? (Object.values(item).map((value, colIndex) => (
+												<td
+														onClick={() => handleCellClick(rowIndex, colIndex)}
+														key={colIndex}
+														className={`border outline-none cursor-pointer border-[#d9d9d9] ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+														>
+														{value}
+												</td>
+										))): null}
+										</tr>
+								))}
+								</tbody>
+						</table>
+				</>
+		)
 }
 
 export default Table

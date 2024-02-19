@@ -96,8 +96,8 @@ const TopButtons = (props) => {
                                 Editar
                             </Button>
                         }
-                        <EditModal name={props?.option} valueTable={props?.valueTable} ReceivePut={ReceivePut} isOpen={open} modal={modal}
-                        tableData={props?.tableData} onOpenChange={onOpenChange} />
+                        <EditModal name={props?.option} size={props?.size} h={props?.h} valueTable={props?.valueTable} 
+                        ReceivePut={ReceivePut} isOpen={open} modal={modal}/>
                     </div>
                     <div className='flex items-center'>
                         {props?.valueTable ? 
