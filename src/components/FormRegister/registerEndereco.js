@@ -48,7 +48,7 @@ const RegisterEndereco = (props) => {
 												<div className="w-full flex flex-row mb-2 gap-2 items-center">
 														<div className="w-[60%] flex flex-row gap-[2.80rem] pl-2 items-center">
 																<label className='text-xs'>Bairro<sup>*</sup></label>
-																<Input className="w-96" isRequired size="sm" autoComplete="off" value={dataFornecedor?.bairroFornecedor} labelPlacement="outside" name={`bairro${type}`}
+																<Input className="w-96" isRequired size="sm" autoComplete="off" value={dataFornecedor?.bairroFornecedor || ''} labelPlacement="outside" name={`bairro${type}`}
 																onChange={(e) => {handleChange(e)}}/>
 														</div>
 														<label className='text-xs pl-1'>Cidade<sup>*</sup></label>
@@ -87,7 +87,7 @@ const RegisterEndereco = (props) => {
 												</div>
 												<div className="w-full flex flex-row gap-[0.80rem] mb-2 items-center">
 														<label className='text-xs'>Complemento</label>
-														<Input size="sm" className="w-96" value={dataRepresentante?.complementoRepresentante} autoComplete="off" labelPlacement="outside" name={`complemento${type}`}
+														<Input size="sm" className="w-96" value={ dataRepresentante?.complementoRepresentante || ''} autoComplete="off" labelPlacement="outside" name={`complemento${type}`}
 														onChange={(e) => {handleChange(e)}}/>
 												</div>
 												<div className="w-full flex flex-row mb-2 gap-2 items-center">

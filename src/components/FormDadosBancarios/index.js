@@ -37,22 +37,22 @@ const FormDadosBancarios = (props) =>{
 						</div>
 						<div className="flex flex-row w-full gap-10 mb-1 p-2 items-center"> 
 								<label className='text-xs'>Agência</label>
-								<Input className="w-40 pl-1" size="sm" value={dataRender?.agencia}  labelPlacement="outside" name="agencia" 
+								<Input className="w-40 pl-1" size="sm" value={dataRender?.agencia || ''}  labelPlacement="outside" name="agencia" 
 										onChange={(e) => {handleChange(e), handleRender(e)}}/>
 						</div>
 						<div className="flex flex-row w-full gap-[3.5rem] mb-1 p-2 items-center"> 
 								<label className='text-xs'>Conta</label>
-								<Input className="w-40" size="sm" value={dataRender?.contaBanco} labelPlacement="outside" name="contaBanco" 
+								<Input className="w-40" size="sm" value={dataRender?.contaBanco || ''} labelPlacement="outside" name="contaBanco" 
 										onChange={(e) => {handleChange(e), handleRender(e)}}/>
 						</div>
 						<div className="flex flex-row w-full gap-2 mb-1 p-2 items-center"> 
 								<label className='text-xs'>Orgão Emissor</label>
-								<Input className="w-40" size="sm" value={dataRender?.orgaoEmissorBanco}  labelPlacement="outside" name="orgaoEmissorBanco" 
+								<Input className="w-40" size="sm" value={dataRender?.orgaoEmissorBanco || ''}  labelPlacement="outside" name="orgaoEmissorBanco" 
 										onChange={(e) => {handleChange(e), handleRender(e)}}/>
 						</div>
 						<div className="flex flex-row w-full gap-[2.2rem] mb-1 p-2 items-center"> 
 								<label className='text-xs'>Chave Pix</label>
-								<Input className="w-40" size="sm" value={dataRender?.pix} labelPlacement="outside" name="pix" 
+								<Input className="w-40" size="sm" value={dataRender?.pix || ''} labelPlacement="outside" name="pix" 
 										onChange={(e) => {handleChange(e), handleRender(e)}}/>
 						</div>
 				</div>
