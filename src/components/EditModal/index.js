@@ -2,21 +2,14 @@
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody, 
     ModalFooter, Input } from "@nextui-org/react";
-import Select from "react-select";
 import RegexToSave from "@/functions/regexToSave";
 
 const EditModal = (props) => {
 
     const [dataToPut, setDataToPut] = useState();
-    //const [selectData, setSelectData] = useState();
     const [dataDescricao, setDataDescricao] = useState();
     const { ReceivePut } = props
 
-    /*
-    const dataTransform = props?.dataModal?.map((data) => ( 
-        {'value': data?.descricao, 'label':data?.descricao}
-        ))*/
-    
     const change = (value) => {
             return props?.modal(value)
     }

@@ -20,7 +20,7 @@ const MiniSideBarNav = (props) => {
 
     return(
         <>
-        <aside className='w-40 left-64 flex flex-col h-full bg-[#1E1E1F] rounded  '>
+        <aside className='w-40 left-64 flex flex-col h-full bg-background-component rounded  '>
             {props.name?.map((name) => (
                 <button key={name} onClick={(e) => {setOption(e.target.innerText)}}  className={`flex h-9 w-64 p-2 cursor-pointer text-center  font-normal text-[#D4D4D8]  hover: decoration-solid  dark:text-gray-900 hover:border-0 hover:text-[#edca62] rounded-lg `}>
                     <span>{name}</span>

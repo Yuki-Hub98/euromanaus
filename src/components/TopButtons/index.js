@@ -125,7 +125,7 @@ const TopButtons = (props) => {
     }
 
     return(
-        <div className='w-full flex flex-row pl-2 h-1/4 shadow-2xl mt-8 rounded  gap-2 bg-[#1E1E1F]'>
+        <div className='w-full flex flex-row pl-2 h-1/4 shadow-2xl mt-8 rounded  gap-2 bg-background-component'>
             <div className=' w-full absolute pl-2'>
                 <h1 className='font-bold text-[#D4D4D8] capitalize'>{props?.title}</h1>
             </div>

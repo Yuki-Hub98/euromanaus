@@ -83,7 +83,7 @@ export default function Fornecedor () {
 
     return (
         <>
-        <div className="flex flex-col pl-2 h-screen bg-[#0000008e] ">
+        <div className="flex flex-col pl-2 h-screen bg-background-page">
             <div className='w-full h-6 absolute top-2'>
                     <Breadcrumbs color='primary'>
                         <BreadcrumbItem>Cadastro</BreadcrumbItem>

@@ -47,21 +47,28 @@ const MiniSideBarButtons = (props) => {
                 <>
                     <div className='flex flex-col pt-5 justify-center gap-2 items-center'>
                     <Button color="primary" size="sm" variant="ghost" onPress={onOpen}>
-                        Cadastrar
+                      Cadastrar
                     </Button>
                     <RegisterModal isOpen={isOpen} size={"4xl"} h={"w-3/5"} name={props?.name} 
                     ReceivePost={ReceivePost} onOpenChange={onOpenChange}/>
-                    <Button color="primary" size="sm" variant="ghost">
-                        Editar
-                    </Button>
                     {valueTable ? 
-                        <Button color="primary" size="sm" variant="ghost" onClick={() => DeleteData(props?.name, valueTable)}>
-                            Excluir
-                        </Button>
+                      <Button color="primary" size="sm" variant="ghost">
+                        Editar
+                      </Button>
+                    :
+                      <Button color="primary" size="sm" isDisabled variant="ghost">
+                        Editar
+                      </Button>
+                    }
+                    
+                    {valueTable ? 
+                      <Button color="primary" size="sm" variant="ghost" onClick={() => DeleteData(props?.name, valueTable)}>
+                        Excluir
+                      </Button>
                         :
-                        <Button color="primary" size="sm" isDisabled variant="ghost">
-                            Excluir
-                        </Button>
+                      <Button color="primary" size="sm" isDisabled variant="ghost">
+                        Excluir
+                      </Button>
                     }
                     
                     </div>
@@ -73,7 +80,7 @@ const MiniSideBarButtons = (props) => {
 
     return(
         <>
-        <aside className=' h-full w-40 flex flex-col  bg-[#1E1E1F] rounded left-64 '>
+        <aside className=' h-full w-40 flex flex-col bg-background-component rounded left-64 '>
             {optionPage(router)}
         </aside>
         </>
