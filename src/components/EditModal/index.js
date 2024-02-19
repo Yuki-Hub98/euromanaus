@@ -5,6 +5,7 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
 import FormDadosBancarios from "../FormDadosBancarios";
+import { GetCep } from "@/app/actions/fornecedor";
 
 const EditModal = (props) => {
 		const { ReceivePut, valueTable } = props
@@ -18,6 +19,7 @@ const EditModal = (props) => {
 
 		useEffect(()=> {
 			setDataDescricao(valueTable?.descricao)
+			setData(valueTable)
 		},[valueTable])
 
 		const change = (value) => {
@@ -41,6 +43,9 @@ const EditModal = (props) => {
 								setDataToPut({'familia': valueTable?.familia, 'editFamilia': valueTable?.familia,
 								'descricao':valueTable?.descricao, 'editDescricao':dataDescricao})
 								break;
+						case'fornecedor':
+								setDataToPut(data)
+								break;
 						default:
 								break;
 				}
@@ -48,6 +53,9 @@ const EditModal = (props) => {
 		}
 
 		const toClean = () => {
+				setCep1(null)
+        setCep2(null)
+				setData(null)
 				setDataToPut(null)
 				setDataDescricao(null)
 				return;
@@ -127,8 +135,8 @@ const EditModal = (props) => {
 		useEffect(() => {
 				const cp = `cep${slected}`
 				for (const key in data) {
-						if (data.hasOwnProperty(key) && key === cp) {
-								if (data[key].length === 8) {
+						if (data?.hasOwnProperty(key) && key === cp) {
+								if (data[key]?.length === 8) {
 										Cep(data)
 								}
 						}
@@ -232,7 +240,7 @@ const EditModal = (props) => {
 										</div>
 										</ModalBody>
 										<ModalFooter>
-												<Button className='bg-sky-50' variant="flat" onClick={() => {setDataToPut(null), props?.modal(!props?.isOpen)}} >
+												<Button className='bg-sky-50' variant="flat" onClick={() => {toClean(), props?.modal(!props?.isOpen)}} >
 														Cancelar
 												</Button>
 														{ dataDescricao || data ? (
