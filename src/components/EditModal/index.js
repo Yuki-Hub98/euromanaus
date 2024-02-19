@@ -16,16 +16,13 @@ const EditModal = (props) => {
 		const [slected, setSelected] = useState("Fornecedor");
 		const [request, setRequest] = useState(false)
 
-		
+		useEffect(()=> {
+			setDataDescricao(valueTable?.descricao)
+		},[valueTable])
 
 		const change = (value) => {
 						return props?.modal(value)
 		}
-
-		useEffect(() => {
-				setDataDescricao(valueTable?.descricao)
-		},[props])
-
 
 		const FormateToPut = (op) =>{
 				if (op === 'departamento' || op === 'cor' || op === 'especificacao') {
@@ -52,6 +49,7 @@ const EditModal = (props) => {
 
 		const toClean = () => {
 				setDataToPut(null)
+				setDataDescricao(null)
 				return;
 		}
 
@@ -175,7 +173,7 @@ const EditModal = (props) => {
 								return(
 										<>    
 										<Card className="w-full">
-										<CardBody className="overflow-hidden bg-[#D4D4D8]">
+										<CardBody className="overflow-hidden bg-background-table">
 												<Tabs
 												fullWidth
 												aria-label="Tabs form"
@@ -186,13 +184,13 @@ const EditModal = (props) => {
 												}}
 												selectedKey={slected}
 												onSelectionChange={setSelected}>
-														<Tab key={"Fornecedor"} title="Dados Fronecedor" className="w-full bg-[#D4D4D8]">
+														<Tab key={"Fornecedor"} title="Dados Fronecedor" className="w-full bg-background-table">
 																<FormRegister type={slected} fill={Fill} data={valueTable} request={request} handleChange={handleChange} SetData={setData}/>
 														</Tab>
-														<Tab key={"Representante"} title="Dados Representantes" className="h-3/6 bg-[#D4D4D8]">
+														<Tab key={"Representante"} title="Dados Representantes" className="h-3/6 bg-background-table">
 																<FormRegister type={slected}  fill={Fill} data={valueTable} request={request} handleChange={handleChange} SetData={setData}/>
 														</Tab>
-														<Tab key={"Financeiro"} title="Dados Financeiros" className="h-3/6 bg-[#D4D4D8]">
+														<Tab key={"Financeiro"} title="Dados Financeiros" className="h-3/6 bg-background-table">
 																<FormDadosBancarios data={valueTable} handleChange={handleChange} />
 														</Tab>
 												</Tabs>

@@ -15,7 +15,8 @@ module.exports = {
 			colors:{
 				background:{
 					page:'#0000008e',
-					component:'#1e1e1f'
+					component:'#1e1e1f',
+					table:'#d4d4d8'
 				},
 			},
 		},
