@@ -1,6 +1,7 @@
 "use Client";
 import React , {useEffect, useState} from "react";
-import { Modal, Button, ModalContent, ModalHeader, ModalBody,ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
+import { Modal, Button, ModalContent, ModalHeader, ModalBody,
+    ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
 import Select from "react-select";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
@@ -162,11 +163,11 @@ const RegisterModal = (props) => {
                         selectedKey={slected}
                         onSelectionChange={setSelected}>
                             <Tab key={"Fornecedor"} title="Dados Fronecedor" className="w-full bg-[#D4D4D8]">
-                                <FormRegister type={slected} dataFornecedor={data} fill={Fill}
+                                <FormRegister type={slected} data={data} fill={Fill}
                                 request={request} handleChange={handleChange} SetData={setData} />
                             </Tab>
                             <Tab key={"Representante"} title="Dados Representantes" className="h-3/6 bg-[#D4D4D8]">
-                                <FormRegister type={slected} dataRepresentante={data} fill={Fill} 
+                                <FormRegister type={slected} data={data} fill={Fill} 
                                 request={request} handleChange={handleChange} SetData={setData} />
                             </Tab>
                             <Tab key={"Financeiro"} title="Dados Financeiros" className="h-3/6 bg-[#D4D4D8]">
