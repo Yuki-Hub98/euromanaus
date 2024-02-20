@@ -5,7 +5,6 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
 import FormDadosBancarios from "../FormDadosBancarios";
-import ConvertDateFormat from "@/functions/convertDate";
 import { GetCep } from "@/app/actions/fornecedor";
 
 const EditModal = (props) => {
@@ -16,7 +15,6 @@ const EditModal = (props) => {
 		const [cep1, setCep1] = useState ();
 		const [cep2, setCep2] = useState ();
 		const [slected, setSelected] = useState("Fornecedor");
-		const [request, setRequest] = useState(false)
 
 		useEffect(()=> {
 			setDataDescricao(valueTable?.descricao)
@@ -111,29 +109,28 @@ const EditModal = (props) => {
 		};
 
 		const Fill  = () => {
-				if (request) {
-						if (cep1) {
-								setData(prevState => ({
-										...prevState,
-										cepFornecedor: cep1?.cep,
-										enderecoFornecedor: cep1?.logradouro,
-										bairroFornecedor: cep1?.bairro,
-										cidadeFornecedor: cep1?.localidade,
-										ufFornecedor: cep1?.uf
-								}));
-						}
+			if (cep1) {
+				setData(prevState => ({
+					...prevState,
+					cepFornecedor: cep1?.cep,
+					enderecoFornecedor: cep1?.logradouro,
+					bairroFornecedor: cep1?.bairro,
+					cidadeFornecedor: cep1?.localidade,
+					ufFornecedor: cep1?.uf
+				}));
+			}
 
-						if (cep2) {
-								setData(prevState => ({
-										...prevState,
-										cepRepresentante: cep2?.cep,
-										enderecoRepresentante: cep2?.logradouro,
-										bairroRepresentante: cep2?.bairro,
-										cidadeRepresentante: cep2?.localidade,
-										ufRepresentante: cep2?.uf
-								}));
-						}
-				}
+		if (cep2) {
+			setData(prevState => ({
+				...prevState,
+				cepRepresentante: cep2?.cep,
+				enderecoRepresentante: cep2?.logradouro,
+				bairroRepresentante: cep2?.bairro,
+				cidadeRepresentante: cep2?.localidade,
+				ufRepresentante: cep2?.uf
+			}));
+		}
+		
 		}
 
 		useEffect(() => {
@@ -204,10 +201,10 @@ const EditModal = (props) => {
 												selectedKey={slected}
 												onSelectionChange={setSelected}>
 														<Tab key={"Fornecedor"} title="Dados Fronecedor" className="w-full bg-background-table">
-																<FormRegister type={slected} fill={Fill} data={valueTable} request={request} handleChange={handleChange} SetData={setData}/>
+																<FormRegister type={slected} fill={Fill} data={valueTable} handleChange={handleChange} SetData={setData}/>
 														</Tab>
 														<Tab key={"Representante"} title="Dados Representantes" className="h-3/6 bg-background-table">
-																<FormRegister type={slected}  fill={Fill} data={valueTable} request={request} handleChange={handleChange} SetData={setData}/>
+																<FormRegister type={slected}  fill={Fill} data={valueTable} handleChange={handleChange} SetData={setData}/>
 														</Tab>
 														<Tab key={"Financeiro"} title="Dados Financeiros" className="h-3/6 bg-background-table">
 																<FormDadosBancarios data={valueTable} handleChange={handleChange} />

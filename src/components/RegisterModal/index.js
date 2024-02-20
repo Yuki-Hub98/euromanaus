@@ -6,7 +6,6 @@ import Select from "react-select";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
 import { GetCep } from "@/app/actions/fornecedor";
-import ConvertDateFormat from "@/functions/convertDate";
 import FormatFone from "@/functions/formatFone";
 import FormDadosBancarios from "../FormDadosBancarios";
 
@@ -123,7 +122,6 @@ const RegisterModal = (props) => {
 
 	const Cep = async (data) => {
 		if (data?.cepFornecedor) {
-			console.log(data?.cepFornecedor)
 			const ce = await GetCep(data?.cepFornecedor)
 			setCep1(ce)
 		}
@@ -173,12 +171,10 @@ const RegisterModal = (props) => {
 						selectedKey={slected}
 						onSelectionChange={setSelected}>
 							<Tab key={"Fornecedor"} title="Dados Fronecedor" className="w-full max-h-3/6 bg-background-table">
-								<FormRegister type={slected} data={data} fill={Fill}
-								request={request} handleChange={handleChange} SetData={setData} />
+								<FormRegister type={slected} data={data} fill={Fill} handleChange={handleChange} SetData={setData} />
 							</Tab>
 							<Tab key={"Representante"} title="Dados Representantes" className="w-full max-h-3/6 bg-background-table">
-								<FormRegister type={slected} data={data} fill={Fill} 
-								request={request} handleChange={handleChange} SetData={setData} />
+								<FormRegister type={slected} data={data} fill={Fill}  handleChange={handleChange} SetData={setData} />
 							</Tab>
 							<Tab key={"Financeiro"} title="Dados Financeiros" className="w-full max-h-3/6 bg-background-table">
 								<FormDadosBancarios handleChange={handleChange} />

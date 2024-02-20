@@ -66,8 +66,8 @@ const Search = (props) => {
 						case "/arvore-de-produtos":
 								return(
 										<>
-										<div className='h-12 flex flex-row justify-items-center items-center'>
-												<Input className='w-64' labelPlacement='outside-left' placeholder=" " 
+										<div className='h-12 gap-2 flex flex-row justify-items-center items-center'>
+												<Input className='w-72' labelPlacement='outside-left' placeholder=" " 
 												onChange={(e) => handleChange(e)} color="primary" label="Descrição"/>
 												<Button color="primary" size='sm' variant="ghost" onClick={() =>  Click()} >
 														Pesquisar
