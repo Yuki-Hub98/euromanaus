@@ -9,6 +9,7 @@ const RerenciaCep = (props) =>{
     const { isOpen, 
     onOpenChange,
     handleChange,
+    handleRender,
     dataFornecedor,
     dataRepresentante,
     SetData,
@@ -120,20 +121,20 @@ const RerenciaCep = (props) =>{
                             <div className="w-full flex flex-row items-center gap-[0.9rem] ">
                                 <label className='text-xs pl-1'>Cidade</label>
                                 <Input autoComplete="off" className="w-32" size="sm" labelPlacement="outside" name={`cidade${type}`} 
-                                    onChange={(e) => {handleChange(e)}}/>
+                                    onChange={(e) => {handleChange(e), handleRender(e)}}/>
                                 <label className='text-xs'>UF</label>
                                 <Input autoComplete="off"  className="w-10" size="sm" labelPlacement="outside" name={`uf${type}`} 
-                                onChange={(e) => {handleChange(e)}}/>
+                                onChange={(e) => {handleChange(e),handleRender(e)}}/>
                             </div>
                             <div className="w-full flex flex-row items-center gap-1">
                                 <label className='text-xs'>Endereço</label>
                                 <Input autoComplete="off" className="w-96" size="sm" labelPlacement="outside" name={`endereco${type}`}
-                                    onChange={(e) => {handleChange(e) }}/>
+                                    onChange={(e) => {handleChange(e),handleRender(e)}}/>
                                 <Button size={"sm"} onClick={() => CepRef(dataRequest)} className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" >Pesquisar</Button>
                             </div>
                         </div>
                         <div className=' w-full h-2/4 flex mt-4 overflow-y-auto overflow-x-auto flex-col rounded'>
-                        <div className='w-full h-2/4 top-0 overflow-y-auto overflow-x-auto rounded bg-[#EDEDED]'>
+                        <div className='w-full max-h-2/4 top-0 overflow-y-auto overflow-x-auto rounded bg-[#EDEDED]'>
                             <TableRender name={"cep"} data={cep} ValueTable={ValueTable}  />
                         </div>
                     </div>
