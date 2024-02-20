@@ -16,7 +16,6 @@ const RegisterModal = (props) => {
 	const [cep1, setCep1] = useState ();
 	const [cep2, setCep2] = useState ();
 	const {ReceivePost} = props
-	const [request, setRequest] = useState(false)
 
 	const dataTransform = props?.dataModal?.map((data) => ( 
 		{'value': data?.descricao, 'label':data?.descricao}
