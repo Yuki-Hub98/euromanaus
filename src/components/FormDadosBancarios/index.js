@@ -23,7 +23,7 @@ const FormDadosBancarios = (props) =>{
 
 		return(
 				<>
-				<div className="w-9/12 p-2">
+				<div className="w-9/12 max-h-full p-2">
 						<h1 className="font-bold">Dados Bancarios</h1>
 						<div className="w-full flex flex-row  gap-2 mt-2 mb-1 p-2 items-center"> 
 								<div className="w-5/12 flex flex-row gap-5 items-center">
