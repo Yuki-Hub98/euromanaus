@@ -5,6 +5,7 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
 import FormDadosBancarios from "../FormDadosBancarios";
+import ConvertDateFormat from "@/functions/convertDate";
 import { GetCep } from "@/app/actions/fornecedor";
 
 const EditModal = (props) => {
@@ -22,8 +23,18 @@ const EditModal = (props) => {
 			setData(valueTable)
 		},[valueTable])
 
+		const toClean = () => {
+			setCep1(null)
+			setCep2(null)
+			setData(null)
+			setDataToPut(null)
+			setDataDescricao(null)
+			return;
+	}
+
 		const change = (value) => {
-						return props?.modal(value)
+				toClean();
+				return props?.modal(value)
 		}
 
 		const FormateToPut = (op) =>{
@@ -50,15 +61,6 @@ const EditModal = (props) => {
 								break;
 				}
 				
-		}
-
-		const toClean = () => {
-				setCep1(null)
-        setCep2(null)
-				setData(null)
-				setDataToPut(null)
-				setDataDescricao(null)
-				return;
 		}
 
 		const TypeButton = (type) => {
@@ -88,6 +90,18 @@ const EditModal = (props) => {
 						...prevState,
 						[name]: RegexToSave(value)
 				}));
+				if (name?.includes("email") || name.includes("site")) {
+					setData(prevState => ({
+						...prevState,
+						[name]: value
+					}));
+				}
+				if (name?.includes("telefone") || name?.includes("celular")) {
+					setData(prevState => ({
+						...prevState,
+						[name]: FormatFone(value)
+				}));
+				}
 				if ((name === "cpfCnpjFornecedor" && cpfCnpj) || (name === "cpfCnpjRepresentante" && cpfCnpj)) {
 						setData(prevState => ({
 								...prevState,
@@ -96,8 +110,7 @@ const EditModal = (props) => {
 				}
 		};
 
-		const Fill  = async (re) => {
-				const request = await re
+		const Fill  = () => {
 				if (request) {
 						if (cep1) {
 								setData(prevState => ({
@@ -121,8 +134,6 @@ const EditModal = (props) => {
 								}));
 						}
 				}
-
-				return setRequest(false)
 		}
 
 		useEffect(() => {

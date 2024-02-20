@@ -1,9 +1,10 @@
 "use Client";
-import React , {useState} from "react";
+import React , {useEffect, useState} from "react";
 import RegisterPessoa from "./registerPessoa";
 import RegisterEndereco from "./registerEndereco";
 import RegisterContato from "./registerContato";
 import RegexToSave from "@/functions/regexToSave";
+import FormatFone from "@/functions/formatFone";
 
 const FormRegister = (props) => {
 		const {type, 
@@ -16,12 +17,28 @@ const FormRegister = (props) => {
 
 		const [dataRender, setDataRender] = useState(data);
 
+		useEffect(() => {
+			setDataRender(data)
+		},[data])
+	
 		const handleRender = (e, cpfCnpj) => {
 			const {value, name} = e.target
 			setDataRender(prevState => ({
 				...prevState,
 				[name]:RegexToSave(value)
 			}))
+			if (name?.includes("telefone") || name?.includes("celular")) {
+				setDataRender(prevState => ({
+					...prevState,
+					[name]: FormatFone(value)
+			}));
+			}
+			if (name?.includes("email") || name.includes("site")) {
+				setDataRender(prevState => ({
+					...prevState,
+					[name]: value
+				}));
+			}
 			if ((name === "cpfCnpjFornecedor" && cpfCnpj) || (name === "cpfCnpjRepresentante" && cpfCnpj)) {
 				setDataRender(prevState => ({
 						...prevState,
