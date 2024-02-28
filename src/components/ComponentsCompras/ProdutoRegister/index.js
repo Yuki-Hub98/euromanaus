@@ -9,7 +9,8 @@ const ProdutoRegister = (props) => {
   const Request = async (e) => {
       const {name, value} = e.target
       if (name === "departamento") {
-        const data = GetArvoreProduto("linha")
+        const linha = await GetArvoreProduto("linha", value, "produto")
+        setDataModal(linha)
       }
       //const data = await GetArvoreProduto(name, value);
       /*setDataModal(prevState => ({
@@ -68,9 +69,12 @@ const ProdutoRegister = (props) => {
         <span id="linha"  className="text-xs">Linha</span>
       </div>
       <div className="col-span-2" aria-labelledby="selectLinha">
-        <Select className="w-full" aria-label="linha" size="sm" name="linha" labelPlacement="outside">
-          <SelectItem>teste</SelectItem>
+      <Select className="w-full" aria-label="linha" size="sm" onChange={(e) => {handleValue(e), Request(e)}} name="linha" labelPlacement="outside">
+          {dataModal?.map((linha)=>(
+            <SelectItem key={linha.linha} value={linha.linha}>{linha.linha}</SelectItem>
+          ))}
         </Select>
+
       </div>
       <div className="pl-10" aria-labelledby="modelo">
         <span id="modelo" className="text-xs">Modelo</span>
