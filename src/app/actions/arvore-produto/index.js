@@ -10,8 +10,8 @@ const PostArvoreProduto = async (request, data) => {
 	return post
 }
 
-const GetArvoreProduto = async (request ,data) => {
-	const get = await Get(request, data)
+const GetArvoreProduto = async (request, data, flag) => {
+	const get = await Get(request, data, flag)
 	return get
 }
 
