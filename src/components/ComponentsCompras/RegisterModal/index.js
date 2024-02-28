@@ -2,21 +2,24 @@
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
-import Select from "react-select";
+import {Select, SelectItem} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
 import { GetCep } from "@/app/actions/fornecedor";
 import FormatFone from "@/functions/formatFone";
 import FormDadosBancarios from "../FormDadosBancarios";
+import { GetArvoreProduto } from "@/app/actions/arvore-produto";
+import ProdutoRegister from "../ProdutoRegister";
 
 const RegisterModal = (props) => {
 	const [dataToPost, setDataToPost] = useState();
-	const [slected, setSelected] = useState("Fornecedor");
-	const [data, setData] = useState ({});
+	const [dataDepartamento, setDataDepartamento] = useState();
+	const [slectedScreenFornecedor, setSelectedScreenFornecedor] = useState("Fornecedor");
+	const [slectedScreenProduto, setSelectedScreenProduto] = useState("Produto");
+	const [data, setData] = useState ();
 	const [cep1, setCep1] = useState ();
 	const [cep2, setCep2] = useState ();
 	const {ReceivePost} = props
-	const [request, setRequest] = useState(false)
 
 	const dataTransform = props?.dataModal?.map((data) => ( 
 		{'value': data?.descricao, 'label':data?.descricao}
@@ -56,6 +59,14 @@ const RegisterModal = (props) => {
 		}
 	};
 
+	const handleValue = (target) => {
+		const {name, value} = target.target;
+		setData(prevState => ({
+			...prevState,
+			[name]:value
+		}))
+	}
+
 	const TypeButton = (type) => {
 		if(type === 'departamento' || type === 'cor' || type === 'especificacao'){
 			return 1 
@@ -63,6 +74,8 @@ const RegisterModal = (props) => {
 			return 2
 		}else if(type === "fornecedor"){
 			return 3
+		}else if (type === "produtos") {
+			return 4
 		}   
 	}
 	const Fill = () => {
@@ -89,6 +102,17 @@ const RegisterModal = (props) => {
 			}
 	}
 
+	const RequestModal = async () =>{
+		const data = await GetArvoreProduto("departamento")
+		setDataDepartamento(data) 
+	}
+
+	useEffect(()=> {
+		if (props?.name === "produtos" && props?.isOpen) {
+			RequestModal();
+		}
+	},[props])
+
 	useEffect(() => {
 		if(data){
 			switch(props?.name){
@@ -109,7 +133,7 @@ const RegisterModal = (props) => {
 	},[props, data])
 
 	useEffect(() => {
-		const cp = `cep${slected}`
+		const cp = `cep${slectedScreenFornecedor}`
 		for (const key in data) {
 			if (data?.hasOwnProperty(key) && key === cp) {
 				if (data[key].length === 8) {
@@ -118,7 +142,7 @@ const RegisterModal = (props) => {
 			}
 		}
 		
-	},[data, slected])
+	},[data, slectedScreenFornecedor])
 
 	const Cep = async (data) => {
 		if (data?.cepFornecedor) {
@@ -138,7 +162,7 @@ const RegisterModal = (props) => {
 				return(
 					<>
 					<div>
-						<Input label="Descrição"  size='lg' type="Text" name="descricao" onChange={(e) => {handleChange(e)}} 
+						<Input label="Descrição"  size="lg" type="Text" name="descricao" onChange={(e) => {handleChange(e)}} 
 						labelPlacement="outside-left" className="w-80 mt-2 justify-between"/>
 					</div>
 					</>
@@ -147,8 +171,8 @@ const RegisterModal = (props) => {
 				return(
 					<>
 					<div className="h-full">
-					<div className='w-96 flex justify-center relative'>
-						<Select className='w-60 ml-3' name="select" onChange={(e) => {setData(data => ({...data, 'select': RegexToSave(e.value)}))}} options={dataTransform}/>
+					<div className="w-96 flex justify-center relative">
+						<Select className="w-60 ml-3" name="select" onChange={(e) => {setData(data => ({...data, 'select': RegexToSave(e.value)}))}} options={dataTransform}/>
 					</div>
 						<Input label="Descrição" size='lg' name="descricao" type="Text" onChange={(e) => {handleChange(e)}}
 						labelPlacement="outside-left" className="w-80 mt-2  justify-between"/>
@@ -168,16 +192,39 @@ const RegisterModal = (props) => {
 							cursor: "w-full bg-[#edca62b4] rounded-b-sm",
 							tabContent: "group-data-[selected=true]:text-[black] rounded-b-sm",
 						}}
-						selectedKey={slected}
-						onSelectionChange={setSelected}>
+						selectedKey={slectedScreenFornecedor}
+						onSelectionChange={setSelectedScreenFornecedor}>
 							<Tab key={"Fornecedor"} title="Dados Fronecedor" className="w-full max-h-3/6 bg-background-table">
-								<FormRegister type={slected} data={data} fill={Fill} handleChange={handleChange} SetData={setData} />
+								<FormRegister type={slectedScreenFornecedor} data={data} fill={Fill} handleChange={handleChange} SetData={setData} />
 							</Tab>
 							<Tab key={"Representante"} title="Dados Representantes" className="w-full max-h-3/6 bg-background-table">
-								<FormRegister type={slected} data={data} fill={Fill}  handleChange={handleChange} SetData={setData} />
+								<FormRegister type={slectedScreenFornecedor} data={data} fill={Fill}  handleChange={handleChange} SetData={setData} />
 							</Tab>
 							<Tab key={"Financeiro"} title="Dados Financeiros" className="w-full max-h-3/6 bg-background-table">
 								<FormDadosBancarios handleChange={handleChange} />
+							</Tab>
+						</Tabs>
+					</CardBody>
+					</Card>                
+					</>
+				)
+				case 4:
+				return(
+					<>    
+					<Card className="w-full h-full">
+					<CardBody className="overflow-hidden bg-background-table">
+						<Tabs
+						fullWidth
+						aria-label="Tabs form"
+						classNames={{
+							tabList: "bg-[white] rounded-b-sm rounded-b-sm",
+							cursor: "w-full bg-[#edca62b4] rounded-b-sm",
+							tabContent: "group-data-[selected=true]:text-[black] rounded-b-sm",
+						}}
+						selectedKey={slectedScreenProduto}
+						onSelectionChange={setSelectedScreenProduto}>
+							<Tab key={"Produto"} title="Cadastro de Produto" className="w-full h-full bg-background-table">
+								<ProdutoRegister dataDepartamento={dataDepartamento} handleValue={handleValue}/>
 							</Tab>
 						</Tabs>
 					</CardBody>
