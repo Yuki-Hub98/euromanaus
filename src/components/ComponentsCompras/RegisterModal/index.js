@@ -2,18 +2,21 @@
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
-import Select from "react-select";
+import {Select, SelectItem} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
 import { GetCep } from "@/app/actions/fornecedor";
 import FormatFone from "@/functions/formatFone";
 import FormDadosBancarios from "../FormDadosBancarios";
+import { GetArvoreProduto } from "@/app/actions/arvore-produto";
+import ProdutoRegister from "../ProdutoRegister";
 
 const RegisterModal = (props) => {
 	const [dataToPost, setDataToPost] = useState();
+	const [dataDepartamento, setDataDepartamento] = useState();
 	const [slectedScreenFornecedor, setSelectedScreenFornecedor] = useState("Fornecedor");
 	const [slectedScreenProduto, setSelectedScreenProduto] = useState("Produto");
-	const [data, setData] = useState ({});
+	const [data, setData] = useState ();
 	const [cep1, setCep1] = useState ();
 	const [cep2, setCep2] = useState ();
 	const {ReceivePost} = props
@@ -56,6 +59,14 @@ const RegisterModal = (props) => {
 		}
 	};
 
+	const handleValue = (target) => {
+		const {name, value} = target.target;
+		setData(prevState => ({
+			...prevState,
+			[name]:value
+		}))
+	}
+
 	const TypeButton = (type) => {
 		if(type === 'departamento' || type === 'cor' || type === 'especificacao'){
 			return 1 
@@ -90,6 +101,17 @@ const RegisterModal = (props) => {
 				}));
 			}
 	}
+
+	const RequestModal = async () =>{
+		const data = await GetArvoreProduto("departamento")
+		setDataDepartamento(data) 
+	}
+
+	useEffect(()=> {
+		if (props?.name === "produtos" && props?.isOpen) {
+			RequestModal();
+		}
+	},[props])
 
 	useEffect(() => {
 		if(data){
@@ -140,7 +162,7 @@ const RegisterModal = (props) => {
 				return(
 					<>
 					<div>
-						<Input label="Descrição"  size='lg' type="Text" name="descricao" onChange={(e) => {handleChange(e)}} 
+						<Input label="Descrição"  size="lg" type="Text" name="descricao" onChange={(e) => {handleChange(e)}} 
 						labelPlacement="outside-left" className="w-80 mt-2 justify-between"/>
 					</div>
 					</>
@@ -149,8 +171,8 @@ const RegisterModal = (props) => {
 				return(
 					<>
 					<div className="h-full">
-					<div className='w-96 flex justify-center relative'>
-						<Select className='w-60 ml-3' name="select" onChange={(e) => {setData(data => ({...data, 'select': RegexToSave(e.value)}))}} options={dataTransform}/>
+					<div className="w-96 flex justify-center relative">
+						<Select className="w-60 ml-3" name="select" onChange={(e) => {setData(data => ({...data, 'select': RegexToSave(e.value)}))}} options={dataTransform}/>
 					</div>
 						<Input label="Descrição" size='lg' name="descricao" type="Text" onChange={(e) => {handleChange(e)}}
 						labelPlacement="outside-left" className="w-80 mt-2  justify-between"/>
@@ -189,7 +211,7 @@ const RegisterModal = (props) => {
 				case 4:
 				return(
 					<>    
-					<Card className="w-full max-h-3/6">
+					<Card className="w-full h-full">
 					<CardBody className="overflow-hidden bg-background-table">
 						<Tabs
 						fullWidth
@@ -201,8 +223,8 @@ const RegisterModal = (props) => {
 						}}
 						selectedKey={slectedScreenProduto}
 						onSelectionChange={setSelectedScreenProduto}>
-							<Tab key={"Produto"} title="Cadastro Produto" className="w-full max-h-3/6 bg-background-table">
-								<FormRegister type={slectedScreenProduto} data={data} fill={Fill} handleChange={handleChange} SetData={setData} />
+							<Tab key={"Produto"} title="Cadastro de Produto" className="w-full h-full bg-background-table">
+								<ProdutoRegister dataDepartamento={dataDepartamento} handleValue={handleValue}/>
 							</Tab>
 						</Tabs>
 					</CardBody>
