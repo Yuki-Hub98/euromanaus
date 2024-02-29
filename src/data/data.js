@@ -25,3 +25,21 @@ export const tipoProduto = [
   {status:"MATÉRIA PRIMA"},
   {status:"USO E CONSUMO"}
 ]
+
+export const opcoesCadastro = [
+  "Organização", 
+  "Fiscal", 
+  "Financeiro",
+  "Compras", 
+  "Industrial",
+  "Vendas", 
+  "Expedição"
+]
+
+export const navArvoreProduto = [
+  "Departamento", 
+  "Linha", 
+  "Familia", 
+  "Grupo", 
+  "Cor", 
+  "Especificação"]
