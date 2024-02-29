@@ -2,17 +2,18 @@
 import Table from "../Table";
 
 const TableRender = (props) => {
-		const {ValueTable, data} = props
+		const {ValueTable, data, type} = props
+
 
 		const TableAssert = (data, tableValue, style) => {
 				return(
 						<>
 						{data?.length !=0 ? 
-								<Table data={data} vTable={tableValue} style={style} />
+							<Table data={data} vTable={tableValue} style={style} />
 						: 
-								<div className="flex h-96 justify-center items-center">
-										<h1 className="text-[#2c2c2b] font-bold"> Objeto sem Cadastro </h1>
-								</div>
+							<div className="flex h-96 justify-center items-center">
+								<h1 className="text-[#2c2c2b] font-bold"> Objeto sem Cadastro </h1>
+							</div>
 						}
 						</>
 				)
@@ -69,6 +70,12 @@ const TableRender = (props) => {
 										{TableAssert(data, ValueTable, "table-auto whitespace-nowrap")}
 										</>
 								)
+						case "produto":
+							return(
+								<>
+									{TableAssert(data, ValueTable, "table-auto whitespace-nowrap")}
+								</>
+							)
 								default:
 										break;
 				}

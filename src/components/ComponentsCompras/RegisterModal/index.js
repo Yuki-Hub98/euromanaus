@@ -66,7 +66,6 @@ const RegisterModal = (props) => {
 
 	const handleValue = (target) => {
 		const {name, value} = target.target;
-		
 		if (data?.linha && data?.grupo && name === "modelo") {
 			const descProd = `${data?.linha} ${data?.grupo} ${value}`
 			setData(prevState => ({
@@ -104,6 +103,22 @@ const RegisterModal = (props) => {
 			[name]:value
 		}))
 	}
+
+	const FormatDataProduto = (data) => {
+		const newData = {...data}
+		if (newData?.items?.length > 0) {
+			newData.items.push({descricaoItem: newData.descricaoItem, codBarra: newData.codBarra, cor: newData.cor, especificacao: newData.especificacao})
+		}else{
+			newData.items = [{descricaoItem: newData.descricaoItem, codBarra: newData.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+		}
+
+		delete newData.descricaoItem;
+		delete newData.codBarra;
+		delete newData.cor;
+		delete newData.especificacao;
+
+		setData(newData)
+}
 
 	const TypeButton = (type) => {
 		if(type === 'departamento' || type === 'cor' || type === 'especificacao'){
@@ -272,7 +287,7 @@ const RegisterModal = (props) => {
 						selectedKey={slectedScreenProduto}
 						onSelectionChange={setSelectedScreenProduto}>
 							<Tab key={"Produto"} title="Cadastro de Produto" className="w-full h-full bg-background-table">
-								<ProdutoRegister dataRenderModal={dataRenderModal} handleValue={handleValue} dataProduto={data}/>
+								<ProdutoRegister dataRenderModal={dataRenderModal} FormatData={FormatDataProduto} handleValue={handleValue} dataProduto={data}/>
 							</Tab>
 						</Tabs>
 					</CardBody>
