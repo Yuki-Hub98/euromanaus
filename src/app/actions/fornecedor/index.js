@@ -15,8 +15,8 @@ const PostFornecedor = async (request, data) => {
 	return post
 }
 
-const GetFornecedor = async (request, data) => {
-	const get = await Get(request, data);
+const GetFornecedor = async (request, data, flag) => {
+	const get = await Get(request, data, flag);
 	return get
 }
 
