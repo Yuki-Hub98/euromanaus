@@ -5,7 +5,7 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 import {Select, SelectItem} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
-import { GetCep } from "@/app/actions/fornecedor";
+import { GetCep, GetFornecedor } from "@/app/actions/fornecedor";
 import FormatFone from "@/functions/formatFone";
 import FormDadosBancarios from "../FormDadosBancarios";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
@@ -13,7 +13,12 @@ import ProdutoRegister from "../ProdutoRegister";
 
 const RegisterModal = (props) => {
 	const [dataToPost, setDataToPost] = useState();
-	const [dataDepartamento, setDataDepartamento] = useState();
+	const [dataRenderModal, setDataRenderModal] = useState({
+		departamento:[],
+		cor:[],
+		especificacao:[],
+		fornecedor:[]
+	});
 	const [slectedScreenFornecedor, setSelectedScreenFornecedor] = useState("Fornecedor");
 	const [slectedScreenProduto, setSelectedScreenProduto] = useState("Produto");
 	const [data, setData] = useState ();
@@ -61,6 +66,39 @@ const RegisterModal = (props) => {
 
 	const handleValue = (target) => {
 		const {name, value} = target.target;
+		
+		if (data?.linha && data?.grupo && name === "modelo") {
+			const descProd = `${data?.linha} ${data?.grupo} ${value}`
+			setData(prevState => ({
+				...prevState,
+				["decricaoProduto"]: descProd
+			}))
+		}else if (data?.linha  && data?.modelo && name === "grupo") {
+			const descProd = `${data?.linha} ${value} ${data?.modelo} `
+			setData(prevState => ({
+				...prevState,
+				["decricaoProduto"]: descProd
+			}))
+		}
+		if (data?.linha && data?.grupo && data?.modelo && name === "cor") {
+			const descItem = `${data?.linha} ${data?.grupo} ${data?.modelo} ${value}`
+			setData(prevState => ({
+				...prevState,
+				["descricaoItem"]: descItem
+			}))
+		}else if (data?.linha  && data?.modelo && data?.cor && name === "grupo") {
+			const descItem = `${data?.linha} ${value} ${data?.modelo} ${data?.cor}`
+			setData(prevState => ({
+				...prevState,
+				["descricaoItem"]: descItem
+			}))
+		}else if (data?.linha  && data?.grupo && data?.cor && name === "modelo") {
+			const descItem = `${data?.linha} ${data?.grupo} ${value} ${data?.cor}`
+			setData(prevState => ({
+				...prevState,
+				["descricaoItem"]: descItem
+			}))
+		}
 		setData(prevState => ({
 			...prevState,
 			[name]:value
@@ -103,8 +141,18 @@ const RegisterModal = (props) => {
 	}
 
 	const RequestModal = async () =>{
-		const data = await GetArvoreProduto("departamento")
-		setDataDepartamento(data) 
+		const dataDepartamento = await GetArvoreProduto("departamento")
+		const dataFornecedor = await GetFornecedor("fornecedor", "", "produto")
+		const dataCor = await GetArvoreProduto("cor")
+		const dataEspecificacao = await GetArvoreProduto("especificacao")
+
+		setDataRenderModal(data=> ({
+			...data,
+			["departamento"]: [dataDepartamento],
+			["cor"]:[dataCor],
+			["especificacao"]: [dataEspecificacao],
+			["fornecedor"]: [dataFornecedor]
+		})) 
 	}
 
 	useEffect(()=> {
@@ -224,7 +272,7 @@ const RegisterModal = (props) => {
 						selectedKey={slectedScreenProduto}
 						onSelectionChange={setSelectedScreenProduto}>
 							<Tab key={"Produto"} title="Cadastro de Produto" className="w-full h-full bg-background-table">
-								<ProdutoRegister dataDepartamento={dataDepartamento} handleValue={handleValue}/>
+								<ProdutoRegister dataRenderModal={dataRenderModal} handleValue={handleValue} dataProduto={data}/>
 							</Tab>
 						</Tabs>
 					</CardBody>
