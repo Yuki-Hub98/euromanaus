@@ -1,8 +1,7 @@
 "use Client";
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
-	ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
-import {Select, SelectItem} from "@nextui-org/react";
+	ModalFooter, Tabs, Tab, Card, CardBody, Input, Select, SelectItem} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
 import { GetCep, GetFornecedor } from "@/app/actions/fornecedor";
@@ -25,10 +24,23 @@ const RegisterModal = (props) => {
 	const [cep1, setCep1] = useState ();
 	const [cep2, setCep2] = useState ();
 	const {ReceivePost} = props
-
-	const dataTransform = props?.dataModal?.map((data) => ( 
-		{'value': data?.descricao, 'label':data?.descricao}
+	const {dataModal} = props
+	const modalArvoreSelect = dataModal?.map((data) => ( 
+		{'value': data?.descricao}
 		))
+
+	const LabelArvore = (name) => {
+		switch (name) {
+			case "linha":
+				return "Departamento"
+			case "familia":
+				return "Linha"
+			case "grupo":
+				return "Familia"
+			default:
+				break;
+		}
+	}
 
 	const toClean = () => {
 		setData(null)
@@ -233,12 +245,23 @@ const RegisterModal = (props) => {
 			case 2:
 				return(
 					<>
-					<div className="h-full">
-					<div className="w-96 flex justify-center relative">
-						<Select className="w-60 ml-3" name="select" onChange={(e) => {setData(data => ({...data, 'select': RegexToSave(e.value)}))}} options={dataTransform}/>
-					</div>
-						<Input label="Descrição" size='lg' name="descricao" type="Text" onChange={(e) => {handleChange(e)}}
-						labelPlacement="outside-left" className="w-80 mt-2  justify-between"/>
+					<div className="h-full w-full grid grid-cols-4 pl-2 items-center justify-center">
+						<label className="w-full items-center pt-2">
+							{LabelArvore(props?.name)}
+						</label>
+						<Select size="lg" className="w-64 pl-4 col-span-3 pt-2" aria-labelledby="selectArvore" 
+							labelPlacement="outside" onChange={(e) => {handleValue(e)}} name="select">
+							{modalArvoreSelect.map((select) => (
+								<SelectItem key={select.value} value={select.value}>
+									{select.value}
+								</SelectItem>
+							))}
+						</Select>
+						<label className="w-full items-center pt-2">
+							Descrição
+						</label>
+						<Input size='lg' name="descricao" type="Text" onChange={(e) => {handleChange(e)}}
+							className="w-64 pl-4 pt-2" labelPlacement="outside"/>
 					</div>
 					</>
 				)
@@ -314,8 +337,7 @@ const RegisterModal = (props) => {
 			header: "border-[#292f46]",
 			footer: "border-[#292f46]",
 			closeButton: "hover:bg-white/5 active:bg-white/10",
-			}}
-			>
+			}}>
 			<ModalContent>
 				{(onClose) => (
 					<>
@@ -331,19 +353,18 @@ const RegisterModal = (props) => {
 						<Button className='bg-sky-50' variant="flat" onClick={() => {toClean()}} onPress={onClose} >
 							Cancelar
 						</Button>
-							{ dataToPost ? (
-								<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {ReceivePost(props?.name, dataToPost), toClean()}} 
+						{ dataToPost ? (
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {ReceivePost(props?.name, dataToPost), toClean()}} 
 								onPress={onClose} >
-									Cadastrar
-								</Button>
-							)
-								:
-							(
-								<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" isDisabled>
-									Cadastrar
-								</Button>
-							)
-							}
+								Cadastrar
+							</Button>
+						)
+							:
+						(
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" isDisabled>
+								Cadastrar
+							</Button>
+						)}
 					</ModalFooter>
 					</>
 				)}
