@@ -8,6 +8,7 @@ import { GetCep, GetFornecedor } from "@/app/actions/fornecedor";
 import FormatFone from "@/functions/formatFone";
 import FormDadosBancarios from "../FormDadosBancarios";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
+import { GetProduto, PostCod } from "@/app/actions/produto";
 import ProdutoRegister from "../ProdutoRegister";
 
 const RegisterModal = (props) => {
@@ -23,8 +24,7 @@ const RegisterModal = (props) => {
 	const [data, setData] = useState ();
 	const [cep1, setCep1] = useState ();
 	const [cep2, setCep2] = useState ();
-	const {ReceivePost} = props
-	const {dataModal} = props
+	const {ReceivePost, dataModal} = props
 	const modalArvoreSelect = dataModal?.map((data) => ( 
 		{'value': data?.descricao}
 		))
@@ -82,13 +82,13 @@ const RegisterModal = (props) => {
 			const descProd = `${data?.linha} ${data?.grupo} ${value}`
 			setData(prevState => ({
 				...prevState,
-				["decricaoProduto"]: descProd
+				["descricaoProduto"]: descProd
 			}))
 		}else if (data?.linha  && data?.modelo && name === "grupo") {
 			const descProd = `${data?.linha} ${value} ${data?.modelo} `
 			setData(prevState => ({
 				...prevState,
-				["decricaoProduto"]: descProd
+				["descricaoProduto"]: descProd
 			}))
 		}
 		if (data?.linha && data?.grupo && data?.modelo && name === "cor") {
@@ -116,12 +116,24 @@ const RegisterModal = (props) => {
 		}))
 	}
 
-	const FormatDataProduto = (data) => {
+	const FormatDataProduto = async (data) => {
 		const newData = {...data}
 		if (newData?.items?.length > 0) {
-			newData.items.push({descricaoItem: newData.descricaoItem, codBarra: newData.codBarra, cor: newData.cor, especificacao: newData.especificacao})
+			const lestId = newData.items[newData.items.length - 1].idItem + 1
+			const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId})
+			newData.items.push({idItem: lestId, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao})
 		}else{
-			newData.items = [{descricaoItem: newData.descricaoItem, codBarra: newData.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+			const lestId = await GetProduto(props?.name)
+      if(lestId.length > 0) {
+        const id = lestId[lestId.length - 1].idItem + 1
+				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: id})
+				newData.items = [{idItem: id, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+      }else{
+				const id = 1
+				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: id})
+				newData.items = [{idItem: id, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+			}
+			
 		}
 
 		delete newData.descricaoItem;
@@ -205,6 +217,9 @@ const RegisterModal = (props) => {
 		if (data?.razaoSocialFornecedor) {
 			setDataToPost(data)
 		}
+		if(data?.items){
+			setDataToPost(data)
+		}
 	},[props, data])
 
 	useEffect(() => {
@@ -230,7 +245,7 @@ const RegisterModal = (props) => {
 			setCep2(ce)
 		}
 	}
-
+	const isDisabled = dataToPost?.razaoSocialFornecedor || dataToPost?.items || dataToPost?.descricao
 	const buttons = (type) => {
 		switch (type) {
 			case 1:
@@ -353,7 +368,7 @@ const RegisterModal = (props) => {
 						<Button className='bg-sky-50' variant="flat" onClick={() => {toClean()}} onPress={onClose} >
 							Cancelar
 						</Button>
-						{ dataToPost ? (
+						{ isDisabled ? (
 							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {ReceivePost(props?.name, dataToPost), toClean()}} 
 								onPress={onClose} >
 								Cadastrar

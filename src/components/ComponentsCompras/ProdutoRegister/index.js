@@ -8,6 +8,7 @@ import TableRender from "@/components/TableRender";
 const ProdutoRegister = (props) => {
   const { dataRenderModal, handleValue, dataProduto, FormatData} = props
   const [valueTable, setValueTable] = useState();
+  const [dataRender, setDataRender] = useState();
   const [dataModal, setDataModal] = useState({
     linha:[],
     familia:[],
@@ -17,6 +18,7 @@ const ProdutoRegister = (props) => {
   const ValueTable = (value) => {
 		setValueTable(value)
 	}
+
   const RequestDepartamento = async (e) => {
     const {name, value} = e.target
     if (name === "departamento") {
@@ -49,8 +51,7 @@ const ProdutoRegister = (props) => {
     }
   }
   const modelo = ["teste"]
-  const size = Object.keys(dataProduto ? dataProduto : 1)
-  const isDisabled = size.length === 13 ? true : false
+  const isDisabled = dataProduto?.descricaoItem &&  dataProduto?.cor && dataProduto?.especificacao && dataProduto?.modelo
 
   return(
     <div className="w-full h-full grid grid-cols-6 gap-y-2">
@@ -68,7 +69,7 @@ const ProdutoRegister = (props) => {
         <span id="descricaoProduto" className="text-xs">Descrição Produto</span>
       </div>
       <div className="col-span-5">
-        <Input className="w-full" size="sm" name="descricaoProduto" value={dataProduto?.decricaoProduto || ''} labelPlacement="outside"/>
+        <Input className="w-full" size="sm" name="descricaoProduto" value={dataProduto?.descricaoProduto || ''} labelPlacement="outside"/>
       </div>
       <div className="w-36" aria-labelledby="descricaoItem">
         <span id="descricaoItem" className="text-xs">Descrição Item</span>
@@ -146,11 +147,11 @@ const ProdutoRegister = (props) => {
           ))}
         </Select>
       </div>
-      <div className="pl-10" aria-labelledby="unidade">
+      <div className="pl-10" aria-labelledby="unidadeMedida">
         <span id="unidade" className="text-xs">Unidade</span>
       </div>
       <div className="col-span-2" aria-labelledby="selectUnidade">
-        <Select className="w-full" size="sm" name="unidade" onChange={(e) => {handleValue(e)}} aria-label="unidade" labelPlacement="outside">
+        <Select className="w-full" size="sm" name="unidadeMedida" onChange={(e) => {handleValue(e)}} aria-label="unidadeMedida" labelPlacement="outside">
           {unidadeMedida?.map((unidade)=> (
             <SelectItem key={unidade.medida} value={unidade.medida}>{unidade.medida}</SelectItem>
           ))}
@@ -177,11 +178,19 @@ const ProdutoRegister = (props) => {
             ))}
           </Select>
         </div>
-        <div className="col-end-7 justify-self-end pr-2" aria-labelledby="adicionar">
-          <Button size="sm" name="adicionar" className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => FormatData(dataProduto)}>
-            Adicionar
-          </Button>
-        </div>
+        {isDisabled ? 
+          <div className="col-end-7 justify-self-end pr-2" aria-labelledby="adicionar">
+            <Button size="sm" name="adicionar" className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {FormatData(dataProduto)}}>
+              Adicionar
+            </Button>
+          </div>
+        :
+          <div className="col-end-7 justify-self-end pr-2" aria-labelledby="adicionar">
+            <Button size="sm" name="adicionar" isDisabled className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20">
+              Adicionar
+            </Button>
+          </div>
+        }
       </div>
       <div className="col-span-6 h-40 overflow-y-auto overflow-x-auto rounded">
         <TableRender data={dataProduto?.items} name={"produto"} ValueTable={ValueTable} type={"search"} />
