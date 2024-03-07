@@ -49,7 +49,7 @@ const MiniSideBarButtons = (props) => {
 
     const optionPage = (page) => {
         switch (page) {
-            case"/fornecedor":
+            case"/dashboard/fornecedor":
             return(
                 <>
                     <div className='flex flex-col pt-5 justify-center gap-2 items-center'>
@@ -83,7 +83,7 @@ const MiniSideBarButtons = (props) => {
                     
                     </div>
                 </>)
-            case "/produtos":
+            case "/dashboard/produtos":
               return(
                 <>
                   <div className='flex flex-col pt-5 justify-center gap-2 items-center'>
