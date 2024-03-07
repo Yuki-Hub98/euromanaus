@@ -1,8 +1,10 @@
 
+import Sidebar from "@/components/SideBar"
 export default function Home() {
 	return (
 		<>
-			<div className="flex flex-col justify-center h-screen bg-background-page"></div>
+			<Sidebar/>
+			<div className="h-screen flex flex-col pl-2 bg-background-page"></div>
 		</>
 	)
 }

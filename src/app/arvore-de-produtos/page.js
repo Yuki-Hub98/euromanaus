@@ -8,9 +8,7 @@ import Warning from "../../components/Warning";
 import TableRender from "../../components/TableRender";
 import MiniSideBarNav from "../../components/MiniSideBarNav";
 import { navArvoreProduto } from "@/data/data";
-
-
-
+import Sidebar from "@/components/SideBar";
 
 export default function ArvoreDeProduto () {
 	const [option, setOption] = useState('departamento');
@@ -129,7 +127,8 @@ export default function ArvoreDeProduto () {
 
 	return (
 		<>
-		<div className="h-screen flex flex-col pl-2 bg-background-page">
+		<Sidebar />
+		<div className="h-screen flex flex-col ml-[16rem] pl-2 bg-background-page">
 		<div className='w-full h-6 absolute top-2'>
 				<Breadcrumbs color='primary'>
 					<BreadcrumbItem>Cadastro</BreadcrumbItem>

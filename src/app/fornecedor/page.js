@@ -7,6 +7,7 @@ import MiniSideBarButtons from "@/components/MiniSideBarButtons";
 import TableRender from "@/components/TableRender";
 import Warning from "@/components/Warning";
 import { PostFornecedor, GetFornecedor, PutFornecedor, DelFornecedor } from "../actions/fornecedor";
+import Sidebar from "@/components/SideBar";
 
 export default function Fornecedor () {
 	const option = "fornecedor"
@@ -84,7 +85,8 @@ export default function Fornecedor () {
 
 	return (
 		<>
-		<div className="flex flex-col pl-2 h-screen bg-background-page">
+		<Sidebar />
+		<div className="h-screen flex flex-col ml-[16rem] pl-2 bg-background-page">
 			<div className='w-full h-6 absolute top-2'>
 					<Breadcrumbs color='primary'>
 						<BreadcrumbItem>Cadastro</BreadcrumbItem>

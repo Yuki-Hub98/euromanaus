@@ -6,6 +6,7 @@ import TableRender from "@/components/TableRender";
 import MiniSideBarButtons from "@/components/MiniSideBarButtons";
 import { PostProduto } from "../actions/produto";
 import SuccessAlert from "@/components/SuccessAlert";
+import Sidebar from "@/components/SideBar";
 
 export default function Produtos () {
 	const option = "produtos"
@@ -30,7 +31,8 @@ export default function Produtos () {
 
 	return (
 		<>
-		<div className="h-screen flex flex-col pl-2 bg-background-page">
+		<Sidebar/>
+		<div className="h-screen flex flex-col ml-[16rem] pl-2 bg-background-page">
 			<div className='w-full h-6 absolute top-2'>
 					<Breadcrumbs color='primary'>
 						<BreadcrumbItem>Cadastro</BreadcrumbItem>
