@@ -73,7 +73,7 @@ const TopButtons = (props) => {
 
 	const OptionPage = (page) => {
 		switch (page) {
-			case "/arvore-de-produtos":
+			case "/dashboard/arvore-de-produtos":
 				return(
 					<>
 					<div className='flex flex-col justify-center items-center'>
@@ -113,7 +113,7 @@ const TopButtons = (props) => {
 					
 					</>
 				)
-			case"/fornecedor":
+			case"/dashboard/fornecedor":
 				return(
 					<>
 					<Search data={props} ReceiveGet={ReceiveGet} />

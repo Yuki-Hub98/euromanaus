@@ -11,7 +11,7 @@ const Sidebar = () => {
 						<div className="overflow-y-auto py-5 px-3 h-full bg-Background-Component dark:bg-gray-800 dark:border-gray-700">
 								<ul className="space-y-2">
 								<li>
-										<Link href={"/"} className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-[white] dark:text-gray-900 hover:text-[#edca62] group">
+										<Link href={"/dashboard"} className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-[white] dark:text-gray-900 hover:text-[#edca62] group">
 										<span className="ml-3">Dashboard</span>
 										</Link>
 								</li>

@@ -19,6 +19,15 @@ module.exports = {
 					table:'#d4d4d8'
 				},
 			},
+			keyframes: {
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+      },
+      animation: {
+        spin: 'spin 2s linear infinite', // Aqui você pode ajustar a duração da animação
+      },
 		},
 	},
 	darkMode: "class",
