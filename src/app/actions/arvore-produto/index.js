@@ -1,9 +1,9 @@
 "use server";
 
-import Get from "@/pages/api/arvore-produto/get";
-import Post from "@/pages/api/arvore-produto/post";
-import Put from "@/pages/api/arvore-produto/put";
-import Del from "@/pages/api/arvore-produto/del";
+import Get from "@/app/api/arvore-produto/get";
+import Post from "@/app/api/arvore-produto/post";
+import Put from "@/app/api/arvore-produto/put";
+import Del from "@/app/api/arvore-produto/del";
 
 const PostArvoreProduto = async (request, data) => {
 	const post = await Post(request, data)

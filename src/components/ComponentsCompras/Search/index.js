@@ -63,7 +63,7 @@ const Search = (props) => {
 		
 		const optionPage = (page) => {
 				switch(page){
-						case "/arvore-de-produtos":
+						case "/dashboard/arvore-de-produtos":
 								return(
 										<>
 										<div className='h-12 gap-2 flex flex-row justify-items-center items-center'>
@@ -75,7 +75,7 @@ const Search = (props) => {
 										</div>
 										</>
 								)
-						case "/fornecedor":
+						case "/dashboard/fornecedor":
 								return(
 										<>
 										<div className='flex flex-row justify-center items-center gap-2'>
