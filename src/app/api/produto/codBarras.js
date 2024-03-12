@@ -1,5 +1,5 @@
 import axios from "axios";
-const PostCodBarras = async (data) => {
+const CodBarras = async (data) => {
   const response = axios.post(`http://localhost:8080/codigoBarras`, data)
   .then((response) => {
     if(response){
@@ -13,4 +13,4 @@ const PostCodBarras = async (data) => {
   })
   return response
 }
-export default PostCodBarras
+export default CodBarras
