@@ -1,12 +1,13 @@
 "use client";
 import React, {useState} from "react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-import SuccessAlert from "../../components/SuccessAlert";
+import SuccessAlert from "@/components/SuccessAlert";
 import TopButtons from "@/components/TopButtons";
-import MiniSideBarButtons from "@/components/MiniSideBarButtons";
 import TableRender from "@/components/TableRender";
+import MiniSideBarButtons from "@/components/MiniSideBarButtons";
 import Warning from "@/components/Warning";
-import { PostFornecedor, GetFornecedor, PutFornecedor, DelFornecedor } from "../actions/fornecedor";
+import { PostFornecedor, GetFornecedor, PutFornecedor, DelFornecedor } from "@/app/actions/fornecedor"
+
 
 export default function Fornecedor () {
 	const option = "fornecedor"
@@ -84,7 +85,6 @@ export default function Fornecedor () {
 
 	return (
 		<>
-		<div className="flex flex-col pl-2 h-screen bg-background-page">
 			<div className='w-full h-6 absolute top-2'>
 					<Breadcrumbs color='primary'>
 						<BreadcrumbItem>Cadastro</BreadcrumbItem>
@@ -107,8 +107,6 @@ export default function Fornecedor () {
 					</div>
 				</div>
 			</div>
-			
-		</div>
 		</>
 	)
 }

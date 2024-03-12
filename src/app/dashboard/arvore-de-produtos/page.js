@@ -2,15 +2,12 @@
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import React , {useEffect, useState} from "react";
 import {GetArvoreProduto, PostArvoreProduto, PutArvoreProduto, DelArvoreProduto} from "@/app/actions/arvore-produto";
-import SuccessAlert from "../../components/SuccessAlert";
-import TopButtons from "../../components/TopButtons";
-import Warning from "../../components/Warning";
-import TableRender from "../../components/TableRender";
-import MiniSideBarNav from "../../components/MiniSideBarNav";
-
-
-const nav = ["Departamento", "Linha", "Familia", "Grupo", "Cor", "Especificação"]
-
+import SuccessAlert from "@/components/SuccessAlert";
+import TopButtons from "@/components/TopButtons";
+import Warning from "@/components/Warning";
+import TableRender from "@/components/TableRender";
+import MiniSideBarNav from "@/components/MiniSideBarNav";
+import { navArvoreProduto } from "@/data/data";
 
 export default function ArvoreDeProduto () {
 	const [option, setOption] = useState('departamento');
@@ -129,7 +126,6 @@ export default function ArvoreDeProduto () {
 
 	return (
 		<>
-		<div className="h-screen flex flex-col pl-2 bg-background-page">
 		<div className='w-full h-6 absolute top-2'>
 				<Breadcrumbs color='primary'>
 					<BreadcrumbItem>Cadastro</BreadcrumbItem>
@@ -144,16 +140,15 @@ export default function ArvoreDeProduto () {
 			DeleteData={DeleteData} dataModal={dataModal} tableData={tableData}/>
 			{status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)}
 			<div className=' w-full flex h-4/5 overflow-y-auto mt-1.5 flex-row'>
-				<MiniSideBarNav ChosenOption={ChosenOption}  name={nav} />
+				<MiniSideBarNav ChosenOption={ChosenOption}  name={navArvoreProduto} />
 				<div className='w-full flex h-50 overflow-y-auto  flex-col rounded'>
-					<TableRender data={tableData} name={option} ValueTable={ValueTable} />
+					<TableRender data={tableData} name={option} ValueTable={ValueTable} type={"search"}/>
 					<div className='w-full h-10 bg-[#CFCFCF]'>
 						<span className='text-black'>
 							teste teste teste teste
 						</span>
 					</div>
 				</div>
-			</div>
 		</div>
 		</>
 	)

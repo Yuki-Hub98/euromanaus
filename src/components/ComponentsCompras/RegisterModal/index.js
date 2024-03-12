@@ -1,29 +1,47 @@
 "use Client";
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
-	ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
-import {Select, SelectItem} from "@nextui-org/react";
+	ModalFooter, Tabs, Tab, Card, CardBody, Input, Select, SelectItem} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
-import { GetCep } from "@/app/actions/fornecedor";
+import { GetCep, GetFornecedor } from "@/app/actions/fornecedor";
 import FormatFone from "@/functions/formatFone";
 import FormDadosBancarios from "../FormDadosBancarios";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
+import { GetProduto, PostCod } from "@/app/actions/produto";
 import ProdutoRegister from "../ProdutoRegister";
+import Fiscal from "../ProdutoRegister/fiscal";
 
 const RegisterModal = (props) => {
 	const [dataToPost, setDataToPost] = useState();
-	const [dataDepartamento, setDataDepartamento] = useState();
+	const [dataRenderModal, setDataRenderModal] = useState({
+		departamento:[],
+		cor:[],
+		especificacao:[],
+		fornecedor:[]
+	});
 	const [slectedScreenFornecedor, setSelectedScreenFornecedor] = useState("Fornecedor");
 	const [slectedScreenProduto, setSelectedScreenProduto] = useState("Produto");
 	const [data, setData] = useState ();
 	const [cep1, setCep1] = useState ();
 	const [cep2, setCep2] = useState ();
-	const {ReceivePost} = props
-
-	const dataTransform = props?.dataModal?.map((data) => ( 
-		{'value': data?.descricao, 'label':data?.descricao}
+	const {ReceivePost, dataModal, onOpenChange, isOpen} = props
+	const modalArvoreSelect = dataModal?.map((data) => ( 
+		{'value': data?.descricao}
 		))
+
+	const LabelArvore = (name) => {
+		switch (name) {
+			case "linha":
+				return "Departamento"
+			case "familia":
+				return "Linha"
+			case "grupo":
+				return "Familia"
+			default:
+				break;
+		}
+	}
 
 	const toClean = () => {
 		setData(null)
@@ -60,12 +78,78 @@ const RegisterModal = (props) => {
 	};
 
 	const handleValue = (target) => {
-		const {name, value} = target.target;
+		const {name, value, checked} = target.target;
+		if (data?.linha && data?.grupo && name === "modelo") {
+			const descProd = `${data?.linha} ${data?.grupo} ${value}`
+			setData(prevState => ({
+				...prevState,
+				["descricaoProduto"]: descProd
+			}))
+		}else if (data?.linha  && data?.modelo && name === "grupo") {
+			const descProd = `${data?.linha} ${value} ${data?.modelo} `
+			setData(prevState => ({
+				...prevState,
+				["descricaoProduto"]: descProd
+			}))
+		}
+		if (data?.linha && data?.grupo && data?.modelo && name === "cor") {
+			const descItem = `${data?.linha} ${data?.grupo} ${data?.modelo} ${value}`
+			setData(prevState => ({
+				...prevState,
+				["descricaoItem"]: descItem
+			}))
+		}else if (data?.linha  && data?.modelo && data?.cor && name === "grupo") {
+			const descItem = `${data?.linha} ${value} ${data?.modelo} ${data?.cor}`
+			setData(prevState => ({
+				...prevState,
+				["descricaoItem"]: descItem
+			}))
+		}else if (data?.linha  && data?.grupo && data?.cor && name === "modelo") {
+			const descItem = `${data?.linha} ${data?.grupo} ${value} ${data?.cor}`
+			setData(prevState => ({
+				...prevState,
+				["descricaoItem"]: descItem
+			}))
+		}
 		setData(prevState => ({
 			...prevState,
 			[name]:value
 		}))
+		if(name === "processado") {
+			setData(prevState => ({
+				...prevState,
+				[name]: checked
+			}))
+		}
 	}
+
+	const FormatDataProduto = async (data) => {
+		const newData = {...data}
+		if (newData?.items?.length > 0) {
+			const lestId = newData.items[newData.items.length - 1].idItem + 1
+			const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId})
+			newData.items.push({idItem: lestId, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao})
+		}else{
+			const lestId = await GetProduto(props?.name)
+      if(lestId.length > 0) {
+        const id = lestId[lestId.length - 1].idItem + 1
+				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: id})
+				newData.items = [{idItem: id, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+      }else{
+				const id = 1
+				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: id})
+				newData.items = [{idItem: id, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+			}
+			
+		}
+
+		delete newData.descricaoItem;
+		delete newData.codBarra;
+		delete newData.cor;
+		delete newData.especificacao;
+
+		setData(newData)
+}
 
 	const TypeButton = (type) => {
 		if(type === 'departamento' || type === 'cor' || type === 'especificacao'){
@@ -103,8 +187,18 @@ const RegisterModal = (props) => {
 	}
 
 	const RequestModal = async () =>{
-		const data = await GetArvoreProduto("departamento")
-		setDataDepartamento(data) 
+		const dataDepartamento = await GetArvoreProduto("departamento")
+		const dataFornecedor = await GetFornecedor("fornecedor", "", "produto")
+		const dataCor = await GetArvoreProduto("cor")
+		const dataEspecificacao = await GetArvoreProduto("especificacao")
+
+		setDataRenderModal(data=> ({
+			...data,
+			["departamento"]: [dataDepartamento],
+			["cor"]:[dataCor],
+			["especificacao"]: [dataEspecificacao],
+			["fornecedor"]: [dataFornecedor]
+		})) 
 	}
 
 	useEffect(()=> {
@@ -128,6 +222,9 @@ const RegisterModal = (props) => {
 			setDataToPost(data)
 		}
 		if (data?.razaoSocialFornecedor) {
+			setDataToPost(data)
+		}
+		if(data?.items){
 			setDataToPost(data)
 		}
 	},[props, data])
@@ -155,7 +252,7 @@ const RegisterModal = (props) => {
 			setCep2(ce)
 		}
 	}
-
+	const isDisabled = dataToPost?.razaoSocialFornecedor || dataToPost?.items || dataToPost?.descricao
 	const buttons = (type) => {
 		switch (type) {
 			case 1:
@@ -170,12 +267,23 @@ const RegisterModal = (props) => {
 			case 2:
 				return(
 					<>
-					<div className="h-full">
-					<div className="w-96 flex justify-center relative">
-						<Select className="w-60 ml-3" name="select" onChange={(e) => {setData(data => ({...data, 'select': RegexToSave(e.value)}))}} options={dataTransform}/>
-					</div>
-						<Input label="Descrição" size='lg' name="descricao" type="Text" onChange={(e) => {handleChange(e)}}
-						labelPlacement="outside-left" className="w-80 mt-2  justify-between"/>
+					<div className="h-full w-full grid grid-cols-4 pl-2 items-center justify-center">
+						<label className="w-full items-center pt-2">
+							{LabelArvore(props?.name)}
+						</label>
+						<Select size="lg" className="w-64 pl-4 col-span-3 pt-2" aria-labelledby="selectArvore" 
+							labelPlacement="outside" onChange={(e) => {handleValue(e)}} name="select">
+							{modalArvoreSelect.map((select) => (
+								<SelectItem key={select.value} value={select.value}>
+									{select.value}
+								</SelectItem>
+							))}
+						</Select>
+						<label className="w-full items-center pt-2">
+							Descrição
+						</label>
+						<Input size='lg' name="descricao" type="Text" onChange={(e) => {handleChange(e)}}
+							className="w-64 pl-4 pt-2" labelPlacement="outside"/>
 					</div>
 					</>
 				)
@@ -224,7 +332,10 @@ const RegisterModal = (props) => {
 						selectedKey={slectedScreenProduto}
 						onSelectionChange={setSelectedScreenProduto}>
 							<Tab key={"Produto"} title="Cadastro de Produto" className="w-full h-full bg-background-table">
-								<ProdutoRegister dataDepartamento={dataDepartamento} handleValue={handleValue}/>
+								<ProdutoRegister dataRenderModal={dataRenderModal} FormatData={FormatDataProduto} handleValue={handleValue} dataProduto={data}/>
+							</Tab>
+							<Tab key={"Fiscal"} title="Fiscal" className="w-full h-full bg-background-table">
+								<Fiscal dataFiscal={data} handleValue={handleValue} SetData={setData}/>
 							</Tab>
 						</Tabs>
 					</CardBody>
@@ -239,8 +350,8 @@ const RegisterModal = (props) => {
 	return (
 		<>
 		<Modal 
-			isOpen={props?.isOpen}
-			onOpenChange={props?.onOpenChange}
+			isOpen={isOpen}
+			onOpenChange={onOpenChange}
 			placement="top-center"
 			size={props?.size}
 			className={props?.h}
@@ -251,8 +362,7 @@ const RegisterModal = (props) => {
 			header: "border-[#292f46]",
 			footer: "border-[#292f46]",
 			closeButton: "hover:bg-white/5 active:bg-white/10",
-			}}
-			>
+			}}>
 			<ModalContent>
 				{(onClose) => (
 					<>
@@ -268,19 +378,18 @@ const RegisterModal = (props) => {
 						<Button className='bg-sky-50' variant="flat" onClick={() => {toClean()}} onPress={onClose} >
 							Cancelar
 						</Button>
-							{ dataToPost ? (
-								<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {ReceivePost(props?.name, dataToPost), toClean()}} 
+						{ isDisabled ? (
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {ReceivePost(props?.name, dataToPost), toClean()}} 
 								onPress={onClose} >
-									Cadastrar
-								</Button>
-							)
-								:
-							(
-								<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" isDisabled>
-									Cadastrar
-								</Button>
-							)
-							}
+								Cadastrar
+							</Button>
+						)
+							:
+						(
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" isDisabled>
+								Cadastrar
+							</Button>
+						)}
 					</ModalFooter>
 					</>
 				)}

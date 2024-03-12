@@ -1,9 +1,9 @@
 "use server";
-import Cep from "@/pages/api/fornecedor/cep";
-import Del from "@/pages/api/fornecedor/del";
-import Get from "@/pages/api/fornecedor/get";
-import Post from "@/pages/api/fornecedor/post";
-import Put from "@/pages/api/fornecedor/put";
+import Cep from "@/app/api/fornecedor/cep";
+import Del from "@/app/api/fornecedor/del";
+import Get from "@/app/api/fornecedor/get";
+import Post from "@/app/api/fornecedor/post";
+import Put from "@/app/api/fornecedor/put";
 
 const GetCep = async (data) => {
 	const cep = Cep(data);
@@ -15,8 +15,8 @@ const PostFornecedor = async (request, data) => {
 	return post
 }
 
-const GetFornecedor = async (request, data) => {
-	const get = await Get(request, data);
+const GetFornecedor = async (request, data, flag) => {
+	const get = await Get(request, data, flag);
 	return get
 }
 
