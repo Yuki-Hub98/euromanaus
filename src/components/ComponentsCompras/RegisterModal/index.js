@@ -10,6 +10,7 @@ import FormDadosBancarios from "../FormDadosBancarios";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 import { GetProduto, PostCod } from "@/app/actions/produto";
 import ProdutoRegister from "../ProdutoRegister";
+import Fiscal from "../ProdutoRegister/fiscal";
 
 const RegisterModal = (props) => {
 	const [dataToPost, setDataToPost] = useState();
@@ -24,7 +25,7 @@ const RegisterModal = (props) => {
 	const [data, setData] = useState ();
 	const [cep1, setCep1] = useState ();
 	const [cep2, setCep2] = useState ();
-	const {ReceivePost, dataModal} = props
+	const {ReceivePost, dataModal, onOpenChange, isOpen} = props
 	const modalArvoreSelect = dataModal?.map((data) => ( 
 		{'value': data?.descricao}
 		))
@@ -77,7 +78,7 @@ const RegisterModal = (props) => {
 	};
 
 	const handleValue = (target) => {
-		const {name, value} = target.target;
+		const {name, value, checked} = target.target;
 		if (data?.linha && data?.grupo && name === "modelo") {
 			const descProd = `${data?.linha} ${data?.grupo} ${value}`
 			setData(prevState => ({
@@ -114,6 +115,12 @@ const RegisterModal = (props) => {
 			...prevState,
 			[name]:value
 		}))
+		if(name === "processado") {
+			setData(prevState => ({
+				...prevState,
+				[name]: checked
+			}))
+		}
 	}
 
 	const FormatDataProduto = async (data) => {
@@ -327,6 +334,9 @@ const RegisterModal = (props) => {
 							<Tab key={"Produto"} title="Cadastro de Produto" className="w-full h-full bg-background-table">
 								<ProdutoRegister dataRenderModal={dataRenderModal} FormatData={FormatDataProduto} handleValue={handleValue} dataProduto={data}/>
 							</Tab>
+							<Tab key={"Fiscal"} title="Fiscal" className="w-full h-full bg-background-table">
+								<Fiscal dataFiscal={data} handleValue={handleValue} SetData={setData}/>
+							</Tab>
 						</Tabs>
 					</CardBody>
 					</Card>                
@@ -340,8 +350,8 @@ const RegisterModal = (props) => {
 	return (
 		<>
 		<Modal 
-			isOpen={props?.isOpen}
-			onOpenChange={props?.onOpenChange}
+			isOpen={isOpen}
+			onOpenChange={onOpenChange}
 			placement="top-center"
 			size={props?.size}
 			className={props?.h}

@@ -43,3 +43,22 @@ export const navArvoreProduto = [
   "Grupo", 
   "Cor", 
   "Especificação"]
+
+export const origemCstIcms = [
+  {origem: "NACIONAL"},
+  {origem: "ESTRANGEIRA IMPORTADA"},
+  {origem: "ESTRANGEIRA NO MERCADO INTERNO"}
+]
+
+export const cstPisCofinsCadProduto = [
+  {descicao: "1 - Operação Tributável com Alíquota Básica"},
+  {descicao: "2 - Operação Tributável com Alíquota Diferenciada"},
+  {descicao: "3 - Operação Tributável com Alíquota por Unidade de Medida de Produto"},
+  {descicao: "4 - Operação Tributável Monofásica – Revenda a Alíquota Zero"},
+  {descicao: "5 - Operação Tributável por Substituição Tributária"},
+  {descicao: "6 - Operação Tributável a Alíquota Zero"},
+  {descicao: "7 - Operação Isenta da Contribuição"},
+  {descicao: "8 - Operação sem Incidência da Contribuição"},
+  {descicao: "9 - Operação com Suspensão da Contribuição"},
+  {descicao: "49 - Outras Operações de Saída"}
+]
