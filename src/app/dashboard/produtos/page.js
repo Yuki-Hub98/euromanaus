@@ -31,7 +31,6 @@ export default function Produtos () {
 
 	return (
 		<>
-		<div className="h-screen flex flex-col pl-2 bg-background-page">
 			<div className='w-full h-6 absolute top-2'>
 					<Breadcrumbs color='primary'>
 						<BreadcrumbItem>Cadastro</BreadcrumbItem>
@@ -52,7 +51,6 @@ export default function Produtos () {
 					</div>
 				</div>
 			</div>
-		</div>
 		</>
 	)
 }

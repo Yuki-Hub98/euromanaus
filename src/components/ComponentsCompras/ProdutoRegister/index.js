@@ -8,7 +8,6 @@ import TableRender from "@/components/TableRender";
 const ProdutoRegister = (props) => {
   const { dataRenderModal, handleValue, dataProduto, FormatData} = props
   const [valueTable, setValueTable] = useState();
-  const [dataRender, setDataRender] = useState();
   const [dataModal, setDataModal] = useState({
     linha:[],
     familia:[],
@@ -58,24 +57,20 @@ const ProdutoRegister = (props) => {
       <div className="w-36" aria-labelledby="codProduto">
         <span id="codProduto" className="text-xs">Cód. Barra</span>
       </div>
-      <div className="col-span-2">
-        <Input className="w-full" size="sm" value={dataProduto?.codBarra || ''} onChange={(e) => {handleValue(e)}} name="codBarra" labelPlacement="outside"/>
-      </div>
-      <div aria-labelledby="codProduto">
-      </div>
-      <div  className="col-span-2" >
+      <div className="col-span-5">
+        <Input className="w-2/5" size="sm" isDisabled value={dataProduto?.codBarra || ''} onChange={(e) => {handleValue(e)}} name="codBarra" labelPlacement="outside"/>
       </div>
       <div className="w-36" aria-labelledby="descricaoProduto">
         <span id="descricaoProduto" className="text-xs">Descrição Produto</span>
       </div>
       <div className="col-span-5">
-        <Input className="w-full" size="sm" name="descricaoProduto" value={dataProduto?.descricaoProduto || ''} labelPlacement="outside"/>
+        <Input className="w-full" size="sm" isDisabled name="descricaoProduto" value={dataProduto?.descricaoProduto || ''} labelPlacement="outside"/>
       </div>
       <div className="w-36" aria-labelledby="descricaoItem">
         <span id="descricaoItem" className="text-xs">Descrição Item</span>
       </div>
       <div className="col-span-5">
-        <Input className="w-full" size="sm" name="descricaoItem" value={dataProduto?.descricaoItem || ''} labelPlacement="outside"/>
+        <Input className="w-full" size="sm" isDisabled name="descricaoItem" value={dataProduto?.descricaoItem || ''} labelPlacement="outside"/>
       </div>
       <div className="w-36" aria-labelledby="departamento">
         <span id="departamento" className="text-xs">Departamento</span>
@@ -156,6 +151,12 @@ const ProdutoRegister = (props) => {
             <SelectItem key={unidade.medida} value={unidade.medida}>{unidade.medida}</SelectItem>
           ))}
         </Select>
+      </div>
+      <div className=" col-start-5 col-end-7">
+        <label className="text-xs flex items-center">
+          <input type="checkbox" className="mr-2 accent-[#edca62b4]" name="processado" onChange={(e) => {handleValue(e)}} placeholder="processado"/>
+          Processado
+        </label>
       </div>
       <div className="h-24 mt-6 pt-4 col-start-2 col-end-6 grid grid-cols-6 rounded-md items-center border shadow">
         <div className="w-36 pl-2" aria-labelledby="cor">
