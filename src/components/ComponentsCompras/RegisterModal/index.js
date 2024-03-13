@@ -132,7 +132,7 @@ const RegisterModal = (props) => {
 		}else{
 			const lestId = await GetProduto(props?.name)
       if(lestId.length > 0) {
-        const id = lestId[lestId.length - 1].idItem + 1
+        const id = lestId[lestId.length - 1].codigoItem + 1
 				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: id})
 				newData.items = [{idItem: id, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
       }else{
