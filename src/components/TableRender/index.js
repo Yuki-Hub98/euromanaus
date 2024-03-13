@@ -70,7 +70,7 @@ const TableRender = (props) => {
 										{TableAssert(data, ValueTable, "table-auto whitespace-nowrap")}
 										</>
 								)
-						case "produto":
+						case "produtos":
 							return(
 								<>
 									{TableAssert(data, ValueTable, "table-auto whitespace-nowrap")}

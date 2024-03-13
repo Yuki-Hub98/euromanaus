@@ -194,7 +194,7 @@ const ProdutoRegister = (props) => {
         }
       </div>
       <div className="col-span-6 h-40 overflow-y-auto overflow-x-auto rounded">
-        <TableRender data={dataProduto?.items} name={"produto"} ValueTable={ValueTable} type={"search"} />
+        <TableRender data={dataProduto?.items} name={"produtos"} ValueTable={ValueTable} type={"search"} />
       </div>
   </div>
   )
