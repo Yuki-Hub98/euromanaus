@@ -77,7 +77,7 @@ const TopButtons = (props) => {
 				return(
 					<>
 					<div className='flex flex-col justify-center items-center'>
-						<Search data={props} ReceiveGet={ReceiveGet} />
+						<Search data={props} ReceiveGet={ReceiveGet} router={page} />
 					</div>
 					<div className='flex items-center'>
 						<Button color="primary" size="sm" variant="ghost" onPress={onOpen}>
@@ -116,7 +116,13 @@ const TopButtons = (props) => {
 			case"/dashboard/fornecedor":
 				return(
 					<>
-					<Search data={props} ReceiveGet={ReceiveGet} />
+					<Search data={props} ReceiveGet={ReceiveGet} router={page} />
+					</>
+				)
+			case"/dashboard/produtos":
+				return(
+					<>
+					<Search data={props} ReceiveGet={ReceiveGet} router={page} />
 					</>
 				)
 			default:

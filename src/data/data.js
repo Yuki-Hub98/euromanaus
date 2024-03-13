@@ -1,6 +1,6 @@
 export const unidadeMedida = [ 
   {medida:"M"}, 
-  {medida:"UND"}, 
+  {medida:"UNID"}, 
   {medida:"CX"}, 
   {medida:"MIL"}, 
   {medida:"PC"}, 
@@ -51,14 +51,14 @@ export const origemCstIcms = [
 ]
 
 export const cstPisCofinsCadProduto = [
-  {descicao: "1 - Operação Tributável com Alíquota Básica"},
-  {descicao: "2 - Operação Tributável com Alíquota Diferenciada"},
-  {descicao: "3 - Operação Tributável com Alíquota por Unidade de Medida de Produto"},
-  {descicao: "4 - Operação Tributável Monofásica – Revenda a Alíquota Zero"},
-  {descicao: "5 - Operação Tributável por Substituição Tributária"},
-  {descicao: "6 - Operação Tributável a Alíquota Zero"},
-  {descicao: "7 - Operação Isenta da Contribuição"},
-  {descicao: "8 - Operação sem Incidência da Contribuição"},
-  {descicao: "9 - Operação com Suspensão da Contribuição"},
-  {descicao: "49 - Outras Operações de Saída"}
+  {descicao: "1 - OPERAÇÃO TRIBUTÁVEL COM ALÍCOTA BÁSICA"},
+  {descicao: "2 - OPERAÇÃO TRIBUTÁVEL COM ALÍCOTA DIFERENCIADA"},
+  {descicao: "3 - OPERAÇÃO TRIBUTÁVEL COM ALÍCOTA POR UNIDADE DE MEDIDA DE PRODUTO"},
+  {descicao: "4 - OPERAÇÃO TRIBUTÁVEL MONOFÁSIA – REVENDA A ALÍCOTA ZERO"},
+  {descicao: "5 - OPERAÇÃO TRIBUTÁVEL POR SUBSTITUIÇÃO TRIBUTÁRIA"},
+  {descicao: "6 - OPERAÇÃO TRIBUTÁVEL A ALÍCOTA ZERO"},
+  {descicao: "7 - OPERAÇÃO ISENTA DA CONTRIBUÇÃO"},
+  {descicao: "8 - OPERAÇÃO SEM INCIDÊNCIA DA CONTRIBUÇÃO"},
+  {descicao: "9 - OPERAÇÃO COM SUSPENSÃO DA CONTRIBUÇÃO"},
+  {descicao: "49 - OUTRAS OPERAÇÕES DE SAÍDA"}
 ]
