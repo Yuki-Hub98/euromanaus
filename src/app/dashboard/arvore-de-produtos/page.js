@@ -7,7 +7,7 @@ import TopButtons from "@/components/TopButtons";
 import Warning from "@/components/Warning";
 import TableRender from "@/components/TableRender";
 import MiniSideBarNav from "@/components/MiniSideBarNav";
-import { navArvoreProduto } from "@/data/data";
+import { navArvoreProduto } from "@/DB/data";
 
 export default function ArvoreDeProduto () {
 	const [option, setOption] = useState('departamento');
