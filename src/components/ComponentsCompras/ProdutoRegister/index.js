@@ -2,7 +2,7 @@
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 import {Input, Button, Select, SelectItem} from "@nextui-org/react";
 import React , {useEffect, useState} from "react";
-import { unidadeMedida, tipoProduto } from "@/data/data";
+import { unidadeMedida, tipoProduto } from "@/DB/data";
 import TableRender from "@/components/TableRender";
 
 const ProdutoRegister = (props) => {

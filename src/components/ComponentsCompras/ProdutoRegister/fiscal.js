@@ -1,6 +1,6 @@
 import {Input, Button, Select, SelectItem, Textarea, useDisclosure} from "@nextui-org/react";
 import React, { useState } from "react";
-import { origemCstIcms, cstPisCofinsCadProduto } from "@/data/data";
+import { origemCstIcms, cstPisCofinsCadProduto } from "@/DB/data";
 import { GetCst_Icms, GetNcm } from "@/app/actions/produto";
 import RerenciaFiscal from "./referenciaFiscal";
 const Fiscal = (props) => {
