@@ -3,6 +3,7 @@ import { Modal, Button, ModalContent, ModalHeader,
 ModalBody,ModalFooter, Input, Textarea } from "@nextui-org/react";
 import TableRender from "../../TableRender";
 import { GetNcm } from "@/app/actions/produto";
+import RegexToSave from "@/functions/regexToSave";
 
 const RerenciaFiscal = (props) =>{
     const { isOpen, 
@@ -59,7 +60,7 @@ const RerenciaFiscal = (props) =>{
                       <span className='text-xs'>Descricao</span>
                       <div className="col-start-2 col-span-3">
                         <Textarea  minRows={2.3} value={dataFiscal?.ncmDescricao || ''} className="w-3/5" name="ncmDescricao" labelPlacement="outside" 
-                        onChange={(e) => {handleValue(e), setDataRequest(e.target.value)}} />
+                        onChange={(e) => {handleValue(e), setDataRequest(RegexToSave(e.target.value))}} />
                       </div>
                       <div className="col-start-3 w-10/12 pl-16">
                         <Button size="sm" className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => RequestCstIms(dataRequest)}>

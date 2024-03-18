@@ -4,7 +4,7 @@ import { origemCstIcms, cstPisCofinsCadProduto } from "@/DB/data";
 import { GetCst_Icms, GetNcm } from "@/app/actions/produto";
 import RerenciaFiscal from "./referenciaFiscal";
 const Fiscal = (props) => {
-  const {dataFiscal, handleValue, SetData} = props
+  const {dataFiscal, handleValue, SetData, dataDuplicated} = props
   const [ncmRequest, setNcmRequest] = useState()
   const [dataRender, setDataRender] = useState({
     csticms:[],
@@ -34,7 +34,6 @@ const Fiscal = (props) => {
     }
   }
 const descNcm =  dataRender?.ncm[0] ? dataRender?.ncm[0][0]?.descricao : ''
-
 return(
   <>
     <div className="w-full h-full grid grid-cols-4 gap-y-1 items-center">
@@ -42,46 +41,67 @@ return(
         <span className="text-xs">ORIGEM</span>
       </div>
       <div className="col-span-3" aria-labelledby="selectOrigem">
-        <Select className="w-3/5 text-xs" labelPlacement="outside" aria-label="origem" size="sm" name="cstIcmsOrigem" onChange={(e) => {handleValue(e), requestCstIcms(e)}}>
+        {dataDuplicated?.cstIcmsOrigem ? 
+          <Input className="w-3/5 text-xs" isDisabled value={dataDuplicated?.cstIcmsOrigem} labelPlacement="outside" aria-label="origem" size="sm" name="cstIcmsOrigem"/>
+            :
+          <Select className="w-3/5 text-xs" labelPlacement="outside" aria-label="origem" size="sm" name="cstIcmsOrigem" onChange={(e) => {handleValue(e), requestCstIcms(e)}}>
           {origemCstIcms.map((cstIcms) => (
             <SelectItem key={cstIcms.origem} value={cstIcms.origem}>{cstIcms.origem}</SelectItem>
           ))}
-        </Select>
+          </Select>
+          }
+        
       </div>
       <div  aria-labelledby="cstICMS">
         <span className="text-xs">CST ICMS</span>
       </div>
       <div className="col-span-3" aria-labelledby="selectCstIcmsDescricao">
-        <Select className="w-full" labelPlacement="outside" aria-label="csticms" name="cstIcmsDescricao" onChange={(e) => {handleValue(e)}} size="sm">
+        {dataDuplicated?.cstIcmsDescricao ? 
+          <Input className="w-full" isDisabled value={dataDuplicated?.cstIcmsDescricao} labelPlacement="outside" aria-label="origem" size="sm" name="cstIcmsDescricao"/>
+            :
+          <Select className="w-full" labelPlacement="outside" aria-label="csticms" name="cstIcmsDescricao" onChange={(e) => {handleValue(e)}} size="sm">
           {dataRender?.csticms[0]?.map((csticms) => (
             <SelectItem key={csticms.descricao} value={csticms.descricao}>{csticms.descricao}</SelectItem>
           ))}
-        </Select>
+          </Select>
+          }
       </div>
       <div  aria-labelledby="cstPisConfins">
         <span className="text-xs">CST PIS/Cofins</span>
       </div>
       <div className="col-span-3" aria-labelledby="selectCstPisConfins">
-        <Select className="w-full" aria-label="cstPisConfins" name="cstPisConfins" onChange={(e) => handleValue(e)} labelPlacement="outside" size="sm">
+        {dataDuplicated?.cstPisConfins ? 
+          <Input className="w-full" isDisabled value={dataDuplicated?.cstPisConfins} labelPlacement="outside" aria-label="origem" size="sm" name="cstPisConfins"/>
+            :
+          <Select className="w-full" aria-label="cstPisConfins" name="cstPisConfins" onChange={(e) => handleValue(e)} labelPlacement="outside" size="sm">
           {cstPisCofinsCadProduto.map((pisConfins) => (
             <SelectItem key={pisConfins.descicao} value={pisConfins.descicao}>{pisConfins.descicao}</SelectItem>
           ))}
-        </Select>
+          </Select>
+          }
       </div>
       <div  aria-labelledby="ncm">
         <span className="text-xs">NCM</span>
       </div>
       <div >
-        <Input className="w-full" labelPlacement="outside" onKeyUp={requestOnPress} value={dataFiscal?.ncmCodigo || ''} name="ncmCodigo" size="sm"
-          onChange={(e) => {handleValue(e), setNcmRequest(e.target.value)}}/>
+        {dataDuplicated?.ncmCodigo ? 
+          <Input className="w-full" isDisabled value={dataDuplicated?.ncmCodigo} labelPlacement="outside" aria-label="origem" size="sm" name="ncmCodigo"/>
+            :
+          <Input className="w-full" labelPlacement="outside" onKeyUp={requestOnPress} value={dataFiscal?.ncmCodigo || ''} name="ncmCodigo" size="sm"
+            onChange={(e) => {handleValue(e), setNcmRequest(e.target.value)}}/>
+          }
       </div>
       <div className="flex justify-end w-40">
-        <Button size="sm" className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onPress={onOpen}> Pesquisar </Button>
+      {dataDuplicated?.ncmCodigo ? 
+          <Button size="sm" isDisabled className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onPress={onOpen}> Pesquisar </Button>
+        :
+          <Button size="sm" className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onPress={onOpen}> Pesquisar </Button>
+        }
       </div>
       <RerenciaFiscal handleValue={handleValue} dataFiscal={dataFiscal} onOpenChange={onOpenChange} isOpen={isOpen} SetData={SetData} size={"3xl"} h={"h-2/4"}/>
       <div className="col-start-2 col-span-3">
         <Textarea  minRows={2.3} className="w-3/5" name="ncmDescricao" isDisabled labelPlacement="outside" value={dataFiscal?.ncmDescricao || descNcm || ''} 
-        onChange={(e) => {handleValue(e)}} />
+        onChange={(e) => {handleValue(e)}} /> 
       </div>
       {/***
         *Feat CEST Por enquanto está desabilitada 

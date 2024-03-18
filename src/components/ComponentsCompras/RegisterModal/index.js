@@ -8,12 +8,13 @@ import { GetCep, GetFornecedor } from "@/app/actions/fornecedor";
 import FormatFone from "@/functions/formatFone";
 import FormDadosBancarios from "../FormDadosBancarios";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
-import { GetProduto, PostCod } from "@/app/actions/produto";
+import { GetLastIdItem, GetSearchProduto, PostCod } from "@/app/actions/produto";
 import ProdutoRegister from "../ProdutoRegister";
 import Fiscal from "../ProdutoRegister/fiscal";
 
 const RegisterModal = (props) => {
 	const [dataToPost, setDataToPost] = useState();
+	const [dataProdutoDuplicated, setDataProdutoDuplicated] = useState();
 	const [dataRenderModal, setDataRenderModal] = useState({
 		departamento:[],
 		cor:[],
@@ -48,6 +49,7 @@ const RegisterModal = (props) => {
 		setDataToPost(null)
 		setCep1(null)
 		setCep2(null)
+		setDataProdutoDuplicated(null)
 		return;
 	}
 
@@ -80,32 +82,38 @@ const RegisterModal = (props) => {
 	const handleValue = (target) => {
 		const {name, value, checked} = target.target;
 		if (data?.linha && data?.grupo && name === "modelo") {
-			const descProd = `${data?.linha} ${data?.grupo} ${value}`
+			const descProd = `${data?.linha} ${value} ${data?.grupo}`
 			setData(prevState => ({
 				...prevState,
 				["descricaoProduto"]: descProd
 			}))
 		}else if (data?.linha  && data?.modelo && name === "grupo") {
-			const descProd = `${data?.linha} ${value} ${data?.modelo} `
+			const descProd = `${data?.linha} ${data?.modelo} ${value}`
 			setData(prevState => ({
 				...prevState,
 				["descricaoProduto"]: descProd
 			}))
 		}
-		if (data?.linha && data?.grupo && data?.modelo && name === "cor") {
-			const descItem = `${data?.linha} ${data?.grupo} ${data?.modelo} ${value}`
+		if (data?.linha && data?.grupo && data?.modelo && data?.cor && name === "especificacao" ) {
+			const descItem = `${data?.linha} ${data?.modelo} ${data?.grupo} ${data?.cor} ${value}`
 			setData(prevState => ({
 				...prevState,
 				["descricaoItem"]: descItem
 			}))
-		}else if (data?.linha  && data?.modelo && data?.cor && name === "grupo") {
-			const descItem = `${data?.linha} ${value} ${data?.modelo} ${data?.cor}`
+		}else if (data?.linha && data?.grupo && data?.modelo && data?.especificacao && name === "cor" ) {
+			const descItem = `${data?.linha} ${data?.modelo} ${data?.grupo} ${value} ${data?.especificacao}`
 			setData(prevState => ({
 				...prevState,
 				["descricaoItem"]: descItem
 			}))
-		}else if (data?.linha  && data?.grupo && data?.cor && name === "modelo") {
-			const descItem = `${data?.linha} ${data?.grupo} ${value} ${data?.cor}`
+		}else if (data?.linha  && data?.modelo && data?.cor && data?.especificacao && name === "grupo") {
+			const descItem = `${data?.linha} ${data?.modelo} ${value} ${data?.cor} ${data?.especificacao}`
+			setData(prevState => ({
+				...prevState,
+				["descricaoItem"]: descItem
+			}))
+		}else if (data?.linha  && data?.grupo && data?.cor && data?.especificacao && name === "modelo") {
+			const descItem = `${data?.linha} ${value} ${data?.grupo} ${data?.cor} ${data?.especificacao}`
 			setData(prevState => ({
 				...prevState,
 				["descricaoItem"]: descItem
@@ -123,18 +131,17 @@ const RegisterModal = (props) => {
 		}
 	}
 
-	const FormatDataProduto = async (data) => {
+	const AddItemProduto = async (data) => {
 		const newData = {...data}
 		if (newData?.items?.length > 0) {
-			const lestId = newData.items[newData.items.length - 1].idItem + 1
-			const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId})
-			newData.items.push({idItem: lestId, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao})
+			const lestId = await GetLastIdItem();
+			const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId?.lastIdItem})
+			newData.items.push({idItem: lestId?.lastIdItem, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao})
 		}else{
-			const lestId = await GetProduto(props?.name)
-      if(lestId.length > 0) {
-        const id = lestId[lestId.length - 1].codigoItem + 1
-				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: id})
-				newData.items = [{idItem: id, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+			const lestId = await GetLastIdItem();
+      if(lestId) {
+				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId?.lastIdItem})
+				newData.items = [{idItem: lestId?.lastIdItem, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
       }else{
 				const id = 1
 				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: id})
@@ -184,6 +191,13 @@ const RegisterModal = (props) => {
 					ufRepresentante: cep2?.uf
 				}));
 			}
+	}
+	const RequestProdutoDuplicated = async (descricao, fornecedor) => {
+		const dataRegisted = await GetSearchProduto({descricao: descricao, fornecedor: fornecedor});
+		if (dataRegisted?.idProduto) {
+			setData(dataRegisted)
+			setDataProdutoDuplicated(dataRegisted)
+		}
 	}
 
 	const RequestModal = async () =>{
@@ -240,6 +254,10 @@ const RegisterModal = (props) => {
 		}
 		
 	},[data, slectedScreenFornecedor])
+
+	useEffect(() => {
+		RequestProdutoDuplicated(data?.descricaoProduto, data?.fornecedor)
+  },[data?.descricaoProduto, data?.fornecedor])
 
 	const Cep = async (data) => {
 		if (data?.cepFornecedor) {
@@ -332,10 +350,11 @@ const RegisterModal = (props) => {
 						selectedKey={slectedScreenProduto}
 						onSelectionChange={setSelectedScreenProduto}>
 							<Tab key={"Produto"} title="Cadastro de Produto" className="w-full h-full bg-background-table">
-								<ProdutoRegister dataRenderModal={dataRenderModal} FormatData={FormatDataProduto} handleValue={handleValue} dataProduto={data}/>
+								<ProdutoRegister dataRenderModal={dataRenderModal} duplicated={dataProdutoDuplicated} AddItem={AddItemProduto}
+								handleValue={handleValue} dataProduto={data}/>
 							</Tab>
 							<Tab key={"Fiscal"} title="Fiscal" className="w-full h-full bg-background-table">
-								<Fiscal dataFiscal={data} handleValue={handleValue} SetData={setData}/>
+								<Fiscal dataFiscal={data} handleValue={handleValue} dataDuplicated={dataProdutoDuplicated} SetData={setData}/>
 							</Tab>
 						</Tabs>
 					</CardBody>
