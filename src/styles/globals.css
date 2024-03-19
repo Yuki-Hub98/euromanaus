@@ -26,6 +26,16 @@
 ::-webkit-scrollbar-thumb:hover {
 	background-color: #6c5c09;
 }
+/*
+Example With custom prefix
+.my-component {
+  padding: var(--euromanaus-spacing-unit-4);
+  font-size: var(--euromanaus-font-size-small);
+  line-height: var(--euromanaus-line-height-small);
+  border-radius: var(--euromanaus-radius-medium);
+}
+*/
+
 
 /*
 @media (prefers-color-scheme: dark) {
