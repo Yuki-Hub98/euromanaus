@@ -2,6 +2,7 @@
 import Cep from "@/app/api/fornecedor/cep";
 import Del from "@/app/api/fornecedor/del";
 import Get from "@/app/api/fornecedor/get";
+import NameFornecedor from "@/app/api/fornecedor/nameFornecedor";
 import Post from "@/app/api/fornecedor/post";
 import Put from "@/app/api/fornecedor/put";
 
@@ -15,8 +16,13 @@ const PostFornecedor = async (request, data) => {
 	return post
 }
 
-const GetFornecedor = async (request, data, flag) => {
-	const get = await Get(request, data, flag);
+const GetFornecedor = async (request, data) => {
+	const get = await Get(request, data);
+	return get
+}
+
+const GetNameFonecedor = async () => {
+	const get = await NameFornecedor()
 	return get
 }
 
@@ -30,4 +36,4 @@ const DelFornecedor = async (request, data) => {
 	return del
 }
 
-export {GetCep, PostFornecedor, GetFornecedor, PutFornecedor, DelFornecedor}
+export {GetCep, PostFornecedor, GetFornecedor, GetNameFonecedor, PutFornecedor, DelFornecedor}

@@ -4,7 +4,7 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Tabs, Tab, Card, CardBody, Input, Select, SelectItem} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
-import { GetCep, GetFornecedor } from "@/app/actions/fornecedor";
+import { GetCep, GetFornecedor, GetNameFonecedor } from "@/app/actions/fornecedor";
 import FormatFone from "@/functions/formatFone";
 import FormDadosBancarios from "../FormDadosBancarios";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
@@ -202,7 +202,7 @@ const RegisterModal = (props) => {
 
 	const RequestModal = async () =>{
 		const dataDepartamento = await GetArvoreProduto("departamento")
-		const dataFornecedor = await GetFornecedor("fornecedor", "", "produto")
+		const dataFornecedor = await GetNameFonecedor()
 		const dataCor = await GetArvoreProduto("cor")
 		const dataEspecificacao = await GetArvoreProduto("especificacao")
 

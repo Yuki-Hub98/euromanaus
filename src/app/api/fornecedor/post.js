@@ -4,7 +4,11 @@ const Post = async (nameRequest, data) => {
 	const response = await axios.post(`http://localhost:8080/${nameRequest}`, data)
 	.then( (response) => {
 		if (response) {
-			return response.data
+			let dataPost ={
+        data: response?.data,
+        status: response?.status
+      }
+			return dataPost
 		}
 	})
 	.catch((error) => {
