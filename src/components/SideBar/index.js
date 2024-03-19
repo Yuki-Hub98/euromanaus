@@ -18,7 +18,7 @@ const Sidebar = (props) => {
 				<>
 						<aside className={`fixed pt-10 bg-background-component ${open ? 'w-64' : 'w-16' } duration-300 h-screen`} aria-label="Sidenav">
 						<div
-							className={`flex cursor-pointer py-3 hover:text-[#edca62] ${open ? 'justify-end pr-2' : 'justify-center'}`}
+							className={`flex cursor-pointer py-3 hover:text-[#edca62] ${open ? 'justify-end pr-4' : 'justify-center'}`}
 							onClick={() => {setOpen(!open), statusSide(!open)}}>
 								<VscMenu size={22}/>
 							</div>

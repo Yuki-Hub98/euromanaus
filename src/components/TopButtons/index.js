@@ -4,62 +4,35 @@ import Search from "../ComponentsCompras/Search";
 import {Button, useDisclosure} from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import EditModal from "../ComponentsCompras/EditModal";
+import { PostArvoreProduto, PutArvoreProduto, DelArvoreProduto } from "@/app/actions/arvore-produto";
+import useDeleteData from "@/hooks/services/useDeleteData";
+import usePostData from "@/hooks/services/usePostData";
+import usePutData from "@/hooks/services/usePutData";
 
 
 const TopButtons = (props) => {
 	const router = usePathname()
 	const { isOpen , onOpen , onOpenChange } = useDisclosure();
-	const [receivePostData, setReceivePostData] = useState();
 	const [receiveGetData, setReceiveGetData] = useState();
-	const [receivePutData, setReceivePutData] = useState();
-	const [nameRequest, setNameRequest] = useState();
 	const [nameRequestGet, setNameRequestGet] = useState();
-	const [nameRequestPut, setNameRequestPut] = useState();
 	const [open, setOpen] = useState(false)
-	const {PostData, GetData, PutData, DeleteData} = props
+	const { GetData } = props
 	const modal = (value) =>{
 		return setOpen(value)
 	}
 
-	const ReceivePost = ( nameRequest ,data) => {
-		setNameRequest(nameRequest)
-		setReceivePostData(data)
-	}
+	const { warningPost , statusPost , ReceivePost } = usePostData(PostArvoreProduto);
+	const { statusEdit, warningEdit, ReceivePut } = usePutData(PutArvoreProduto);
+	const { statusDelete, warningDelete, DeleteData } = useDeleteData(DelArvoreProduto)
 
 	const ReceiveGet = (nameRequest, data) => {
 		setNameRequestGet(nameRequest)
 		setReceiveGetData(data)
 	}
 
-	const ReceivePut = (nameRequest, data) =>{
-		setNameRequestPut(nameRequest)
-		setReceivePutData(data)
-	}
-
-	
 	const toClean = () => {
-		setReceivePostData(null)
 		setReceiveGetData(null)
-		setReceivePutData(null)
-		setNameRequestPut(null)
-		setNameRequestGet(null)
-		setNameRequest(null)
-		
 	}
-
-	useEffect(() => {
-		if (receivePostData) {
-			PostData(nameRequest, receivePostData)
-			return toClean()
-		}
-	})
-
-	useEffect(() => {
-		if (receivePutData) {
-			PutData(nameRequestPut, receivePutData)
-			return toClean();
-		}
-	})
 
 	useEffect(() => {
 		if (receiveGetData && nameRequestGet) {
@@ -85,6 +58,8 @@ const TopButtons = (props) => {
 						</Button>
 						<RegisterModal name={props?.option} size={props?.size} h={props?.h} isOpen={isOpen} 
 						dataModal={props?.dataModal} onOpenChange={onOpenChange} ReceivePost={ReceivePost} />
+						{ statusPost }
+						{ warningPost }
 					</div>
 					<div className='flex items-center'>
 						{props?.valueTable ? 
@@ -98,6 +73,8 @@ const TopButtons = (props) => {
 						}
 						<EditModal name={props?.option} size={props?.size} h={props?.h} valueTable={props?.valueTable} 
 						ReceivePut={ReceivePut} isOpen={open} modal={modal}/>
+						{ statusEdit }
+						{ warningEdit }
 					</div>
 					<div className='flex items-center'>
 						{props?.valueTable ? 
@@ -109,6 +86,8 @@ const TopButtons = (props) => {
 								Excluir
 							</Button>
 						}
+						{ statusDelete }
+						{ warningDelete }
 					</div>
 					
 					</>
