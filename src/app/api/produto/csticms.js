@@ -9,7 +9,6 @@ const response = axios.get(`http://localhost:8080/produtos/csticms?origem=${data
 })
 .catch((error) => {
   if (error) {
-    console.log(error)
     return error?.response?.data
   }
 })

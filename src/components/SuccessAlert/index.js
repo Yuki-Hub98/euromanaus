@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const SuccessAlert = (props) => {
 		const [showAlert, setShowAlert] = useState(false);
-
+		const { CloseStatus } = props
 		useEffect(() => {
 				if (props) {
 						setShowAlert(true)
@@ -14,7 +14,7 @@ const SuccessAlert = (props) => {
 				if (showAlert) {
 				const timeoutId = setTimeout(() => {
 					// Ocultar o alerta após 3 segundos (ajuste conforme necessário)
-						props?.CloseStatus()
+						CloseStatus()
 						setShowAlert(false);
 				}, 4000);
 

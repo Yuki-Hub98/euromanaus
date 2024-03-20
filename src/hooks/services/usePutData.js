@@ -18,7 +18,7 @@ const usePutData = (putFunction) => {
 
   let statusEdit =  resultPut?.status === 200 ? ( <> <SuccessAlert CloseStatus={CloseStatus}  message="Editado com com Sucesso !"/> </> ): (null)
 
-  let warningEdit = resultPut?.error ? ( <> <Warning status={resultPut} /> </>) : (null) 
+  let warningEdit = resultPut?.error ? ( <> <Warning status={resultPut} CloseStatus={CloseStatus} /> </>) : (null) 
 
   return {resultPut, statusEdit, warningEdit, ReceivePut}
 }

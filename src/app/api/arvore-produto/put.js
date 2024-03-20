@@ -5,7 +5,11 @@ const Put = async (request, data) =>{
 	const response = await axios.put(`http://localhost:8080/arvore-produto/${request}/edit`, data)
 	.then((response) => {
 		if (response) {
-			return response.data
+			let dataPut ={
+				data: response?.data,
+				status: response?.status
+			}
+			return dataPut
 		}}
 	).catch((error) => {
 		if (error?.response) {

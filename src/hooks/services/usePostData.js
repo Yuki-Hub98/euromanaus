@@ -24,7 +24,7 @@ const usePostData = (postFunction) => {
 
   let statusPost = resultPost?.status === 200 ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com Sucesso !"/> </> ): (null) 
 
-  let warningPost = resultPost?.error ? ( <> <Warning status={resultPost} /> </>) : (null) 
+  let warningPost = resultPost?.error ? ( <> <Warning status={resultPost} CloseStatus={CloseStatus} /> </>) : (null) 
 
   return {resultPost, statusPost, warningPost, ReceivePost}
 
