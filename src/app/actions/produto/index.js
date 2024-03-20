@@ -8,6 +8,8 @@ import Modelo from "@/app/api/produto/modelo";
 import Del from "@/app/api/produto/del";
 import SearchProduto from "@/app/api/produto/getProduto";
 import LastIdItem from "@/app/api/produto/getLastId";
+import ProdutoToEdit from "@/app/api/produto/produtoToEdit";
+import Put from "@/app/api/produto/put";
 
 
 const GetProduto = async (nameRequest, data) => {
@@ -40,9 +42,19 @@ const GetModelo = async (data) => {
   return get
 }
 
+const GetProdutoToEdit = async (data) => {
+  const get = await ProdutoToEdit(data)  
+  return get
+}
+
 const PostProduto = async (nameRequest, data) => {
   const post = await Post(nameRequest, data)
   return post
+}
+
+const PutProdudo = async (nameRequest, data) => {
+  const put = await Put(nameRequest, data)
+  return put
 }
 
 const PostCod = async (data) => {
@@ -55,4 +67,4 @@ const DelProduto = async (nameRequest, data) =>{
   return del
 }
 
-export {GetProduto, GetCst_Icms, GetNcm, GetModelo, GetSearchProduto, PostProduto, PostCod, DelProduto, GetLastIdItem}
+export {GetProduto, GetCst_Icms, GetNcm, GetModelo, GetSearchProduto, GetLastIdItem, GetProdutoToEdit, PostProduto, PostCod, PutProdudo, DelProduto}

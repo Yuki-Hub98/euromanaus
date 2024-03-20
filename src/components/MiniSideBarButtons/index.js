@@ -1,11 +1,11 @@
 "use Client";
-import React , {useEffect, useState} from "react";
+import React , {useState} from "react";
 import { usePathname } from "next/navigation";
 import {Button, useDisclosure } from "@nextui-org/react";
 import RegisterModal from "../ComponentsCompras/RegisterModal";
 import EditModal from "../ComponentsCompras/EditModal";
-import { PostProduto } from "@/app/actions/produto";
-import { DelFornecedor, PutFornecedor } from "@/app/actions/fornecedor";
+import { DelProduto, PostProduto, PutProdudo } from "@/app/actions/produto";
+import { DelFornecedor, PostFornecedor, PutFornecedor } from "@/app/actions/fornecedor";
 import useDeleteData from "@/hooks/services/useDeleteData";
 import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
@@ -14,11 +14,13 @@ const MiniSideBarButtons = (props) => {
     const router = usePathname()
     const { isOpen , onOpen , onOpenChange } = useDisclosure();
     const [open, setOpen] = useState(false)
-    const { warningPost , statusPost , ReceivePost } = usePostData(PostProduto);
-    const { statusEdit, warningEdit, ReceivePut} = usePutData(PutFornecedor);
-    const { statusDelete, warningDelete, DeleteData } = useDeleteData(DelFornecedor)
-    
-    const { valueTable } = props
+    const produtoPost = usePostData(PostProduto);
+    const produtoUpdate = usePutData(PutProdudo);
+    const produtoDelete = useDeleteData(DelProduto);
+    const fornecedorPost = usePostData(PostFornecedor);
+    const forncedorUpdate = usePutData(PutFornecedor);
+    const fornecedorDelete = useDeleteData(DelFornecedor);
+    const { valueTable, SetValueTable } = props
 
     const modal = (value) =>{
       return setOpen(value)
@@ -34,9 +36,9 @@ const MiniSideBarButtons = (props) => {
                       Cadastrar
                     </Button>
                     <RegisterModal isOpen={isOpen} size={"4xl"} h={"w-3/5"} name={props?.name} 
-                    ReceivePost={ReceivePost} onOpenChange={onOpenChange}/>
-                    {statusPost}
-                    {warningPost}
+                    ReceivePost={fornecedorPost.ReceivePost} onOpenChange={onOpenChange}/>
+                    {fornecedorPost.statusPost}
+                    {fornecedorPost.warningPost}
                     <div className='flex items-center'>
                       {valueTable ? 
                         <Button color="primary" size="sm" variant="ghost" onPress={() => {setOpen(true)}}>
@@ -47,13 +49,13 @@ const MiniSideBarButtons = (props) => {
                           Editar
                         </Button>
                       }
-                      <EditModal name={props?.name} size={"4xl"} h={"w-3/5"} ReceivePut={ReceivePut} 
-                      valueTable={valueTable} isOpen={open} modal={modal}/>
-                      {statusEdit}
-                      {warningEdit}
+                      <EditModal name={props?.name} size={"4xl"} h={"w-3/5"} ReceivePut={forncedorUpdate.ReceivePut} 
+                      valueTable={valueTable} isOpen={open} SetValueTable={SetValueTable} modal={modal}/>
+                      {forncedorUpdate.statusEdit}
+                      {forncedorUpdate.warningEdit}
                     </div>
                     {valueTable ? 
-                      <Button color="primary" size="sm" variant="ghost" onClick={() => DeleteData(props?.name, valueTable)}>
+                      <Button color="primary" size="sm" variant="ghost" onClick={() => fornecedorDelete.DeleteData(props?.name, valueTable)}>
                         Excluir
                       </Button>
                         :
@@ -73,9 +75,9 @@ const MiniSideBarButtons = (props) => {
                       Cadastrar
                     </Button>
                     <RegisterModal isOpen={isOpen} size={"4xl"} h={"w-3/5"} name={props?.name} 
-                    ReceivePost={ReceivePost} onOpenChange={onOpenChange}/>
-                    {statusPost}
-                    {warningPost}
+                    ReceivePost={produtoPost.ReceivePost} onOpenChange={onOpenChange}/>
+                    {produtoPost.statusPost}
+                    {produtoPost.warningPost}
                     <div className='flex items-center'>
                       {valueTable ? 
                         <Button color="primary" size="sm" variant="ghost" onPress={() => {setOpen(true)}}>
@@ -86,13 +88,13 @@ const MiniSideBarButtons = (props) => {
                           Editar
                         </Button>
                       }
-                      <EditModal name={props?.name} size={"4xl"} h={"w-3/5"} ReceivePut={ReceivePut} 
-                      valueTable={valueTable} isOpen={open} modal={modal}/>
-                      {statusEdit}
-                      {warningEdit}
+                      <EditModal name={props?.name} size={"4xl"} h={"w-3/5"} ReceivePut={produtoUpdate.ReceivePut} 
+                      valueTable={valueTable} SetValueTable={SetValueTable} isOpen={open} modal={modal}/>
+                      {produtoUpdate.statusEdit}
+                      {produtoUpdate.warningEdit}
                     </div>
                     {valueTable ? 
-                      <Button color="primary" size="sm" variant="ghost" onClick={() => DeleteData(props?.name, valueTable)}>
+                      <Button color="primary" size="sm" variant="ghost" onClick={() => produtoDelete.DeleteData(props?.name, valueTable)}>
                         Excluir
                       </Button>
                         :
@@ -100,8 +102,8 @@ const MiniSideBarButtons = (props) => {
                         Excluir
                       </Button>
                     }
-                    {statusDelete}
-                    {warningDelete}
+                    {produtoDelete.statusDelete}
+                    {produtoDelete.warningDelete}
                   </div>
                 </>)
             default:

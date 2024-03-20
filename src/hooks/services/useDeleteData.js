@@ -17,7 +17,7 @@ const useDeleteData = (deleteFunction) => {
 
   let statusDelete =  resultDelte?.del ? ( <> <SuccessAlert CloseStatus={CloseStatus}  message="Deletado com com Sucesso !"/> </> ): (null)
 
-  let warningDelete = resultDelte?.error ? ( <> <Warning status={resultDelte} /> </>) : (null) 
+  let warningDelete = resultDelte?.error ? ( <> <Warning status={resultDelte} CloseStatus={CloseStatus} /> </>) : (null) 
 
   return {resultDelte, statusDelete, warningDelete, DeleteData}
 

@@ -30,7 +30,7 @@ export default function Produtos () {
 			<TopButtons title={option} option={option} GetData={ReceiveGet}/>
 			{warningGet}
 			<div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
-				<MiniSideBarButtons name={option} valueTable={valueTable} />
+				<MiniSideBarButtons name={option} valueTable={valueTable} SetValueTable={setValueTable} />
 				<div className='w-full flex overflow-y-auto h-50 flex-col rounded'>
 					<TableRender data={resultGet} name={option} ValueTable={ValueTable}/>
 					<div className='w-full h-10 bg-[#CFCFCF]'>
