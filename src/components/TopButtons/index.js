@@ -16,7 +16,7 @@ const TopButtons = (props) => {
 	const [receiveGetData, setReceiveGetData] = useState();
 	const [nameRequestGet, setNameRequestGet] = useState();
 	const [open, setOpen] = useState(false)
-	const { GetData } = props
+	const { GetData, SetValueTable, valueTable } = props
 	const modal = (value) =>{
 		return setOpen(value)
 	}
@@ -42,7 +42,7 @@ const TopButtons = (props) => {
 			GetData(nameRequestGet);
 			return toClean();
 		}
-	})
+	}, [receiveGetData, nameRequestGet])
 
 	const OptionPage = (page) => {
 		switch (page) {
@@ -71,14 +71,14 @@ const TopButtons = (props) => {
 								Editar
 							</Button>
 						}
-						<EditModal name={props?.option} size={props?.size} h={props?.h} valueTable={props?.valueTable} 
-						ReceivePut={ReceivePut} isOpen={open} modal={modal}/>
+						<EditModal name={props?.option} size={props?.size} h={props?.h} valueTable={valueTable} 
+						ReceivePut={ReceivePut} SetValueTable={SetValueTable}  isOpen={open} modal={modal}/>
 						{ statusEdit }
 						{ warningEdit }
 					</div>
 					<div className='flex items-center'>
 						{props?.valueTable ? 
-							<Button color="primary" size='sm' variant="ghost" onClick={() => DeleteData(props?.option, props?.valueTable)}>
+							<Button color="primary" size='sm' variant="ghost" onClick={() => DeleteData(props?.option, valueTable)}>
 								Excluir
 							</Button>
 							:

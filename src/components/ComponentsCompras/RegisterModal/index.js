@@ -4,13 +4,14 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Tabs, Tab, Card, CardBody, Input, Select, SelectItem} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../FormRegister";
-import { GetCep, GetFornecedor, GetNameFonecedor } from "@/app/actions/fornecedor";
+import { GetCep, GetNameFonecedor } from "@/app/actions/fornecedor";
 import FormatFone from "@/functions/formatFone";
 import FormDadosBancarios from "../FormDadosBancarios";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 import { GetLastIdItem, GetSearchProduto, PostCod } from "@/app/actions/produto";
 import ProdutoRegister from "../ProdutoRegister";
 import Fiscal from "../ProdutoRegister/fiscal";
+import useSearchArvoreProduto from "@/hooks/services/useSearchArvoreProduto";
 
 const RegisterModal = (props) => {
 	const [dataToPost, setDataToPost] = useState();
@@ -30,6 +31,7 @@ const RegisterModal = (props) => {
 	const modalArvoreSelect = dataModal?.map((data) => ( 
 		{'value': data?.descricao}
 		))
+	const  {requestArvore, dataArvore} = useSearchArvoreProduto()
 
 	const LabelArvore = (name) => {
 		switch (name) {
@@ -350,11 +352,11 @@ const RegisterModal = (props) => {
 						selectedKey={slectedScreenProduto}
 						onSelectionChange={setSelectedScreenProduto}>
 							<Tab key={"Produto"} title="Cadastro de Produto" className="w-full h-full bg-background-table">
-								<ProdutoRegister dataRenderModal={dataRenderModal} duplicated={dataProdutoDuplicated} AddItem={AddItemProduto}
-								handleValue={handleValue} dataProduto={data}/>
+								<ProdutoRegister dataRenderModal={dataRenderModal} type={"register"} duplicated={dataProdutoDuplicated} AddItem={AddItemProduto}
+								handleValue={handleValue} requestArvore={requestArvore} dataArvore={dataArvore} dataProduto={data}/>
 							</Tab>
 							<Tab key={"Fiscal"} title="Fiscal" className="w-full h-full bg-background-table">
-								<Fiscal dataFiscal={data} handleValue={handleValue} dataDuplicated={dataProdutoDuplicated} SetData={setData}/>
+								<Fiscal dataFiscal={data} handleValue={handleValue} type={"register"} dataDuplicated={dataProdutoDuplicated} SetData={setData}/>
 							</Tab>
 						</Tabs>
 					</CardBody>

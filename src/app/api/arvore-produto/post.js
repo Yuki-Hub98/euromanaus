@@ -4,7 +4,11 @@ const Post = async (request, data) =>{
 		
 		const response = await axios.post(`http://localhost:8080/arvore-produto/${request}`, data)
 		.then((response) => {
-				return response.data
+			let dataPost ={
+        data: response?.data,
+        status: response?.status
+      }
+      return dataPost
 		})
 		.catch((error) => {
 				if (error?.response) {

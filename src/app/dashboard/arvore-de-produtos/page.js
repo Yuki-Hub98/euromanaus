@@ -72,7 +72,8 @@ export default function ArvoreDeProduto () {
 					<BreadcrumbItem className='capitalize'>{option}</BreadcrumbItem>
 				</Breadcrumbs>
 			</div>
-			<TopButtons title={option} size={"md"} h={'h-3/6'} option={option} valueTable={valueTable} GetData={ReceiveGet} dataModal={dataModal} tableData={tableData}/>
+			<TopButtons title={option} size={"md"} h={'h-3/6'} option={option} valueTable={valueTable} GetData={ReceiveGet} 
+			dataModal={dataModal} tableData={tableData} SetValueTable={setValueTable}/>
 				{ warningGet }
 				<div className=' w-full flex h-4/5 overflow-y-auto mt-1.5 flex-row'>
 					<MiniSideBarNav ChosenOption={ChosenOption}  name={navArvoreProduto} />

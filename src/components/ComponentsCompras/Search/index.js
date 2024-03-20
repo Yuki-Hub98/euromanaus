@@ -4,6 +4,7 @@ import {Button,  Input, Select, SelectItem} from "@nextui-org/react";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 import RegexToSave from "@/functions/regexToSave";
 import { GetModelo } from "@/app/actions/produto";
+import useSearchArvoreProduto from "@/hooks/services/useSearchArvoreProduto";
 
 
 const Search = (props) => {
@@ -14,8 +15,9 @@ const Search = (props) => {
 			linha:[],
 			modelo:[]
 		});
-		const {ReceiveGet} = props
-		const { data, router } = props
+		const {ReceiveGet, data, router} = props
+		const {requestArvore, dataArvore} = useSearchArvoreProduto()
+		
 		const Clear = () => {
 				setDataToGet(null)
 				setDataSearchDesc(null)
@@ -28,17 +30,6 @@ const Search = (props) => {
 				...data,
 				["departamento"]: [dataDepartamento],
 			})) 
-		}
-
-		const RequestDepartamento = async (e) => {
-			const {name, value} = e.target
-			if (name === "departamento") {
-				const linhaData = await GetArvoreProduto("linha", value, "produto")
-				setDataModal(data => ({
-					...data,
-					["linha"]: [linhaData]
-				}))
-			}
 		}
 
 		const RequestModelo = async (e) =>{
@@ -156,7 +147,7 @@ const Search = (props) => {
 								</div>
 								<div className="w-8/12 flex flex-row items-center col-span-2 gap-2" >
 									<span className="text-xs text-[#edca62]">Departamento</span>
-									<Select size="sm" color="primary" onChange={(e) => {handleChange(e), RequestDepartamento(e)}} labelPlacement="outside" name="departamento" aria-label="departamento" >
+									<Select size="sm" color="primary" onChange={(e) => {handleChange(e), requestArvore(e)}} labelPlacement="outside" name="departamento" aria-label="departamento" >
 										{dataModal?.departamento[0]?.map((departamento) => (
 											<SelectItem key={departamento.descricao} value={departamento.descricao}>{departamento.descricao}</SelectItem>
 										))}
@@ -165,7 +156,7 @@ const Search = (props) => {
 								<div className="flex flex-row items-center gap-2" >
 									<span className="text-xs text-[#edca62]">Linha</span>
 									<Select className="w-10/12" size="sm" onChange={(e) => {handleChange(e), RequestModelo(e)}} color="primary" name="linha" labelPlacement="outside-left" aria-label="linha" >
-										{dataModal?.linha[0]?.map((linha) => (
+										{dataArvore?.linha[0]?.map((linha) => (
 											<SelectItem key={linha.linha} value={linha.linha}>{linha.linha}</SelectItem>
 										))}
 									</Select>
