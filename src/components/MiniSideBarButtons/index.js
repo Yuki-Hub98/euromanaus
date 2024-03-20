@@ -63,8 +63,8 @@ const MiniSideBarButtons = (props) => {
                         Excluir
                       </Button>
                     }
-                    {statusDelete}
-                    {warningDelete}
+                    {fornecedorDelete.statusDelete}
+                    {fornecedorDelete.warningDelete}
                     </div>
                 </>)
             case "/dashboard/produtos":
