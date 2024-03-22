@@ -20,7 +20,7 @@ export const unidadeMedida = [
 ]
 
 export const tipoProduto = [ 
-  {status:"ATIVO IMOBILIARIO"},
+  {status:"ATIVO IMOBILIZADO"},
   {status:"ITEM DE VENDA"},
   {status:"MATÉRIA PRIMA"},
   {status:"USO E CONSUMO"}

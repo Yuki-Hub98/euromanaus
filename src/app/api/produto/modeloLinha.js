@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const Modelo = async (data) => {
-  const response = axios.get(`http://localhost:8080/produtos/modelo?linha=${data}`)
+const ModeloLinha = async (data) => {
+  const response = axios.get(`http://localhost:8080/produtos/modelo/linha?linha=${data}`)
   .then((response) => {
     if (response) {
       return response?.data
@@ -16,4 +16,4 @@ const Modelo = async (data) => {
   return response
 }
 
-export default Modelo
+export default ModeloLinha

@@ -4,23 +4,21 @@ import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import TopButtons from "@/components/TopButtons";
 import TableRender from "@/components/TableRender";
 import MiniSideBarButtons from "@/components/MiniSideBarButtons";
-import { GetFornecedor } from "@/app/actions/fornecedor"
 import useGetData from "@/hooks/services/useGetData";
-import { DelFornecedor, PostFornecedor, PutFornecedor } from "@/app/actions/fornecedor";
-import useDeleteData from "@/hooks/services/useDeleteData";
+import { DeleteModelo, EditModelo, RegisterModelo, SearchModelo } from "@/app/actions/modelo";
 import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
+import useDeleteData from "@/hooks/services/useDeleteData";
 
-
-
-export default function Fornecedor () {
-	const option = "fornecedor"
+export default function Modelos () {
+	const option = "modelos"
 	const [valueTable, setValueTable] = useState();
-	const { warningGet , resultGet, ReceiveGet } = useGetData(GetFornecedor)
-	const { statusPost, warningPost, ReceivePost } = usePostData(PostFornecedor);
-	const { statusEdit, warningEdit, ReceivePut } = usePutData(PutFornecedor);
-	const { statusDelete, warningDelete, DeleteData } = useDeleteData(DelFornecedor)
+	const { warningGet , resultGet, ReceiveGet } = useGetData(SearchModelo)
+	const { statusPost, warningPost, ReceivePost } = usePostData(RegisterModelo);
+	const { statusEdit, warningEdit, ReceivePut } = usePutData(EditModelo);
+	const { statusDelete, warningDelete, DeleteData } = useDeleteData(DeleteModelo)
 
+	
 	const ValueTable = (value) => {
 		setValueTable(value)
 	}
@@ -31,13 +29,13 @@ export default function Fornecedor () {
 					<Breadcrumbs color='primary'>
 						<BreadcrumbItem>Cadastro</BreadcrumbItem>
 						<BreadcrumbItem>Compras</BreadcrumbItem>
-						<BreadcrumbItem>Fornecedor</BreadcrumbItem>
+						<BreadcrumbItem>Modelos</BreadcrumbItem>
 					</Breadcrumbs>
 			</div>
 			<TopButtons title={option} option={option} GetData={ReceiveGet} />
 			<div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
-				<MiniSideBarButtons name={option} valueTable={valueTable} SetValueTable={setValueTable} PostData={ReceivePost} PutData={ReceivePut} 
-				DeleteData={DeleteData}/>
+				<MiniSideBarButtons name={option} valueTable={valueTable} PostData={ReceivePost} PutData={ReceivePut} 
+				DeleteData={DeleteData} SetValueTable={setValueTable}/>
 				{statusPost} {statusEdit} {statusDelete}
 				{warningGet} {warningPost} {warningEdit} {warningDelete}
 				<div className='w-full flex overflow-y-auto h-50 flex-col rounded'>

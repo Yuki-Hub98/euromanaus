@@ -4,7 +4,7 @@ import Get from "@/app/api/produto/get";
 import Post from "@/app/api/produto/post";
 import CstIcms from "@/app/api/produto/csticms";
 import Ncm from "@/app/api/produto/ncm";
-import Modelo from "@/app/api/produto/modelo";
+import ModeloLinha from "@/app/api/produto/modeloLinha";
 import Del from "@/app/api/produto/del";
 import SearchProduto from "@/app/api/produto/getProduto";
 import LastIdItem from "@/app/api/produto/getLastId";
@@ -37,8 +37,8 @@ const GetNcm = async (data) => {
   return get
 }
 
-const GetModelo = async (data) => {
-  const get = await Modelo(data)
+const GetModeloLinha = async (data) => {
+  const get = await ModeloLinha(data)
   return get
 }
 
@@ -67,4 +67,4 @@ const DelProduto = async (nameRequest, data) =>{
   return del
 }
 
-export {GetProduto, GetCst_Icms, GetNcm, GetModelo, GetSearchProduto, GetLastIdItem, GetProdutoToEdit, PostProduto, PostCod, PutProdudo, DelProduto}
+export {GetProduto, GetCst_Icms, GetNcm, GetModeloLinha, GetSearchProduto, GetLastIdItem, GetProdutoToEdit, PostProduto, PostCod, PutProdudo, DelProduto}
