@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 const {nextui} = require("@nextui-org/react");
 const  withMT = require("@material-tailwind/react/utils/withMT");
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
 module.exports = {
 	content: [
 		'./src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -114,7 +117,7 @@ module.exports = {
 				},
 			},
 		},
-	}), { })],
+	}), { }), addVariablesForColors],
 }, withMT({
 	content: [],
 	theme: {
@@ -122,3 +125,14 @@ module.exports = {
 	},
 	plugins: [],
 });
+
+function addVariablesForColors({ addBase, theme }) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}

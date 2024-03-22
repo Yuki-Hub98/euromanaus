@@ -76,8 +76,14 @@ const TableRender = (props) => {
 									{TableAssert(data, ValueTable, "table-auto whitespace-nowrap")}
 								</>
 							)
-								default:
-										break;
+						case "modelos":
+							return(
+								<>
+									{TableAssert(data, ValueTable, "w-1/3")}
+								</>
+							)
+							default:
+								break;
 				}
 		}
 		return(

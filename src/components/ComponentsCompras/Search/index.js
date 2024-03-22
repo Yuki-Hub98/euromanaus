@@ -3,8 +3,9 @@ import React , {useEffect, useState} from "react";
 import {Button,  Input, Select, SelectItem} from "@nextui-org/react";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 import RegexToSave from "@/functions/regexToSave";
-import { GetModelo } from "@/app/actions/produto";
+import { GetModeloLinha } from "@/app/actions/produto";
 import useSearchArvoreProduto from "@/hooks/services/useSearchArvoreProduto";
+import { SearchModelo } from "@/app/actions/modelo";
 
 
 const Search = (props) => {
@@ -13,7 +14,7 @@ const Search = (props) => {
 		const [dataModal, setDataModal] = useState({
 			departamento:[],
 			linha:[],
-			modelo:[]
+			modelos:[]
 		});
 		const {ReceiveGet, data, router} = props
 		const {requestArvore, dataArvore} = useSearchArvoreProduto()
@@ -25,20 +26,13 @@ const Search = (props) => {
 
 		const RequestModal = async () =>{
 			const dataDepartamento = await GetArvoreProduto("departamento")
+			const modelo = await SearchModelo("modelos")
 	
 			setDataModal(data=> ({
 				...data,
 				["departamento"]: [dataDepartamento],
+				["modelos"]: [modelo]
 			})) 
-		}
-
-		const RequestModelo = async (e) =>{
-			const {value} = e.target
-			const modeloData = await GetModelo(value)
-				setDataModal(data => ({
-					...data,
-					["modelo"]: [modeloData]
-				}))
 		}
 
 		const handleChange = (e) =>{
@@ -76,7 +70,7 @@ const Search = (props) => {
 										<div className='h-12 gap-2 flex flex-row justify-items-center items-center'>
 												<Input className='w-72' labelPlacement='outside-left' placeholder=" " 
 												onChange={(e) => handleChange(e)} color="primary" label="Descrição" name="descricao"/>
-												<Button color="primary" size='sm' variant="ghost" onClick={() =>  Click()} >
+												<Button color="primary" type="submit" size='sm' variant="ghost" onClick={() =>  Click()} >
 														Pesquisar
 												</Button>
 										</div>
@@ -105,7 +99,7 @@ const Search = (props) => {
 												size="sm"
 												onChange={(e) => handleChange(e)} name="nomeFantasiaFornecedor" color="primary"/>
 												<div className="pt-6">
-												<Button color="primary" size='sm' variant="ghost"  onClick={() =>  Click()}>
+												<Button color="primary" type="submit" size='sm' variant="ghost"  onClick={() =>  Click()}>
 														Pesquisar
 												</Button>
 												</div>
@@ -155,7 +149,7 @@ const Search = (props) => {
 								</div>
 								<div className="flex flex-row items-center gap-2" >
 									<span className="text-xs text-[#edca62]">Linha</span>
-									<Select className="w-10/12" size="sm" onChange={(e) => {handleChange(e), RequestModelo(e)}} color="primary" name="linha" labelPlacement="outside-left" aria-label="linha" >
+									<Select className="w-10/12" size="sm" onChange={(e) => {handleChange(e)}} color="primary" name="linha" labelPlacement="outside-left" aria-label="linha" >
 										{dataArvore?.linha[0]?.map((linha) => (
 											<SelectItem key={linha.linha} value={linha.linha}>{linha.linha}</SelectItem>
 										))}
@@ -164,19 +158,31 @@ const Search = (props) => {
 								<div className="flex flex-row items-center gap-2 mr-1" >
 									<span className="text-xs text-[#edca62]">Modelo</span>
 									<Select className="w-10/12" size="sm" onChange={(e) => handleChange(e)} color="primary" name="modelo" labelPlacement="outside-left" aria-label="modelo" >
-										{dataModal?.modelo[0]?.map((modelo) => (
-											<SelectItem key={modelo.modelo} value={modelo.modelo}>{modelo.modelo}</SelectItem>
+										{dataModal?.modelos[0]?.map((modelo) => (
+											<SelectItem key={modelo.descricao} value={modelo.descricao}>{modelo.descricao}</SelectItem>
 										))}
 									</Select>
 								</div>
 								<div className="ml-2">
-									<Button color="primary" size='sm' variant="ghost"  onClick={() =>  Click()}>
+									<Button color="primary" size='sm' type="submit" variant="ghost"  onClick={() =>  Click()}>
 										Pesquisar
 									</Button>
 								</div>
 							</div>
 							</>
 						)
+						case"/dashboard/modelos":
+						return(
+							<>
+								<div className='h-12 gap-2 flex flex-row justify-items-center items-center'>
+										<Input className='w-72' labelPlacement='outside-left' placeholder=" " 
+										onChange={(e) => handleChange(e)} color="primary" label="Descrição" name="descricao"/>
+										<Button color="primary" type="submit" size='sm' variant="ghost" onClick={() =>  Click()} >
+												Pesquisar
+										</Button>
+								</div>
+							</>
+					)
 				}
 		}
 

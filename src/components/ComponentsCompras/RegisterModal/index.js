@@ -9,6 +9,7 @@ import FormatFone from "@/functions/formatFone";
 import FormDadosBancarios from "../FormDadosBancarios";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 import { GetLastIdItem, GetSearchProduto, PostCod } from "@/app/actions/produto";
+import { SearchModelo } from "@/app/actions/modelo";
 import ProdutoRegister from "../ProdutoRegister";
 import Fiscal from "../ProdutoRegister/fiscal";
 import useSearchArvoreProduto from "@/hooks/services/useSearchArvoreProduto";
@@ -20,7 +21,8 @@ const RegisterModal = (props) => {
 		departamento:[],
 		cor:[],
 		especificacao:[],
-		fornecedor:[]
+		fornecedor:[],
+		modelos:[]
 	});
 	const [slectedScreenFornecedor, setSelectedScreenFornecedor] = useState("Fornecedor");
 	const [slectedScreenProduto, setSelectedScreenProduto] = useState("Produto");
@@ -96,31 +98,6 @@ const RegisterModal = (props) => {
 				["descricaoProduto"]: descProd
 			}))
 		}
-		if (data?.linha && data?.grupo && data?.modelo && data?.cor && name === "especificacao" ) {
-			const descItem = `${data?.linha} ${data?.modelo} ${data?.grupo} ${data?.cor} ${value}`
-			setData(prevState => ({
-				...prevState,
-				["descricaoItem"]: descItem
-			}))
-		}else if (data?.linha && data?.grupo && data?.modelo && data?.especificacao && name === "cor" ) {
-			const descItem = `${data?.linha} ${data?.modelo} ${data?.grupo} ${value} ${data?.especificacao}`
-			setData(prevState => ({
-				...prevState,
-				["descricaoItem"]: descItem
-			}))
-		}else if (data?.linha  && data?.modelo && data?.cor && data?.especificacao && name === "grupo") {
-			const descItem = `${data?.linha} ${data?.modelo} ${value} ${data?.cor} ${data?.especificacao}`
-			setData(prevState => ({
-				...prevState,
-				["descricaoItem"]: descItem
-			}))
-		}else if (data?.linha  && data?.grupo && data?.cor && data?.especificacao && name === "modelo") {
-			const descItem = `${data?.linha} ${value} ${data?.grupo} ${data?.cor} ${data?.especificacao}`
-			setData(prevState => ({
-				...prevState,
-				["descricaoItem"]: descItem
-			}))
-		}
 		setData(prevState => ({
 			...prevState,
 			[name]:value
@@ -138,16 +115,16 @@ const RegisterModal = (props) => {
 		if (newData?.items?.length > 0) {
 			const lestId = await GetLastIdItem();
 			const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId?.lastIdItem})
-			newData.items.push({idItem: lestId?.lastIdItem, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao})
+			newData.items.push({idItem: lestId?.lastIdItem, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao})
 		}else{
 			const lestId = await GetLastIdItem();
       if(lestId) {
 				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId?.lastIdItem})
-				newData.items = [{idItem: lestId?.lastIdItem, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+				newData.items = [{idItem: lestId?.lastIdItem, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
       }else{
 				const id = 1
 				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: id})
-				newData.items = [{idItem: id, descricaoItem: newData.descricaoItem, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+				newData.items = [{idItem: id, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
 			}
 			
 		}
@@ -161,7 +138,7 @@ const RegisterModal = (props) => {
 }
 
 	const TypeButton = (type) => {
-		if(type === 'departamento' || type === 'cor' || type === 'especificacao'){
+		if(type === 'departamento' || type === 'cor' || type === 'especificacao' || type=== 'modelos' ){
 			return 1 
 		}else if (type === "linha" || type === "familia" || type === "grupo") {
 			return 2
@@ -207,13 +184,15 @@ const RegisterModal = (props) => {
 		const dataFornecedor = await GetNameFonecedor()
 		const dataCor = await GetArvoreProduto("cor")
 		const dataEspecificacao = await GetArvoreProduto("especificacao")
+		const modelo = await SearchModelo("modelos")
 
 		setDataRenderModal(data=> ({
 			...data,
 			["departamento"]: [dataDepartamento],
 			["cor"]:[dataCor],
 			["especificacao"]: [dataEspecificacao],
-			["fornecedor"]: [dataFornecedor]
+			["fornecedor"]: [dataFornecedor],
+			["modelos"]:[modelo]
 		})) 
 	}
 
