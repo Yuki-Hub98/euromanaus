@@ -2,9 +2,10 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Input} from "@nextui-org/react";
 import useHandleChange from "@/hooks/ui/useHandleChange";
 
-const ModalRegisterMaoDeObra = (props) => {
+const ModalEditMaoDeObra = (props) => {
   const {isOpen, onOpenChange, size, height, name} = props
   const {dataHandleChange, handleChange} = useHandleChange()
+
   return(
     <>
       <Modal 
@@ -48,7 +49,7 @@ const ModalRegisterMaoDeObra = (props) => {
               <Button className='bg-sky-50' size="sm" variant="flat" onClick={() => {onClose()}} >
                 Cancelar
               </Button>
-              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost(name, data), toClean()}} 
+              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost(name, dataHandleChange), toClean()}} 
                 onPress={onClose} >
                 Cadastrar
               </Button>
@@ -62,4 +63,4 @@ const ModalRegisterMaoDeObra = (props) => {
 
 }
 
-export default ModalRegisterMaoDeObra
+export default ModalEditMaoDeObra
