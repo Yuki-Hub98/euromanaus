@@ -11,6 +11,7 @@ import ProdutoRegister from "../ProdutoRegister";
 import { GetProdutoToEdit } from "@/app/actions/produto";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 import useSearchArvoreProduto from "@/hooks/services/useSearchArvoreProduto";
+import { SearchModelo } from "@/app/actions/modelo";
 
 const EditModal = (props) => {
 	const { ReceivePut, valueTable, SetValueTable } = props
@@ -20,7 +21,8 @@ const EditModal = (props) => {
 		departamento:[],
 		cor:[],
 		especificacao:[],
-		fornecedor:[]
+		fornecedor:[],
+		modelos:[]
 	});
 	const [data, setData] = useState (valueTable);
 	const [cep1, setCep1] = useState ();
@@ -58,7 +60,7 @@ const EditModal = (props) => {
 	}
 
 	const FormateToPut = (op) =>{
-		if (op === 'departamento' || op === 'cor' || op === 'especificacao') {
+		if (op === 'departamento' || op === 'cor' || op === 'especificacao' || op === 'modelos') {
 			return setDataToPut({'descricao': valueTable?.descricao, 'edit':dataDescricao})
 		}
 		switch (op) {  
@@ -87,7 +89,7 @@ const EditModal = (props) => {
 		}
 
 	const TypeButton = (type) => {
-		if(type === 'departamento' || type === 'cor' || type === 'especificacao'){
+		if(type === "departamento" || type === "cor" || type === "especificacao" || type === "modelos"){
 			return 1 
 		}else if (type === "linha" || type === "familia" || type === "grupo") {
 			return 2
@@ -149,31 +151,6 @@ const EditModal = (props) => {
 					["descricaoProduto"]: descProd
 				}))
 			}
-			if (data?.linha && data?.grupo && data?.modelo && data?.cor && name === "especificacao" ) {
-				const descItem = `${data?.linha} ${data?.modelo} ${data?.grupo} ${data?.cor} ${value}`
-				setData(prevState => ({
-					...prevState,
-					["descricaoItem"]: descItem
-				}))
-			}else if (data?.linha && data?.grupo && data?.modelo && data?.especificacao && name === "cor" ) {
-				const descItem = `${data?.linha} ${data?.modelo} ${data?.grupo} ${value} ${data?.especificacao}`
-				setData(prevState => ({
-					...prevState,
-					["descricaoItem"]: descItem
-				}))
-			}else if (data?.linha  && data?.modelo && data?.cor && data?.especificacao && name === "grupo") {
-				const descItem = `${data?.linha} ${data?.modelo} ${value} ${data?.cor} ${data?.especificacao}`
-				setData(prevState => ({
-					...prevState,
-					["descricaoItem"]: descItem
-				}))
-			}else if (data?.linha  && data?.grupo && data?.cor && data?.especificacao && name === "modelo") {
-				const descItem = `${data?.linha} ${value} ${data?.grupo} ${data?.cor} ${data?.especificacao}`
-				setData(prevState => ({
-					...prevState,
-					["descricaoItem"]: descItem
-				}))
-			}
 			setData(prevState => ({
 				...prevState,
 				[name]:value
@@ -188,16 +165,21 @@ const EditModal = (props) => {
 	
 		const AddItemProduto = async (data, valueTable) => {
 			const newData = {...data}
-			newData.items.forEach((element, index) => {
+
+			newData?.items.forEach((element) => {
+				newData.items = [...newData.items, {idItem: element.idItem, descricaoItem: `${newData.descricaoProduto} ${element.cor} ${element.especificacao}`, codBarra: element.codBarra, cor: element.cor, especificacao: element.especificacao}]
+				newData.items.shift()
+			})
+
+			newData?.items.forEach((element, index) => {
 				if (element.idItem === valueTable?.idItem) {
 					newData.items.splice(index, 1)
-					newData.items = [...newData.items, {idItem: valueTable?.idItem, descricaoItem: newData.descricaoItem, codBarra: valueTable?.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+					newData.items = [...newData.items, {idItem: valueTable?.idItem, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: valueTable?.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
 				}
 			});
 			delete newData.cor
 			delete newData.especificacao
 			delete newData.descricaoItem
-			console.log(newData)
 			setData(newData)
 	}
 
@@ -230,13 +212,15 @@ const EditModal = (props) => {
 		const dataFornecedor = await GetNameFonecedor()
 		const dataCor = await GetArvoreProduto("cor")
 		const dataEspecificacao = await GetArvoreProduto("especificacao")
+		const modelo = await SearchModelo("modelos")
 
 		setDataRenderModal(data=> ({
 			...data,
 			["departamento"]: [dataDepartamento],
 			["cor"]:[dataCor],
 			["especificacao"]: [dataEspecificacao],
-			["fornecedor"]: [dataFornecedor]
+			["fornecedor"]: [dataFornecedor],
+			["modelos"]:[modelo]
 		})) 
 	}
 
@@ -343,7 +327,7 @@ const EditModal = (props) => {
 								onSelectionChange={setSelectedScreenProduto}>
 									<Tab key={"Produto"} title="Cadastro de Produto" className="w-full h-full bg-background-table">
 										<ProdutoRegister dataRenderModal={dataRenderModal} dataProduto={data} requestArvore={requestArvore}  AddItem={AddItemProduto} type={"edit"} 
-										handleValue={handleValue} dataArvore={dataArvore}/>
+										handleValueEdit={handleValue} dataArvore={dataArvore}/>
 									</Tab>
 									<Tab key={"Fiscal"} title="Fiscal" className="w-full h-full bg-background-table">
 										<Fiscal dataRenderModal={dataRenderModal} dataFiscal={data}	SetData={setData} type={"edit"}/>

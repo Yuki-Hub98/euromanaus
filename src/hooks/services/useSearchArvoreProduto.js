@@ -10,8 +10,10 @@ const useSearchArvoreProduto = () => {
 
   const requestArvore = async (e) => {
     const {name, value} = e.target
+    if (value === '') {
+      return;
+    }
     if (name === "departamento") {
-      console.log("chegou")
       const linhaData = await GetArvoreProduto("linha", value, "produto")
       setDataArvore(data => ({
         ...data,

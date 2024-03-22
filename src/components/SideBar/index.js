@@ -1,6 +1,6 @@
 "use client"
 
-import { DropDownNav } from "../DropDown";
+import { DropDownNav } from "../DropDownNav";
 import Link from "next/link";
 import { opcoesCadastro } from "@/DB/data";
 import { VscMenu } from "react-icons/vsc";

@@ -6,13 +6,19 @@ import TableRender from "@/components/TableRender";
 import MiniSideBarButtons from "@/components/MiniSideBarButtons";
 import { GetProduto } from "@/app/actions/produto";
 import useGetData from "@/hooks/services/useGetData";
-
+import { DelProduto, PostProduto, PutProdudo } from "@/app/actions/produto";
+import useDeleteData from "@/hooks/services/useDeleteData";
+import usePostData from "@/hooks/services/usePostData";
+import usePutData from "@/hooks/services/usePutData";
 
 export default function Produtos () {
 	const option = "produtos"
 	const [valueTable, setValueTable] = useState();
 
 	const { warningGet , resultGet , ReceiveGet } = useGetData(GetProduto)
+	const { statusPost, warningPost, ReceivePost } = usePostData(PostProduto);
+	const { statusEdit, warningEdit, ReceivePut } = usePutData(PutProdudo);
+	const { statusDelete, warningDelete, DeleteData } = useDeleteData(DelProduto)
 	
 	const ValueTable = (value) => {
 		setValueTable(value)
@@ -28,9 +34,11 @@ export default function Produtos () {
 				</Breadcrumbs>
 			</div>
 			<TopButtons title={option} option={option} GetData={ReceiveGet}/>
-			{warningGet}
+			{statusPost} {statusEdit} {statusDelete}
+			{warningGet} {warningPost} {warningEdit} {warningDelete}
 			<div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
-				<MiniSideBarButtons name={option} valueTable={valueTable} SetValueTable={setValueTable} />
+				<MiniSideBarButtons name={option} valueTable={valueTable} SetValueTable={setValueTable} PostData={ReceivePost} PutData={ReceivePut} 
+				DeleteData={DeleteData}/>
 				<div className='w-full flex overflow-y-auto h-50 flex-col rounded'>
 					<TableRender data={resultGet} name={option} ValueTable={ValueTable}/>
 					<div className='w-full h-10 bg-[#CFCFCF]'>
