@@ -1,7 +1,7 @@
 "use client"
-import Sidebar from "@/components/SideBar"
+import Sidebar from "@/components/ui/SideBar"
 import { Suspense } from "react"
-import Spinner from "@/components/Spinner"
+import Spinner from "@/components/ui/animation/spinner"
 import { useSideBar } from "@/hooks/ui/useSideBar"
 export default function LayoutDashboard({ children }) {
   const {isOpen, sideBar} = useSideBar(true)

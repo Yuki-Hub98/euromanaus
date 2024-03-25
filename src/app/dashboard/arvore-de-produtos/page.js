@@ -2,9 +2,9 @@
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import React , { useEffect, useState } from "react";
 import { DelArvoreProduto, GetArvoreProduto, PostArvoreProduto, PutArvoreProduto } from "@/app/actions/arvore-produto";
-import TopButtons from "@/components/TopButtons";
-import TableRender from "@/components/TableRender";
-import MiniSideBarNav from "@/components/MiniSideBarNav";
+import TopButtons from "@/components/ui/TopButtons";
+import TableRender from "@/components/ui/Table/tableRender";
+import MiniSideBarNav from "@/components/ui/MiniSideBarNav";
 import { navArvoreProduto } from "@/DB/data";
 import useGetData from "@/hooks/services/useGetData";
 import usePostData from "@/hooks/services/usePostData";

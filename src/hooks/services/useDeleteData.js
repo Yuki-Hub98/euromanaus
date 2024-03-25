@@ -1,6 +1,6 @@
 "use client";
-import SuccessAlert from "@/components/SuccessAlert";
-import Warning from "@/components/Warning";
+import SuccessAlert from "@/components/ui/SuccessAlert";
+import Warning from "@/components/ui/Warning";
 import {useState} from "react";
 
 const useDeleteData = (deleteFunction) => {

@@ -1,5 +1,5 @@
 "use client";
-import Warning from "@/components/Warning";
+import Warning from "@/components/ui/Warning";
 import {useState} from "react";
 const useGetData = (getFunction) => {
 

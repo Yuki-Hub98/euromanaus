@@ -7,7 +7,7 @@ import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
 import ModalRegisterMaoDeObra from "@/components/ComponentsIndustrial/Register/modalRegisterMaoDeObra";
 import ModalEditMaoDeObra from "@/components/ComponentsIndustrial/Edit/modalEditMaoDeObra";
-import TableRender from "@/components/TableRender";
+import TableRender from "@/components/ui/Table/tableRender";
 import useHandleChange from "@/hooks/ui/useHandleChange";
 
 export default function MaoDeObra () {

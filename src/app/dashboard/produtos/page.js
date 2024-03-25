@@ -1,9 +1,9 @@
 "use client";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import React , {useState} from "react";
-import TopButtons from "@/components/TopButtons";
-import TableRender from "@/components/TableRender";
-import MiniSideBarButtons from "@/components/MiniSideBarButtons";
+import TopButtons from "@/components/ui/TopButtons";
+import TableRender from "@/components/ui/Table/tableRender";
+import MiniSideBarButtons from "@/components/ui/MiniSideBarButtons";
 import { GetProduto } from "@/app/actions/produto";
 import useGetData from "@/hooks/services/useGetData";
 import { DelProduto, PostProduto, PutProdudo } from "@/app/actions/produto";

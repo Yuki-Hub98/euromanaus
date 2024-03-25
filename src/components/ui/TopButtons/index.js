@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import RegisterModal from "../ComponentsCompras/RegisterModal";
-import Search from "../ComponentsCompras/Search";
+import RegisterModal from "../../ComponentsCompras/RegisterModal";
+import Search from "../../ComponentsCompras/Search";
 import {Button, useDisclosure} from "@nextui-org/react";
 import { usePathname } from "next/navigation";
-import EditModal from "../ComponentsCompras/EditModal";
+import EditModal from "../../ComponentsCompras/EditModal";
 
 
 const TopButtons = (props) => {

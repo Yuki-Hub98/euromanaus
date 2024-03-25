@@ -1,7 +1,7 @@
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, 
 ModalBody,ModalFooter, Input } from "@nextui-org/react";
-import TableRender from "../../TableRender";
+import TableRender from "../../ui/Table/tableRender";
 import { GetCep } from "@/app/actions/fornecedor";
 import RegexCep from "@/functions/regexToCep";
 
