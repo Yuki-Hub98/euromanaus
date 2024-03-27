@@ -2,8 +2,8 @@
 import React , {useState} from "react";
 import { usePathname } from "next/navigation";
 import {Button, useDisclosure } from "@nextui-org/react";
-import RegisterModal from "../../ComponentsCompras/RegisterModal";
-import EditModal from "../../ComponentsCompras/EditModal";
+import RegisterModal from "../../ComponentsCompras/registerModal";
+import EditModal from "../../ComponentsCompras/editModal";
 
 const MiniSideBarButtons = (props) => {
     const router = usePathname()

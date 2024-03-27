@@ -1,11 +1,12 @@
 "use client";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-import TopButtons from "@/components/ui/TopButtons";
-import TableRender from "@/components/ui/Table/tableRender";
-import MiniSideBarButtons from "@/components/ui/MiniSideBarButtons";
+import TopButtons from "@/components/ui/topButtons";
+import TableRender from "@/components/ui/table/tableRender";
+import MiniSideBarButtons from "@/components/ui/miniSideBarButtons";
 import useGetData from "@/hooks/services/useGetData";
 import { DeleteModelo, EditModelo, RegisterModelo, SearchModelo } from "@/app/actions/modelo";
+import Layout from "@/components/ui/layout/layout";
 import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
 import useDeleteData from "@/hooks/services/useDeleteData";
@@ -18,10 +19,13 @@ export default function Modelos () {
 	const { statusEdit, warningEdit, ReceivePut } = usePutData(EditModelo);
 	const { statusDelete, warningDelete, DeleteData } = useDeleteData(DeleteModelo)
 
-	
 	const ValueTable = (value) => {
 		setValueTable(value)
 	}
+
+	useEffect(() => {
+		ReceiveGet("modelos")
+	},[])
 
 	return (
 		<>

@@ -1,12 +1,13 @@
 "use client";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-import React , {useState} from "react";
-import TopButtons from "@/components/ui/TopButtons";
-import TableRender from "@/components/ui/Table/tableRender";
-import MiniSideBarButtons from "@/components/ui/MiniSideBarButtons";
+import React , {useEffect, useState} from "react";
+import TopButtons from "@/components/ui/topButtons";
+import TableRender from "@/components/ui/table/tableRender";
+import MiniSideBarButtons from "@/components/ui/miniSideBarButtons";
 import { GetProduto } from "@/app/actions/produto";
 import useGetData from "@/hooks/services/useGetData";
 import { DelProduto, PostProduto, PutProdudo } from "@/app/actions/produto";
+import Layout from "@/components/ui/layout/layout";
 import useDeleteData from "@/hooks/services/useDeleteData";
 import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
@@ -24,6 +25,10 @@ export default function Produtos () {
 		setValueTable(value)
 	}
 
+	useEffect(() => {
+		ReceiveGet("produtos")
+	},[])
+
 	return (
 		<>
 			<div className='w-full h-6 absolute top-2'>
@@ -40,7 +45,7 @@ export default function Produtos () {
 				<MiniSideBarButtons name={option} valueTable={valueTable} SetValueTable={setValueTable} PostData={ReceivePost} PutData={ReceivePut} 
 				DeleteData={DeleteData}/>
 				<div className='w-full flex overflow-y-auto h-50 flex-col rounded'>
-					<TableRender data={resultGet} name={option} ValueTable={ValueTable}/>
+					<TableRender data={resultGet} name={option} buttons={false} style={"table-auto whitespace-nowrap"} ValueTable={ValueTable}/>
 					<div className='w-full h-10 bg-[#CFCFCF]'>
 						<span className='text-black'>
 							teste teste teste teste

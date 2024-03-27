@@ -3,7 +3,7 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 import useHandleChange from "@/hooks/ui/useHandleChange";
 
 const ModalRegisterMaoDeObra = (props) => {
-  const {isOpen, onOpenChange, size, height, name} = props
+  const {isOpen, onOpenChange, size, height, name, ReceivePost} = props
   const {dataHandleChange, handleChange} = useHandleChange()
   return(
     <>
@@ -28,19 +28,14 @@ const ModalRegisterMaoDeObra = (props) => {
             <ModalBody>
             <div className="w-full grid gri-cols-6 gap-2 items-center">
               <div className="col-span-1">
-                <span className="text-sm">Mão de Obra</span>
+                <span className="text-sm">Função</span>
               </div>
-              <Input size="md" type="Text" name="maoDeObra" onChange={(e) => {handleChange(e)}} 
+              <Input size="sm" type="Text" name="funcao" onChange={(e) => {handleChange(e)}} 
                 labelPlacement="outside" className="col-start-2"/>
               <div className="col-span-1">
-                <span className="text-sm">Minuto</span>
+                <span className="text-sm">Sálario</span>
               </div>
-              <Input size="md" type="number" name="minuto" onChange={(e) => {handleChange(e)}} 
-                labelPlacement="outside" className="col-start-2"/>
-              <div className="col-span-1">
-                <span className="text-sm">Valor</span>
-              </div>
-              <Input size="md" type="number" name="valor" onChange={(e) => {handleChange(e)}} 
+              <Input size="sm" type="Text" name="salario" onChange={(e) => {handleChange(e)}} 
                 labelPlacement="outside" placeholder="R$" className="col-start-2"/>
             </div>
             </ModalBody>
@@ -48,7 +43,7 @@ const ModalRegisterMaoDeObra = (props) => {
               <Button className='bg-sky-50' size="sm" variant="flat" onClick={() => {onClose()}} >
                 Cancelar
               </Button>
-              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost(name, data), toClean()}} 
+              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost("cadastro-de-funcao", dataHandleChange)}} 
                 onPress={onClose} >
                 Cadastrar
               </Button>
