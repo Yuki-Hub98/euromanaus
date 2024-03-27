@@ -1,24 +1,37 @@
-import SuccessAlert from "@/components/SuccessAlert";
-import Warning from "@/components/Warning";
+import SuccessAlert from "@/components/ui/successAlert";
+import Warning from "@/components/ui/warning";
 import React, {useState} from "react"
+import { useDispatch, useSelector } from "react-redux";
 const usePutData = (putFunction) => {
 
-  const [resultPut, setResultPut] = useState()
-
+  const resultPut = useSelector(state => state.data)
+  const [status, setStatus] = useState()
+  const dispatch = useDispatch();
   const CloseStatus = () => {
-		return setResultPut(null);
+		return setStatus(null);
 	}
 
   const ReceivePut = async (nameRequest, data) =>{
     if (data) {
-      const statusPut = await putFunction(nameRequest, data)
-      setResultPut(statusPut)
+      try{
+        const statusPut = await putFunction(nameRequest, data)
+        setStatus(statusPut)
+        dispatch({type: 'EDIT_DATA', payload: statusPut.data})
+      }catch{
+        const statusError = {
+          status: 404,
+          error: "Erro ao editar dados",
+          message: "Por favor contacte os administradores"
+        }
+        setStatus(statusError)
+      }
+      
     }
   }
 
-  let statusEdit =  resultPut?.status === 200 ? ( <> <SuccessAlert CloseStatus={CloseStatus}  message="Editado com com Sucesso !"/> </> ): (null)
+  let statusEdit =  status?.status === 200 ? ( <> <SuccessAlert CloseStatus={CloseStatus}  message="Editado com com Sucesso !"/> </> ): (null)
 
-  let warningEdit = resultPut?.error ? ( <> <Warning status={resultPut} CloseStatus={CloseStatus} /> </>) : (null) 
+  let warningEdit = status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null) 
 
   return {resultPut, statusEdit, warningEdit, ReceivePut}
 }

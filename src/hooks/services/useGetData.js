@@ -1,12 +1,15 @@
 "use client";
-import Warning from "@/components/Warning";
-import {useState} from "react";
+import Warning from "@/components/ui/warning";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 const useGetData = (getFunction) => {
 
-  const [resultGet, setResultGet] = useState([{}]);
+	const resultGet = useSelector(state => state.data);
+	const [status, setStatus] = useState()
+  const dispatch = useDispatch();
 
 	const CloseStatus = () => {
-		return setResultGet(null);
+		setStatus(null)
 	}
 
   const ReceiveGet = (nameRequest, data) => {
@@ -19,15 +22,30 @@ const useGetData = (getFunction) => {
 
   const Search = async (nameRequest, dataGet) => {
 		if (dataGet) {
-			const data =  await getFunction(nameRequest, dataGet)
-			setResultGet(data)
+			try {
+				const dataTable = await getFunction(nameRequest, dataGet);
+				setStatus(dataTable)
+				dispatch({ type: 'GET_DATA', payload: dataTable });
+			} catch (error) {
+				console.error('Erro ao pesquisar dados:', error);
+			}
 		}else{
-			const data =  await getFunction(nameRequest)
-			setResultGet(data)
+			try {
+				const dataTable = await getFunction(nameRequest);
+				setStatus(dataTable)
+				dispatch({ type: 'GET_DATA', payload: dataTable });
+			} catch (error) {
+				const statusError = {
+					status: 404,
+					error: "Erro ao pesquisar dados",
+					message: "Por favor contacte os administradores"
+				}
+				setStatus(statusError)
+			}
 		}
 	}
 
-  let warningGet = resultGet?.error ? ( <> <Warning status={resultGet} CloseStatus={CloseStatus} /> </>) : (null)
+  let warningGet = status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)
 
   return {resultGet, warningGet, ReceiveGet}
 }

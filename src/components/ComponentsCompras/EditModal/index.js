@@ -3,11 +3,11 @@ import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
-import FormRegister from "../FormRegister";
-import FormDadosBancarios from "../FormDadosBancarios";
+import FormRegister from "../formRegister";
+import FormDadosBancarios from "../formDadosBancarios";
 import { GetCep, GetNameFonecedor } from "@/app/actions/fornecedor";
-import Fiscal from "../ProdutoRegister/fiscal";
-import ProdutoRegister from "../ProdutoRegister";
+import Fiscal from "../produtoRegister/fiscal";
+import ProdutoRegister from "../produtoRegister";
 import { GetProdutoToEdit } from "@/app/actions/produto";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 import useSearchArvoreProduto from "@/hooks/services/useSearchArvoreProduto";

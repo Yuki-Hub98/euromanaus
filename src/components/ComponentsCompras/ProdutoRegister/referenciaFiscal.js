@@ -1,7 +1,7 @@
 import React , {useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, 
 ModalBody,ModalFooter, Input, Textarea } from "@nextui-org/react";
-import TableRender from "../../TableRender";
+import TableRender from "../../ui/table/tableRender";
 import { GetNcm } from "@/app/actions/produto";
 import RegexToSave from "@/functions/regexToSave";
 

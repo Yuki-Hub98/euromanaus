@@ -3,15 +3,15 @@ import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Tabs, Tab, Card, CardBody, Input, Select, SelectItem} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
-import FormRegister from "../FormRegister";
+import FormRegister from "../formRegister";
 import { GetCep, GetNameFonecedor } from "@/app/actions/fornecedor";
 import FormatFone from "@/functions/formatFone";
-import FormDadosBancarios from "../FormDadosBancarios";
+import FormDadosBancarios from "../formDadosBancarios";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 import { GetLastIdItem, GetSearchProduto, PostCod } from "@/app/actions/produto";
 import { SearchModelo } from "@/app/actions/modelo";
-import ProdutoRegister from "../ProdutoRegister";
-import Fiscal from "../ProdutoRegister/fiscal";
+import ProdutoRegister from "../produtoRegister";
+import Fiscal from "../produtoRegister/fiscal";
 import useSearchArvoreProduto from "@/hooks/services/useSearchArvoreProduto";
 
 const RegisterModal = (props) => {

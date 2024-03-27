@@ -1,7 +1,7 @@
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, 
 ModalBody,ModalFooter, Input } from "@nextui-org/react";
-import TableRender from "../../TableRender";
+import TableRender from "../../ui/table/tableRender";
 import { GetCep } from "@/app/actions/fornecedor";
 import RegexCep from "@/functions/regexToCep";
 
@@ -135,7 +135,7 @@ const RerenciaCep = (props) =>{
                         </div>
                         <div className=' w-full h-2/4 flex mt-4 overflow-y-auto overflow-x-auto flex-col rounded'>
                         <div className='w-full max-h-2/4 top-0 overflow-y-auto overflow-x-auto rounded bg-[#EDEDED]'>
-                            <TableRender name={"cep"} data={cep} ValueTable={ValueTable}  />
+                            <TableRender name={"cep"} data={cep} buttons={false} style={"table-auto whitespace-nowrap"} ValueTable={ValueTable}  />
                         </div>
                     </div>
                     </div>

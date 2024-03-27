@@ -3,7 +3,7 @@
 import {Button} from "@nextui-org/react";
 import Link from "next/link";
 import { useState } from "react";
-import { TypewriterEffect } from "@/components/ui/typewriter-effect";
+import { TypewriterEffect } from "@/components/ui/animation/typewriter-effect";
 export default function Home() {
 	const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,7 +49,7 @@ export default function Home() {
 										type="email"
 										autoComplete="email"
 										required
-										className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-[#edca62b4] focus:border-[#edca62b4] focus:z-10 sm:text-sm"
+										className="appearance-none rounded-none relative block w-full px-3 py-2 border border-background-table placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-[#edca62b4] focus:border-[#edca62b4] focus:z-10 sm:text-sm"
 										placeholder="Email address"
 										value={email}
 										onChange={handleEmailChange}
@@ -65,7 +65,7 @@ export default function Home() {
 										type="password"
 										autoComplete="current-password"
 										required
-										className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-[#edca62b4] focus:border-[#edca62b4] focus:z-10 sm:text-sm"
+										className="appearance-none rounded-none relative block w-full px-3 py-2 border border-background-table placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-[#edca62b4] focus:border-[#edca62b4] focus:z-10 sm:text-sm"
 										placeholder="Password"
 										value={password}
 										onChange={handlePasswordChange}
@@ -79,11 +79,11 @@ export default function Home() {
 										id="remember-me"
 										name="remember-me"
 										type="checkbox"
-										className="h-4 w-4 text-[#edca62b4] accent-[#edca62b4] focus:ring-[#edca62b4] border-gray-300 rounded"
+										className="h-4 w-4 text-[#edca62b4] accent-[#edca62b4] focus:ring-[#edca62b4] border-background-table rounded"
 									/>
 									<label
 										htmlFor="remember-me"
-										className="ml-2 block text-sm text-gray-300"
+										className="ml-2 block text-sm text-background-table"
 									>
 										Remember me
 									</label>
@@ -92,7 +92,7 @@ export default function Home() {
 								<div className="text-sm">
 									<a
 										href="#"
-										className="font-medium text-[#edca62b4] hover:text-gray-300"
+										className="font-medium text-[#edca62b4] hover:background-table"
 									>
 										Forgot your password?
 									</a>

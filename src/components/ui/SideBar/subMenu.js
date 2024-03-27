@@ -6,7 +6,7 @@ const organizacao = ["Empresa", "Filial"]
 const fiscal = ["Tipo de Notas"]
 const financeiro = ["Caixa", "Contas a Pagar", "Contas a Receber", "Gerais"]
 const compras = ["Árvore de Produtos", "Fornecedor", "Modelos" , "Produtos"]
-const industrial = ["Centro de Estoque", "Recursos", "Etapa de Produção", "Ficha Técnica"]
+const industrial = ["Centro de Estoque", "Recursos", "Etapa de Produção", "Cadastro de Função", "Ficha Técnica"]
 const vendas = ["Consultor", "Clientes", "Promoção", "Barreira de Compras", "Procedencia"]
 const expedicao = ["Veículos", "Motoristas"]
 
