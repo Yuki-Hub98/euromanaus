@@ -1,14 +1,19 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import RegexToSave from "@/functions/regexToSave";
 
-const useHandleChange = () => {
+const useHandleChange = (value) => {
   const [dataHandleChange, setDataHandleChange] = useState();
-  const handleChange = (e) => {
-    const {name, value} = e.target.value;
+  
+  useEffect(() => {
+    setDataHandleChange(value)
+  }, [value])
 
+  const handleChange = (e) => {
+    const {name, value} = e.target;
     setDataHandleChange(evetData => ({
       ...evetData,
-      [name]: value
+      [name]: RegexToSave(value)
     }))
   }
 
