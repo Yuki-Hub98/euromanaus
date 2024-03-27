@@ -1,6 +1,7 @@
+import Loading from "@/app/dashboard/loading"
 import { Suspense } from "react"
-import Loading from "../loading"
-export default function LayoutProduto({ children }) {
+
+export default function Layout({ children }) {
 	return (
   <>
     <section>

@@ -2,7 +2,7 @@
 import {Input, Button, Select, SelectItem} from "@nextui-org/react";
 import React , {useState} from "react";
 import { unidadeMedida, tipoProduto } from "@/DB/data";
-import TableRender from "@/components/TableRender";
+import TableRender from "@/components/ui/table/tableRender";
 
 const ProdutoRegister = (props) => {
   const { dataRenderModal, 
@@ -22,7 +22,6 @@ const ProdutoRegister = (props) => {
 	}
 
   const isDisabled = dataProduto?.descricaoProduto &&  dataProduto?.cor && dataProduto?.especificacao && dataProduto?.modelo
-  console.log(duplicated)
   const RenderRegister = (type) => {
     switch (type) {
       case "register":
@@ -342,7 +341,7 @@ const ProdutoRegister = (props) => {
                   </div>
                 </div>
                 <div className="col-span-6 h-40 overflow-y-auto overflow-x-auto rounded">
-                  <TableRender data={dataProduto?.items} name={"produtos"} ValueTable={ValueTable} type={"search"} />
+                  <TableRender data={dataProduto?.items} buttons={false} name={"produtos"} ValueTable={ValueTable} type={"search"} />
                 </div>
             </div>
           </>

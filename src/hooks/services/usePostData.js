@@ -1,15 +1,17 @@
 "use client";
-import SuccessAlert from "@/components/SuccessAlert";
-import Warning from "@/components/Warning";
-import {useState} from "react";
+import SuccessAlert from "@/components/ui/successAlert";
+import Warning from "@/components/ui/warning";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const usePostData = (postFunction) => {
 
-  const [resultPost, setResultPost] = useState();
-
+  const resultPost = useSelector(state => state.data);
+  const [status, setStatus] = useState();
+  const dispatch = useDispatch();
   const CloseStatus = () => {
-		return setResultPost(null);
-	}
+    setStatus(null)
+  }
 
   const ReceivePost = ( nameRequest ,data) => {
     if (data) {
@@ -18,13 +20,29 @@ const usePostData = (postFunction) => {
   }
 
   const Request = async (nameRequest ,data) => {
-    const status = await postFunction(nameRequest ,data)
-    setResultPost(status)
+    try{
+      const dataPost = await postFunction(nameRequest ,data)
+      if (dataPost.status === 200) {
+        setStatus(dataPost)
+        dispatch({type: 'POST_DATA', payload: dataPost.data})
+      }else{
+        setStatus(dataPost)
+      }
+    }catch(error){
+      const statusError = {
+        status: 404,
+        error: "Erro ao cadastrar dados",
+        message: "Por favor contacte os administradores"
+      }
+      setStatus(statusError)
+    }
+      
+      
   }
 
-  let statusPost = resultPost?.status === 200 ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com Sucesso !"/> </> ): (null) 
+  let statusPost = status?.status === 200 ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com Sucesso !"/> </> ): (null) 
 
-  let warningPost = resultPost?.error ? ( <> <Warning status={resultPost} CloseStatus={CloseStatus} /> </>) : (null) 
+  let warningPost = status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null) 
 
   return {resultPost, statusPost, warningPost, ReceivePost}
 

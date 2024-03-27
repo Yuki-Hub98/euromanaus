@@ -1,0 +1,23 @@
+import axios from "axios";
+
+const Put = async (nameRequest, data) => {
+  const response = await axios.put(`http://localhost:8080/${nameRequest}/edit/${data?.codigo}`, data)
+  .then((response) => {
+    if (response) {
+      let dataPost ={
+        data: response?.data,
+        status: response?.status
+      }
+      return dataPost
+    }
+  })
+  .catch((error) => {
+    if (error) {
+      return error?.response?.data
+    }
+  })
+
+  return response
+}
+
+export default Put

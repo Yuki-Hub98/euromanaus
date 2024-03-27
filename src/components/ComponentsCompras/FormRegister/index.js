@@ -1,8 +1,8 @@
 "use Client";
 import React , {useEffect, useState} from "react";
-import RegisterPessoa from "./registerPessoa";
-import RegisterEndereco from "./registerEndereco";
-import RegisterContato from "./registerContato";
+import RegisterPessoa from "@/components/ComponentsCompras/formRegister/registerPessoa";
+import RegisterEndereco from "@/components/ComponentsCompras/formRegister/registerEndereco"
+import RegisterContato from "@/components/ComponentsCompras/formRegister/registerContato";
 import RegexToSave from "@/functions/regexToSave";
 import FormatFone from "@/functions/formatFone";
 

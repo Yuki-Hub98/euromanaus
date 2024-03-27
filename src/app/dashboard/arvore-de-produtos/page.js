@@ -2,14 +2,15 @@
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import React , { useEffect, useState } from "react";
 import { DelArvoreProduto, GetArvoreProduto, PostArvoreProduto, PutArvoreProduto } from "@/app/actions/arvore-produto";
-import TopButtons from "@/components/TopButtons";
-import TableRender from "@/components/TableRender";
-import MiniSideBarNav from "@/components/MiniSideBarNav";
+import TopButtons from "@/components/ui/topButtons";
+import TableRender from "@/components/ui/table/tableRender";
+import MiniSideBarNav from "@/components/ui/miniSideBarNav";
 import { navArvoreProduto } from "@/DB/data";
 import useGetData from "@/hooks/services/useGetData";
 import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
 import useDeleteData from "@/hooks/services/useDeleteData";
+import Layout from "@/components/ui/layout/layout";
 
 export default function ArvoreDeProduto () {
 	const [option, setOption] = useState('departamento');
@@ -56,6 +57,10 @@ export default function ArvoreDeProduto () {
 		}
 	})
 
+	useEffect(() => {
+		ReceiveGet("departamento")
+	},[])
+
 	const modalData = async (opcao) =>{
 		if (opcao){
 			const data = await GetArvoreProduto(opcao)
@@ -83,7 +88,7 @@ export default function ArvoreDeProduto () {
 				<div className=' w-full flex h-4/5 overflow-y-auto mt-1.5 flex-row'>
 					<MiniSideBarNav ChosenOption={ChosenOption}  name={navArvoreProduto} />
 					<div className='w-full flex h-50 overflow-y-auto  flex-col rounded'>
-						<TableRender data={resultGet} name={option} ValueTable={ValueTable} type={"search"}/>
+						<TableRender data={resultGet} name={option} buttons={false} ValueTable={ValueTable} style={"w-1/3"} type={"search"}/>
 						<div className='w-full h-10 bg-[#CFCFCF]'>
 							<span className='text-black'>
 								teste teste teste teste

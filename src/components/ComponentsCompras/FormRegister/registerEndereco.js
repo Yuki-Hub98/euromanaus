@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Input, useDisclosure} from "@nextui-org/react";
-import RerenciaCep from "./referenciaCep";
+import RerenciaCep from "@/components/ComponentsCompras/formRegister/referenciaCep"
+
 
 const RegisterEndereco = (props) => {
 		const { type, 

@@ -1,12 +1,13 @@
 "use client"
 import { useState, useEffect } from "react";
 import FormatTable from "@/functions/formatTable";
+import { MdOutlineEdit, MdDeleteOutline } from "react-icons/md";
 
 const Table = (props) => {
 		const [focusedRow, setFocusedRow] = useState(null);
 		const [focusedCol, setFocusedCol] = useState(null);
 		const [markedCellValue, setMarkedCellValue] = useState();
-		const {data} = props
+		const {data, buttons, edit, vTable, nameRequest, del} = props
 		const handleKeyDown = (event) => {
 				if (event.key === 'ArrowUp') {
 				setFocusedRow((prevRow) => (prevRow !== null ? Math.max(prevRow - 1, 0) : 0));
@@ -50,10 +51,10 @@ const Table = (props) => {
 
 		useEffect(() => {
 				if (markedCellValue) {
-						props?.vTable(markedCellValue)
+						vTable(markedCellValue)
 				}
 				Clear();
-		},[props,markedCellValue])
+		},[markedCellValue])
 
 		useEffect(() => {
 				window.addEventListener('keydown', handleKeyDown);
@@ -68,7 +69,7 @@ const Table = (props) => {
 								<thead>
 										<tr >
 												{data ? 
-												(Object.keys(props?.data[0]).map((col, index) => (
+												(Object.keys(data[0]).map((col, index) => (
 														<th key={index} className='p-2 bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] '>
 																{FormatTable(col)}
 														</th>
@@ -94,7 +95,20 @@ const Table = (props) => {
 														>
 														{value}
 												</td>
-										))): null}
+										)))
+										: null}
+										{Object.entries(data[0]).length !== 0 && buttons ?
+										<>
+											<td onClick={() => {vTable(item), edit()}} className="flex flex-row cursor-pointer bg-[#EDEDED] items-center justify-center hover:text-[#edca62b4]">
+												<MdOutlineEdit/>
+											</td>
+											<td onClick={() => {del(nameRequest, item)}}  className="flex flex-row cursor-pointer bg-[#EDEDED] items-center justify-center hover:text-red-400">
+												<MdDeleteOutline/>
+											</td> 
+										</> 
+										:
+											null
+										}
 										</tr>
 								))}
 								</tbody>

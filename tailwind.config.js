@@ -71,7 +71,7 @@ module.exports = {
 					boxShadow: {
 						// shadow-small
 						small:
-							"0px 0px 5px 0px rgb(0 0 0 / 0.02), 0px 2px 10px 0px rgb(0 0 0 / 0.06), 0px 0px 1px 0px rgb(0 0 0 / 0.3)",
+							"0px 0px 5px 0px rgb(0 0 0 / 0.2), 0px 2px 10px 0px rgb(0 0 0 / 0.06), 0px 0px 1px 0px rgb(0 0 0 / 0.7)",
 						// shadow-medium
 						medium:
 							"0px 0px 15px 0px rgb(0 0 0 / 0.03), 0px 2px 30px 0px rgb(0 0 0 / 0.08), 0px 0px 1px 0px rgb(0 0 0 / 0.3)",
@@ -97,7 +97,7 @@ module.exports = {
 						DEFAULT: "#edca62",
 						foreground: "#ffffff",
 					},
-					focus: "#F182F6",
+					focus: "#FCF0AD",
 				},
 			},
 			dark: {

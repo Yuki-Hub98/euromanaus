@@ -1,9 +1,9 @@
 "use client";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-import TopButtons from "@/components/TopButtons";
-import TableRender from "@/components/TableRender";
-import MiniSideBarButtons from "@/components/MiniSideBarButtons";
+import TopButtons from "@/components/ui/topButtons";
+import TableRender from "@/components/ui/table/tableRender";
+import MiniSideBarButtons from "@/components/ui/miniSideBarButtons";
 import { GetFornecedor } from "@/app/actions/fornecedor"
 import useGetData from "@/hooks/services/useGetData";
 import { DelFornecedor, PostFornecedor, PutFornecedor } from "@/app/actions/fornecedor";
@@ -25,6 +25,10 @@ export default function Fornecedor () {
 		setValueTable(value)
 	}
 
+	useEffect(() => {
+		ReceiveGet("fornecedor")
+	},[])
+
 	return (
 		<>
 			<div className='w-full h-6 absolute top-2'>
@@ -41,7 +45,7 @@ export default function Fornecedor () {
 				{statusPost} {statusEdit} {statusDelete}
 				{warningGet} {warningPost} {warningEdit} {warningDelete}
 				<div className='w-full flex overflow-y-auto h-50 flex-col rounded'>
-					<TableRender data={resultGet} name={option} ValueTable={ValueTable} />
+					<TableRender data={resultGet} name={option} buttons={false} style={"table-auto whitespace-nowrap"} ValueTable={ValueTable} />
 					<div className='w-full h-10 bg-[#CFCFCF]'>
 						<span className='text-black'>
 							teste teste teste teste
