@@ -4,7 +4,7 @@ import useHandleChange from "@/hooks/ui/useHandleChange";
 
 const ModalRegisterMaoDeObra = (props) => {
   const {isOpen, onOpenChange, size, height, name, ReceivePost} = props
-  const {dataHandleChange, handleChange} = useHandleChange()
+  const {dataHandleChange, handleChange, clearHandle} = useHandleChange()
   return(
     <>
       <Modal 
@@ -40,7 +40,7 @@ const ModalRegisterMaoDeObra = (props) => {
             </div>
             </ModalBody>
             <ModalFooter>
-              <Button className='bg-sky-50' size="sm" variant="flat" onClick={() => {onClose()}} >
+              <Button className='bg-sky-50' size="sm" variant="flat" onClick={() => {clearHandle(), onClose()}} >
                 Cancelar
               </Button>
               <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost("cadastro-de-funcao", dataHandleChange)}} 

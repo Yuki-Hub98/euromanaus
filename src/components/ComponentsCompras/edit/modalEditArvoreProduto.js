@@ -2,10 +2,21 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Input} from "@nextui-org/react";
 import useHandleChange from "@/hooks/ui/useHandleChange";
 
-const ModalEditMaoDeObra = (props) => {
+const ModalEditArvoreProduto= (props) => {
   const {isOpen, ReceivePut, onOpenChange, size, height, name, valueEdit} = props
-  const {dataHandleChange, handleChange, clearHandle} = useHandleChange(valueEdit)
-
+  const {dataHandleChange, handleChange} = useHandleChange(valueEdit)
+  const LabelArvore = (name) => {
+		switch (name) {
+			case "linha":
+				return "Departamento"
+			case "familia":
+				return "Linha"
+			case "grupo":
+				return "Familia"
+			default:
+				break;
+		}
+	}
   return(
     <>
       <Modal 
@@ -28,25 +39,32 @@ const ModalEditMaoDeObra = (props) => {
             <ModalHeader className="w-full gri-cols-6"> {name.toUpperCase()} </ModalHeader>
             <ModalBody>
             <div className="w-full grid gri-cols-6 gap-2 items-center justify-center">
+              { name === "linha" || name === "familia" || name === "grupo" ?
+                <>
+                  <div className="col-span-1">
+                    <span className="text-sm">{LabelArvore(name)}</span>
+                  </div>
+                  <div className="col-start-2">
+                    <h1 className="font-bold">{dataHandleChange[LabelArvore(name).toLowerCase()]}</h1>
+                  </div>
+                </>
+                :
+                null
+              }
               <div className="col-span-1">
-                <span className="text-sm">Função</span>
+                <span className="text-sm">Descricão</span>
               </div>
-              <Input size="sm" type="Text" name="funcao" value={dataHandleChange?.funcao || ''} onChange={(e) => {handleChange(e)}} 
+              <Input size="sm" type="Text" name="descricao" value={dataHandleChange?.descricao || ''} onChange={(e) => {handleChange(e)}} 
                 labelPlacement="outside" className="col-start-2"/>
-              <div className="col-span-1">
-                <span className="text-sm">Sálario</span>
-              </div>
-              <Input size="sm" autoComplete="off" value={dataHandleChange?.salario || ''} type="text" name="salario" onChange={(e) => {handleChange(e)}} 
-                labelPlacement="outside" placeholder="R$" className="col-start-2"/>
             </div>
             </ModalBody>
             <ModalFooter>
               <Button className='bg-sky-50' size="sm" variant="flat" onClick={() => {clearHandle(), onClose()}} >
                 Cancelar
               </Button>
-              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePut("cadastro-de-funcao", dataHandleChange)}} 
+              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePut(name, dataHandleChange)}} 
                 onPress={onClose} >
-                Cadastrar
+                Editar
               </Button>
             </ModalFooter>
             </>
@@ -58,4 +76,4 @@ const ModalEditMaoDeObra = (props) => {
 
 }
 
-export default ModalEditMaoDeObra
+export default ModalEditArvoreProduto
