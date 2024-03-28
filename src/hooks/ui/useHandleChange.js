@@ -9,6 +9,9 @@ const useHandleChange = (value) => {
     setDataHandleChange(value)
   }, [value])
 
+  const clearHandle = () => {
+    setDataHandleChange(null)
+  }
   const handleChange = (e) => {
     const {name, value} = e.target;
     setDataHandleChange(evetData => ({
@@ -17,7 +20,7 @@ const useHandleChange = (value) => {
     }))
   }
 
-  return {dataHandleChange, handleChange}
+  return {dataHandleChange, clearHandle, handleChange}
 
 }
 

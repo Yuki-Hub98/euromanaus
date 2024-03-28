@@ -7,7 +7,7 @@ import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
 import ModalRegisterMaoDeObra from "@/components/ComponentsIndustrial/register/modalRegisterMaoDeObra";
 import ModalEditMaoDeObra from "@/components/ComponentsIndustrial/edit/modalEditMaoDeObra";
-import TableRender from "@/components/ui/table/tableRender";
+import TableRender from "@/components/ui/table/tableRender/";
 import useHandleChange from "@/hooks/ui/useHandleChange";
 import { RegisterCadastroDeFuncao, GetCadastroDeFuncao, EditCadastroDeFuncao, DelCadastroDeFuncao } from "@/app/actions/cadastro-de-funcao";
 

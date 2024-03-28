@@ -1,7 +1,7 @@
 "use Client";
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
-	ModalFooter, Tabs, Tab, Card, CardBody, Input, Select, SelectItem} from "@nextui-org/react";
+	ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
 import FormRegister from "../formRegister";
 import { GetCep, GetNameFonecedor } from "@/app/actions/fornecedor";
@@ -29,24 +29,8 @@ const RegisterModal = (props) => {
 	const [data, setData] = useState ();
 	const [cep1, setCep1] = useState ();
 	const [cep2, setCep2] = useState ();
-	const {ReceivePost, dataModal, onOpenChange, isOpen} = props
-	const modalArvoreSelect = dataModal?.map((data) => ( 
-		{'value': data?.descricao}
-		))
+	const {ReceivePost, onOpenChange, isOpen} = props
 	const  {requestArvore, dataArvore} = useSearchArvoreProduto()
-
-	const LabelArvore = (name) => {
-		switch (name) {
-			case "linha":
-				return "Departamento"
-			case "familia":
-				return "Linha"
-			case "grupo":
-				return "Familia"
-			default:
-				break;
-		}
-	}
 
 	const toClean = () => {
 		setData(null)
@@ -138,7 +122,7 @@ const RegisterModal = (props) => {
 }
 
 	const TypeButton = (type) => {
-		if(type === 'departamento' || type === 'cor' || type === 'especificacao' || type=== 'modelos' ){
+		if(type=== 'modelos'){
 			return 1 
 		}else if (type === "linha" || type === "familia" || type === "grupo") {
 			return 2
@@ -204,16 +188,6 @@ const RegisterModal = (props) => {
 
 	useEffect(() => {
 		if(data){
-			switch(props?.name){
-				case 'linha':
-					return setDataToPost({'departamento': data?.select, 'descricao': data?.descricao})
-				case 'familia':
-					return setDataToPost({'linha': data?.select, 'descricao': data?.descricao})
-				case 'grupo':
-					return setDataToPost({'familia': data?.select, 'descricao': data?.descricao})
-				default:
-					break;
-			}
 			setDataToPost(data)
 		}
 		if (data?.razaoSocialFornecedor) {
@@ -260,29 +234,6 @@ const RegisterModal = (props) => {
 					<div>
 						<Input label="Descrição"  size="lg" type="Text" name="descricao" onChange={(e) => {handleChange(e)}} 
 						labelPlacement="outside-left" className="w-80 mt-2 justify-between"/>
-					</div>
-					</>
-				)
-			case 2:
-				return(
-					<>
-					<div className="h-full w-full grid grid-cols-4 pl-2 items-center justify-center">
-						<label className="w-full items-center pt-2">
-							{LabelArvore(props?.name)}
-						</label>
-						<Select size="lg" className="w-64 pl-4 col-span-3 pt-2" aria-labelledby="selectArvore" 
-							labelPlacement="outside" onChange={(e) => {handleValue(e)}} name="select">
-							{modalArvoreSelect.map((select) => (
-								<SelectItem key={select.value} value={select.value}>
-									{select.value}
-								</SelectItem>
-							))}
-						</Select>
-						<label className="w-full items-center pt-2">
-							Descrição
-						</label>
-						<Input size='lg' name="descricao" type="Text" onChange={(e) => {handleChange(e)}}
-							className="w-64 pl-4 pt-2" labelPlacement="outside"/>
 					</div>
 					</>
 				)

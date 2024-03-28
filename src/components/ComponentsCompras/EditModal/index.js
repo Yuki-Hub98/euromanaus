@@ -60,22 +60,10 @@ const EditModal = (props) => {
 	}
 
 	const FormateToPut = (op) =>{
-		if (op === 'departamento' || op === 'cor' || op === 'especificacao' || op === 'modelos') {
+		if (op === 'modelos') {
 			return setDataToPut({'descricao': valueTable?.descricao, 'edit':dataDescricao})
 		}
 		switch (op) {  
-			case 'linha':
-				setDataToPut({'departamento': valueTable?.departamento, 'editDepartamento': valueTable?.departamento,
-				'descricao':valueTable?.descricao, 'editDescricao':dataDescricao })
-				break;
-			case 'familia':
-				setDataToPut({'linha': valueTable?.linha, 'editLinha': valueTable?.linha,
-				'descricao':valueTable?.descricao, 'editDescricao':dataDescricao })
-				break;
-			case 'grupo':
-				setDataToPut({'familia': valueTable?.familia, 'editFamilia': valueTable?.familia,
-				'descricao':valueTable?.descricao, 'editDescricao':dataDescricao})
-				break;
 			case'fornecedor':
 				setDataToPut(data)
 				break;
@@ -89,10 +77,8 @@ const EditModal = (props) => {
 		}
 
 	const TypeButton = (type) => {
-		if(type === "departamento" || type === "cor" || type === "especificacao" || type === "modelos"){
+		if(type === "modelos"){
 			return 1 
-		}else if (type === "linha" || type === "familia" || type === "grupo") {
-			return 2
 		}else if(type ==="fornecedor"){
 			return 3
 		}else if(type === "produtos"){
