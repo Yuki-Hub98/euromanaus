@@ -1,62 +1,14 @@
-import { useEffect, useState } from "react";
-import RegisterModal from "../../ComponentsCompras/registerModal";
 import Search from "../../ComponentsCompras/search";
-import {Button, useDisclosure} from "@nextui-org/react";
 import { usePathname } from "next/navigation";
-import EditModal from "../../ComponentsCompras/editModal";
+
 
 
 const TopButtons = (props) => {
 	const router = usePathname()
-	const { isOpen , onOpen , onOpenChange } = useDisclosure();
-	const [open, setOpen] = useState(false)
-	const { PostData, PutData, GetData, SetValueTable, valueTable, DeleteData } = props
-	const modal = (value) =>{
-		return setOpen(value)
-	}
+	const { GetData } = props
 
 	const OptionPage = (page) => {
 		switch (page) {
-			case "/dashboard/arvore-de-produtos":
-				return(
-					<>
-					<div className='flex flex-col justify-center items-center'>
-						<Search data={props} ReceiveGet={GetData} router={page} />
-					</div>
-					<div className='flex items-center'>
-						<Button color="primary" size="sm" variant="ghost" onPress={onOpen}>
-							Cadastrar
-						</Button>
-						<RegisterModal name={props?.option} size={"md"} h={"h-3/6"} isOpen={isOpen} 
-						dataModal={props?.dataModal} onOpenChange={onOpenChange} ReceivePost={PostData} />
-					</div>
-					<div className='flex items-center'>
-						{props?.valueTable ? 
-							<Button color="primary" size='sm' variant="ghost" onPress={() => {setOpen(true)}}>
-								Editar
-							</Button>
-							:
-							<Button color="primary" size="sm" variant="ghost" isDisabled>
-								Editar
-							</Button>
-						}
-						<EditModal name={props?.option} size={"md"} h={"h-3/6"} valueTable={valueTable} 
-						ReceivePut={PutData} SetValueTable={SetValueTable}  isOpen={open} modal={modal}/>
-					</div>
-					<div className='flex items-center'>
-						{props?.valueTable ? 
-							<Button color="primary" size='sm' variant="ghost" onClick={() => DeleteData(props?.option, valueTable)}>
-								Excluir
-							</Button>
-							:
-							<Button color="primary" size="sm" variant="ghost" isDisabled>
-								Excluir
-							</Button>
-						}
-					</div>
-					
-					</>
-				)
 			case"/dashboard/fornecedor":
 				return(
 					<>

@@ -64,18 +64,6 @@ const Search = (props) => {
 		
 		const optionPage = (page) => {
 				switch(page){
-						case "/dashboard/arvore-de-produtos":
-								return(
-										<>
-										<div className='h-12 gap-2 flex flex-row justify-items-center items-center'>
-												<Input className='w-72' labelPlacement='outside-left' placeholder=" " 
-												onChange={(e) => handleChange(e)} color="primary" label="Descrição" name="descricao"/>
-												<Button color="primary" type="submit" size='sm' variant="ghost" onClick={() =>  Click()} >
-														Pesquisar
-												</Button>
-										</div>
-										</>
-								)
 						case "/dashboard/fornecedor":
 								return(
 										<>

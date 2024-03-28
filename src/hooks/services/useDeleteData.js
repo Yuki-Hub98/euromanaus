@@ -15,7 +15,6 @@ const useDeleteData = (deleteFunction) => {
   const DeleteData = async (nameRequest, data) => {
     try{
       const statusDel = await deleteFunction(nameRequest,data)
-      console.log(statusDel)
       dispatch({type:'DELETE_DATA', payload: statusDel})
       setStatus(statusDel)
     }catch{
@@ -26,9 +25,6 @@ const useDeleteData = (deleteFunction) => {
       }
       setStatus(statusError)
     }
-
-    
-    
 	}
 
   let statusDelete =  status?.del ? ( <> <SuccessAlert CloseStatus={CloseStatus}  message="Deletado com com Sucesso !"/> </> ): (null)

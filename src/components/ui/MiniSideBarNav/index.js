@@ -1,6 +1,7 @@
 "use Client";
 import React , {useEffect, useState} from "react";
 import { usePathname } from "next/navigation";
+import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 
 const MiniSideBarNav = (props) => {
 		const router = usePathname()

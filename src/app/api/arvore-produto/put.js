@@ -2,7 +2,7 @@ import axios from "axios";
 
 const Put = async (request, data) =>{
 
-	const response = await axios.put(`http://localhost:8080/arvore-produto/${request}/edit`, data)
+	const response = await axios.put(`http://localhost:8080/arvore-produto/${request}/edit/${data.codigo}`, data)
 	.then((response) => {
 		if (response) {
 			let dataPut ={
