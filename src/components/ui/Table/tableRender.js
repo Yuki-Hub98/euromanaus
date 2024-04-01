@@ -1,5 +1,5 @@
 "use client"
-import Table from "./";
+import Table from ".";
 
 const TableRender = (props) => {
 		const {ValueTable, 

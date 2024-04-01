@@ -2,6 +2,7 @@
 import Warning from "@/components/ui/warning";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { setGet } from "@/reducers/models/dataReducer";
 const useGetData = (getFunction) => {
 
 	const resultGet = useSelector(state => state.data);
@@ -25,7 +26,7 @@ const useGetData = (getFunction) => {
 			try {
 				const dataTable = await getFunction(nameRequest, dataGet);
 				setStatus(dataTable)
-				dispatch({ type: 'GET_DATA', payload: dataTable });
+				dispatch(setGet(dataTable));
 			} catch (error) {
 				console.error('Erro ao pesquisar dados:', error);
 			}
@@ -33,7 +34,7 @@ const useGetData = (getFunction) => {
 			try {
 				const dataTable = await getFunction(nameRequest);
 				setStatus(dataTable)
-				dispatch({ type: 'GET_DATA', payload: dataTable });
+				dispatch(setGet(dataTable));
 			} catch (error) {
 				const statusError = {
 					status: 404,

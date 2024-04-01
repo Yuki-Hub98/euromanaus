@@ -2,11 +2,7 @@
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
-import RegexToSave from "@/functions/regexToSave";
-import FormRegister from "../formRegister";
-import { GetCep, GetNameFonecedor } from "@/app/actions/fornecedor";
-import FormatFone from "@/functions/formatFone";
-import FormDadosBancarios from "../formDadosBancarios";
+import { GetNameFonecedor } from "@/app/actions/fornecedor";
 import { GetArvoreProduto } from "@/app/actions/arvore-produto";
 import { GetLastIdItem, GetSearchProduto, PostCod } from "@/app/actions/produto";
 import { SearchModelo } from "@/app/actions/modelo";
@@ -27,8 +23,6 @@ const RegisterModal = (props) => {
 	const [slectedScreenFornecedor, setSelectedScreenFornecedor] = useState("Fornecedor");
 	const [slectedScreenProduto, setSelectedScreenProduto] = useState("Produto");
 	const [data, setData] = useState ();
-	const [cep1, setCep1] = useState ();
-	const [cep2, setCep2] = useState ();
 	const {ReceivePost, onOpenChange, isOpen} = props
 	const  {requestArvore, dataArvore} = useSearchArvoreProduto()
 
@@ -40,32 +34,6 @@ const RegisterModal = (props) => {
 		setDataProdutoDuplicated(null)
 		return;
 	}
-
-	const handleChange = (e, cpfCnpj) => {
-		const { name, value } = e.target;
-		setData(prevState => ({
-			...prevState,
-			[name]: RegexToSave(value)
-		}));
-		if (name?.includes("email") || name.includes("site")) {
-			setData(prevState => ({
-				...prevState,
-				[name]: value
-			}));
-		}
-		if (name?.includes("telefone") || name?.includes("celular")) {
-			setData(prevState => ({
-				...prevState,
-				[name]: FormatFone(value)
-		}));
-		}
-		if ((name?.includes("cpfCnpjFornecedor") && cpfCnpj) || (name.includes("cpfCnpjRepresentante" ) && cpfCnpj)) {
-			setData(prevState => ({
-				...prevState,
-				[name]: cpfCnpj
-			}));
-		}
-	};
 
 	const handleValue = (target) => {
 		const {name, value, checked} = target.target;
@@ -124,37 +92,11 @@ const RegisterModal = (props) => {
 	const TypeButton = (type) => {
 		if(type=== 'modelos'){
 			return 1 
-		}else if (type === "linha" || type === "familia" || type === "grupo") {
-			return 2
-		}else if(type === "fornecedor"){
-			return 3
 		}else if (type === "produtos") {
 			return 4
 		}   
 	}
-	const Fill = () => {
-			if (cep1) {
-				setData(prevState => ({
-					...prevState,
-					cepFornecedor: cep1?.cep,
-					enderecoFornecedor: cep1?.logradouro,
-					bairroFornecedor: cep1?.bairro,
-					cidadeFornecedor: cep1?.localidade,
-					ufFornecedor: cep1?.uf
-				}));
-			}
 
-			if (cep2) {
-				setData(prevState => ({
-					...prevState,
-					cepRepresentante: cep2?.cep,
-					enderecoRepresentante: cep2?.logradouro,
-					bairroRepresentante: cep2?.bairro,
-					cidadeRepresentante: cep2?.localidade,
-					ufRepresentante: cep2?.uf
-				}));
-			}
-	}
 	const RequestProdutoDuplicated = async (descricao, fornecedor) => {
 		const dataRegisted = await GetSearchProduto({descricao: descricao, fornecedor: fornecedor});
 		if (dataRegisted?.idProduto) {
@@ -190,42 +132,17 @@ const RegisterModal = (props) => {
 		if(data){
 			setDataToPost(data)
 		}
-		if (data?.razaoSocialFornecedor) {
-			setDataToPost(data)
-		}
 		if(data?.items){
 			setDataToPost(data)
 		}
 	},[props, data])
 
 	useEffect(() => {
-		const cp = `cep${slectedScreenFornecedor}`
-		for (const key in data) {
-			if (data?.hasOwnProperty(key) && key === cp) {
-				if (data[key].length === 8) {
-					Cep(data)
-				}
-			}
-		}
-		
-	},[data, slectedScreenFornecedor])
-
-	useEffect(() => {
 		RequestProdutoDuplicated(data?.descricaoProduto, data?.fornecedor)
   },[data?.descricaoProduto, data?.fornecedor])
 
-	const Cep = async (data) => {
-		if (data?.cepFornecedor) {
-			const ce = await GetCep(data?.cepFornecedor)
-			setCep1(ce)
-		}
 
-		if (data?.cepRepresentante) {
-			const ce = await GetCep(data.cepRepresentante)
-			setCep2(ce)
-		}
-	}
-	const isDisabled = dataToPost?.razaoSocialFornecedor || dataToPost?.items || dataToPost?.descricao
+	const isDisabled = dataToPost?.items || dataToPost?.descricao
 	const buttons = (type) => {
 		switch (type) {
 			case 1:
@@ -235,35 +152,6 @@ const RegisterModal = (props) => {
 						<Input label="Descrição"  size="lg" type="Text" name="descricao" onChange={(e) => {handleChange(e)}} 
 						labelPlacement="outside-left" className="w-80 mt-2 justify-between"/>
 					</div>
-					</>
-				)
-			case 3:
-				return(
-					<>    
-					<Card className="w-full max-h-3/6">
-					<CardBody className="overflow-hidden bg-background-table">
-						<Tabs
-						fullWidth
-						aria-label="Tabs form"
-						classNames={{
-							tabList: "bg-[white] rounded-b-sm rounded-b-sm",
-							cursor: "w-full bg-[#edca62b4] rounded-b-sm",
-							tabContent: "group-data-[selected=true]:text-[black] rounded-b-sm",
-						}}
-						selectedKey={slectedScreenFornecedor}
-						onSelectionChange={setSelectedScreenFornecedor}>
-							<Tab key={"Fornecedor"} title="Dados Fronecedor" className="w-full max-h-3/6 bg-background-table">
-								<FormRegister type={slectedScreenFornecedor} data={data} fill={Fill} handleChange={handleChange} SetData={setData} />
-							</Tab>
-							<Tab key={"Representante"} title="Dados Representantes" className="w-full max-h-3/6 bg-background-table">
-								<FormRegister type={slectedScreenFornecedor} data={data} fill={Fill}  handleChange={handleChange} SetData={setData} />
-							</Tab>
-							<Tab key={"Financeiro"} title="Dados Financeiros" className="w-full max-h-3/6 bg-background-table">
-								<FormDadosBancarios handleChange={handleChange} />
-							</Tab>
-						</Tabs>
-					</CardBody>
-					</Card>                
 					</>
 				)
 				case 4:

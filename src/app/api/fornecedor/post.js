@@ -12,8 +12,8 @@ const Post = async (nameRequest, data) => {
 		}
 	})
 	.catch((error) => {
-		if (error.response) {
-			console.log("error", error.response)
+		if (error) {
+			return error.response.data
 		}
 	})
 	return response
