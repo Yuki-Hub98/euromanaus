@@ -1,8 +1,7 @@
 import axios from "axios";
-
 const Del = async (nameRequest, data) => {
 	if (data) {
-		const response = await axios.delete(`http://localhost:8080/fornecedor/del/${data?.idCad}`)
+		const response = await axios.delete(`http://localhost:8080/fornecedor/del/${data?.codigo}`, {data})
 		.then((response) => {
 			if (response) {
 				return response.data
@@ -10,7 +9,7 @@ const Del = async (nameRequest, data) => {
 		})
 		.catch((error) => {
 			if (error) {
-				return error.response
+				return error.response.data
 			}
 		})
 		return response

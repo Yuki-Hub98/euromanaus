@@ -9,7 +9,6 @@ const Warning = (data) => {
 		const [status, setStatus] = useState()
 		const [onOpen, setOnOpen] = useState(false)
 
-		
 		useEffect(() => {
 				if(data.status){
 						setOnOpen(true)
@@ -17,7 +16,6 @@ const Warning = (data) => {
 				}else{
 						setOnOpen(false)
 				}
-
 		},[data])
 
 		return(
@@ -36,32 +34,31 @@ const Warning = (data) => {
 						footer: "border-[#292f46]",
 						closeButton: "hover:bg-white/5 active:bg-white/10",
 						}}>
-								<ModalContent>
-														{ onOpen ? (
-																<>
-																		<ModalHeader> Warning </ModalHeader>
-																		<ModalBody>
-																				<div className="w-full flex flex-col ">
-																						<div>
-																								<span>Codigo: {status?.status}</span>
-																						</div>
-																						<div>
-																								<span>Error: {status?.error}</span>
-																						</div>
-																						<div>
-																								<span>Message: {status?.message}</span>
-																						</div>
-																				</div>
-																		</ModalBody>
-																		<ModalFooter>
-																		<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {setOnOpen(false), data?.CloseStatus()}}>
-																				Ok
-																		</Button>
-																</ModalFooter>
-																</> 
-														) : (null)}
-								</ModalContent>
-
+					<ModalContent>
+						{ onOpen ? (
+							<>
+								<ModalHeader> Warning </ModalHeader>
+									<ModalBody>
+										<div className="w-full flex flex-col gap-y-3">
+											<div>
+												<span>Codigo: {status?.status}</span>
+											</div>
+											<div>
+												<span>Error: {status?.error}</span>
+											</div>
+											<div>
+												<span>Message: {status?.message}</span>
+											</div>
+										</div>
+									</ModalBody>
+									<ModalFooter>
+										<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {setOnOpen(false), data?.CloseStatus()}}>
+										Ok
+										</Button>
+									</ModalFooter>
+							</> 
+						) : (null)}
+					</ModalContent>
 				</Modal>
 				</>
 		)
