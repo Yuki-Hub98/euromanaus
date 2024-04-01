@@ -3,6 +3,7 @@ import SuccessAlert from "@/components/ui/successAlert";
 import Warning from "@/components/ui/warning";
 import {useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setDelete } from "@/reducers/models/dataReducer";
 
 const useDeleteData = (deleteFunction) => {
   const resultDelte = useSelector(state => state.data)
@@ -13,18 +14,18 @@ const useDeleteData = (deleteFunction) => {
 	}
 
   const DeleteData = async (nameRequest, data) => {
-    try{
-      const statusDel = await deleteFunction(nameRequest,data)
-      dispatch({type:'DELETE_DATA', payload: statusDel})
-      setStatus(statusDel)
-    }catch{
-      const statusError = {
-        status: 404,
-        error: "Erro ao deletar dados",
-        message: "Por favor contacte os administradores"
+      try {
+        const statusDel = await deleteFunction(nameRequest, data)
+        console.log(statusDel)
+        if (statusDel?.status === 403 ) {
+          setStatus(statusDel)
+          throw new Error (statusDel.message)
+        }
+        dispatch(setDelete(statusDel))
+        setStatus(statusDel)
+      } catch (error) {
+        console.log(error)
       }
-      setStatus(statusError)
-    }
 	}
 
   let statusDelete =  status?.del ? ( <> <SuccessAlert CloseStatus={CloseStatus}  message="Deletado com com Sucesso !"/> </> ): (null)

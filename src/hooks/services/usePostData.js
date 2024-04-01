@@ -3,6 +3,7 @@ import SuccessAlert from "@/components/ui/successAlert";
 import Warning from "@/components/ui/warning";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setPost } from "@/reducers/models/dataReducer";
 
 const usePostData = (postFunction) => {
 
@@ -20,24 +21,18 @@ const usePostData = (postFunction) => {
   }
 
   const Request = async (nameRequest ,data) => {
-    try{
+    try {
       const dataPost = await postFunction(nameRequest ,data)
-      if (dataPost.status === 200) {
+      console.log(dataPost)
+      if (dataPost?.status === 422) {
         setStatus(dataPost)
-        dispatch({type: 'POST_DATA', payload: dataPost.data})
-      }else{
-        setStatus(dataPost)
+        throw new Error (dataPost.message)
       }
-    }catch(error){
-      const statusError = {
-        status: 404,
-        error: "Erro ao cadastrar dados",
-        message: "Por favor contacte os administradores"
-      }
-      setStatus(statusError)
+      dispatch(setPost(dataPost))
+      setStatus(dataPost)
+    } catch (error) {
+      console.log(error)
     }
-      
-      
   }
 
   let statusPost = status?.status === 200 ? ( <> <SuccessAlert CloseStatus={CloseStatus} message="Cadastro efetuado com Sucesso !"/> </> ): (null) 

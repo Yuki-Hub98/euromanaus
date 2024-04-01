@@ -3,9 +3,7 @@ import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
-import FormRegister from "../formRegister";
-import FormDadosBancarios from "../formDadosBancarios";
-import { GetCep, GetNameFonecedor } from "@/app/actions/fornecedor";
+import { GetNameFonecedor } from "@/app/actions/fornecedor";
 import Fiscal from "../produtoRegister/fiscal";
 import ProdutoRegister from "../produtoRegister";
 import { GetProdutoToEdit } from "@/app/actions/produto";
@@ -25,9 +23,6 @@ const EditModal = (props) => {
 		modelos:[]
 	});
 	const [data, setData] = useState (valueTable);
-	const [cep1, setCep1] = useState ();
-	const [cep2, setCep2] = useState ();
-	const [slectedScreenFornecedor, setSelectedScreenFornecedor] = useState("Fornecedor");
 	const [slectedScreenProduto, setSelectedScreenProduto] = useState("Produto");
 	const  {requestArvore, dataArvore} = useSearchArvoreProduto()
 
@@ -45,8 +40,6 @@ const EditModal = (props) => {
 	},[valueTable])
 
 	const toClean = () => {
-		setCep1(null)
-		setCep2(null)
 		setData(null)
 		setDataToPut(null)
 		setDataDescricao(null)
@@ -64,9 +57,6 @@ const EditModal = (props) => {
 			return setDataToPut({'descricao': valueTable?.descricao, 'edit':dataDescricao})
 		}
 		switch (op) {  
-			case'fornecedor':
-				setDataToPut(data)
-				break;
 			case'produtos':
 				setDataToPut(data)
 				break;
@@ -79,48 +69,10 @@ const EditModal = (props) => {
 	const TypeButton = (type) => {
 		if(type === "modelos"){
 			return 1 
-		}else if(type ==="fornecedor"){
-			return 3
 		}else if(type === "produtos"){
 			return 4
 		}   
 	}
-
-	const RenderSelect = (option) =>{
-		if (option.departamento) {
-			return option.departamento
-		}else if(option.linha) {
-			return option.linha
-		}else if (option.familia) {
-			return option.familia
-		}
-	}
-
-	const handleChange = (e, cpfCnpj) => {
-		const { name, value } = e.target;
-			setData(prevState => ({
-				...prevState,
-				[name]: RegexToSave(value)
-			}));
-			if (name?.includes("email") || name.includes("site")) {
-				setData(prevState => ({
-					...prevState,
-					[name]: value
-				}));
-			}
-			if (name?.includes("telefone") || name?.includes("celular")) {
-				setData(prevState => ({
-					...prevState,
-					[name]: FormatFone(value)
-				}));
-			}
-			if ((name === "cpfCnpjFornecedor" && cpfCnpj) || (name === "cpfCnpjRepresentante" && cpfCnpj)) {
-				setData(prevState => ({
-					...prevState,
-					[name]: cpfCnpj
-				}));
-			}
-		};
 
 		const handleValue = (target) => {
 			const {name, value, checked} = target.target;
@@ -169,30 +121,6 @@ const EditModal = (props) => {
 			setData(newData)
 	}
 
-	const Fill  = () => {
-		if (cep1) {
-			setData(prevState => ({
-				...prevState,
-				cepFornecedor: cep1?.cep,
-				enderecoFornecedor: cep1?.logradouro,
-				bairroFornecedor: cep1?.bairro,
-				cidadeFornecedor: cep1?.localidade,
-				ufFornecedor: cep1?.uf
-			}));
-		}
-
-		if (cep2) {
-			setData(prevState => ({
-				...prevState,
-				cepRepresentante: cep2?.cep,
-				enderecoRepresentante: cep2?.logradouro,
-				bairroRepresentante: cep2?.bairro,
-				cidadeRepresentante: cep2?.localidade,
-				ufRepresentante: cep2?.uf
-			}));
-		}
-	}
-
 	const RequestModal = async () =>{
 		const dataDepartamento = await GetArvoreProduto("departamento")
 		const dataFornecedor = await GetNameFonecedor()
@@ -223,28 +151,6 @@ const EditModal = (props) => {
 		}
 	})
 
-	useEffect(() => {
-		const cp = `cep${slectedScreenFornecedor}`
-			for (const key in data) {
-				if (data?.hasOwnProperty(key) && key === cp) {
-					if (data[key]?.length === 8) {
-						Cep(data)
-					}
-				}
-			}
-	},[data, slectedScreenFornecedor])
-
-	const Cep = async (data) => {
-		if (data?.cepFornecedor) {
-			const ce = await GetCep(data.cepFornecedor)
-			setCep1(ce)
-		}
-
-		if (data?.cepRepresentante) {
-			const ce = await GetCep(data.cepRepresentante)
-			setCep2(ce)
-		}
-	}
 
 	const buttons = (type) => {
 		switch (type) {
@@ -254,46 +160,6 @@ const EditModal = (props) => {
 						<div>
 							<Input label="Descrição" value={dataDescricao}  size='lg' type="Text"  onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
 						</div>
-					</>
-				)
-			case 2:
-				return(
-					<>
-						<div className="h-full">
-							<div className='w-96 gap-y-5 flex justify-center  relative'>
-							<h1 className='font-bold'>{RenderSelect(valueTable)}</h1>
-						</div>
-							<Input label="Descrição" value={dataDescricao} size='lg' type="Text" onChange={(e) => setDataDescricao(RegexToSave(e.target.value))} labelPlacement="outside-left" className="mt-2 w-80 justify-between"/>
-						</div> 
-					</>
-				)
-			case 3:
-				return(
-					<>    
-						<Card className="w-full">
-							<CardBody className="overflow-hidden bg-background-table">
-								<Tabs
-									fullWidth
-									aria-label="Tabs form"
-									classNames={{
-										tabList: "bg-[white] rounded-b-sm rounded-b-sm",
-										cursor: "w-full bg-[#edca62b4] rounded-b-sm",
-										tabContent: "group-data-[selected=true]:text-[black] rounded-b-sm",
-									}}
-									selectedKey={slectedScreenFornecedor}
-									onSelectionChange={setSelectedScreenFornecedor}>
-										<Tab key={"Fornecedor"} title="Dados Fronecedor" className="w-full bg-background-table">
-											<FormRegister type={slectedScreenFornecedor} fill={Fill} data={valueTable} handleChange={handleChange} SetData={setData}/>
-										</Tab>
-										<Tab key={"Representante"} title="Dados Representantes" className="h-3/6 bg-background-table">
-											<FormRegister type={slectedScreenFornecedor}  fill={Fill} data={valueTable} handleChange={handleChange} SetData={setData}/>
-										</Tab>
-										<Tab key={"Financeiro"} title="Dados Financeiros" className="h-3/6 bg-background-table">
-											<FormDadosBancarios data={valueTable} handleChange={handleChange} />
-										</Tab>
-								</Tabs>
-							</CardBody>
-						</Card>                
 					</>
 				)
 			case 4:
