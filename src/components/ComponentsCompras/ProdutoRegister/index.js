@@ -221,7 +221,7 @@ const ProdutoRegister = (props) => {
                 <span id="descricaoItem" className="text-xs">Descrição Item</span>
               </div>
               <div className="col-span-5">
-                <Input className="w-full" size="sm" isDisabled name="descricaoItem" value={dataProduto?.items[0]?.descricaoItem || ''} labelPlacement="outside"/>
+                <Input className="w-full" size="sm" isDisabled name="descricaoItem" labelPlacement="outside"/>
               </div>
               <div className="w-36" aria-labelledby="departamento">
                 <span id="departamento" className="text-xs">Departamento</span>

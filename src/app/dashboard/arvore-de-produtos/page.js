@@ -3,15 +3,15 @@ import { Breadcrumbs, BreadcrumbItem, Input, Button, useDisclosure } from "@next
 import React , { useEffect, useState } from "react";
 import { DelArvoreProduto, GetArvoreProduto, PostArvoreProduto, PutArvoreProduto } from "@/app/actions/arvore-produto";
 import TableRender from "@/components/ui/table/tableRender/";
-import MiniSideBarNav from "@/components/ui/MiniSideBarNav";
+import MiniSideBarNav from "@/components/ui/miniSideBarNav";
 import { navArvoreProduto } from "@/DB/data";
 import useGetData from "@/hooks/services/useGetData";
 import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
 import useDeleteData from "@/hooks/services/useDeleteData";
 import useHandleChange from "@/hooks/ui/useHandleChange";
-import ModalRegisterArvoreProduto from "@/components/ComponentsCompras/register/modalRegisterArvoreProduto";
-import ModalEditArvoreProduto from "@/components/ComponentsCompras/edit/modalEditArvoreProduto";
+import ModalRegisterArvoreProduto from "@/components/componentsCompras/register/modalRegisterArvoreProduto";
+import ModalEditArvoreProduto from "@/components/componentsCompras/edit/modalEditArvoreProduto";
 
 export default function ArvoreDeProduto () {
 	const [option, setOption] = useState('departamento');

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const Del = async (nameRequest,data) => {
 	if (data) {
-		const response = await axios.delete(`http://localhost:8080/produtos/del/${data?.codigoItem}`)
+		const response = await axios.delete(`http://localhost:8080/produtos/del/${data?.codigo}`, {data})
 		.then((response) => {
 			if (response) {
 				return response.data

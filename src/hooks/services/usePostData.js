@@ -4,10 +4,11 @@ import Warning from "@/components/ui/warning";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "@/reducers/models/dataReducer";
+import { RemoveDuplicatesPost } from "@/functions/removeDuplicates";
 
 const usePostData = (postFunction) => {
 
-  const resultPost = useSelector(state => state.data);
+  const dataGlobal = useSelector(state => state.data);
   const [status, setStatus] = useState();
   const dispatch = useDispatch();
   const CloseStatus = () => {
@@ -23,13 +24,18 @@ const usePostData = (postFunction) => {
   const Request = async (nameRequest ,data) => {
     try {
       const dataPost = await postFunction(nameRequest ,data)
-      console.log(dataPost)
       if (dataPost?.status === 422) {
         setStatus(dataPost)
         throw new Error (dataPost.message)
       }
-      dispatch(setPost(dataPost))
-      setStatus(dataPost)
+      if(dataPost?.data?.length > 0) {
+        const newData = RemoveDuplicatesPost(dataGlobal, dataPost.data);
+        newData.forEach(element => dispatch(setPost(element)));
+        setStatus(dataPost);
+        return;
+      }
+      dispatch(setPost(dataPost?.data));
+      setStatus(dataPost);
     } catch (error) {
       console.log(error)
     }
@@ -39,7 +45,7 @@ const usePostData = (postFunction) => {
 
   let warningPost = status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null) 
 
-  return {resultPost, statusPost, warningPost, ReceivePost}
+  return { statusPost, warningPost, ReceivePost }
 
 }
 
