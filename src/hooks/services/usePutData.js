@@ -3,9 +3,10 @@ import Warning from "@/components/ui/warning";
 import React, {useState} from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { setEdit } from "@/reducers/models/dataReducer";
-const usePutData = (putFunction) => {
+import { RemoveDuplicatesPut } from "@/functions/removeDuplicates";
 
-  const resultPut = useSelector(state => state.data)
+const usePutData = (putFunction) => {
+  const dataGlobal = useSelector(state => state.data)
   const [status, setStatus] = useState()
   const dispatch = useDispatch();
   const CloseStatus = () => {
@@ -20,8 +21,14 @@ const usePutData = (putFunction) => {
           setStatus(statusPut)
           throw new Error (statusPut.message)
         }
-        setStatus(statusPut)
+        if(statusPut?.data?.length > 0) {
+          const newData = RemoveDuplicatesPut(dataGlobal, statusPut.data);
+          newData.forEach(element => dispatch(setEdit(element)));
+          setStatus(statusPut)
+          return;
+        }
         dispatch(setEdit(statusPut.data))
+        setStatus(statusPut)
       } catch (error) {
         console.log(error)
       }  
@@ -32,7 +39,7 @@ let statusEdit =  status?.status === 200 ? ( <> <SuccessAlert CloseStatus={Close
 
 let warningEdit = status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null) 
 
-return {resultPut, statusEdit, warningEdit, ReceivePut}
+return { statusEdit, warningEdit, ReceivePut }
 }
 
 export default usePutData

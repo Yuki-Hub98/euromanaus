@@ -142,7 +142,7 @@ const ModalEditFornecedor = (props) => {
 						</Button>
 						<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {ReceivePut(name, data),  clearValueTable(null)}} 
 							onPress={onClose} >
-							Cadastrar
+							Editar
 						</Button>
 					</ModalFooter>
 					</>
