@@ -8,9 +8,9 @@ import { DelFornecedor, PostFornecedor, PutFornecedor } from "@/app/actions/forn
 import useDeleteData from "@/hooks/services/useDeleteData";
 import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
-import SearchFornecedor from "@/components/ComponentsCompras/search/searchFornecedor";
-import ModalRegisterFornecedor from "@/components/ComponentsCompras/register/modalRegisterFornecedor";
-import ModalEditFornecedor from "@/components/ComponentsCompras/edit/modalEditFornecedor";
+import ModalRegisterFornecedor from "@/components/componentsCompras/register/modalRegisterFornecedor";
+import ModalEditFornecedor from "@/components/componentsCompras/edit/modalEditFornecedor";
+import SearchFornecedor from "@/components/componentsCompras/search/searchFornecedor";
 
 
 

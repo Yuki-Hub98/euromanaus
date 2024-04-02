@@ -1,7 +1,6 @@
 "use client";
 import { Breadcrumbs, BreadcrumbItem, useDisclosure, Button } from "@nextui-org/react";
 import React , {useEffect, useState} from "react";
-import TopButtons from "@/components/ui/topButtons";
 import TableRender from "@/components/ui/table/tableRender";
 import { GetProduto } from "@/app/actions/produto";
 import useGetData from "@/hooks/services/useGetData";
@@ -9,10 +8,9 @@ import { DelProduto, PostProduto, PutProdudo } from "@/app/actions/produto";
 import useDeleteData from "@/hooks/services/useDeleteData";
 import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
-import ModalRegisterProdutos from "@/components/ComponentsCompras/register/modalRegisterProdutos";
-import ModalEditProdutos from "@/components/ComponentsCompras/edit/modalEditProdutos";
-import Search from "@/components/ComponentsCompras/search";
-import SearchProdutos from "@/components/ComponentsCompras/search/searchProdutos";
+import ModalRegisterProdutos from "@/components/componentsCompras/register/modalRegisterProdutos";
+import ModalEditProdutos from "@/components/componentsCompras/edit/modalEditProdutos";
+import SearchProdutos from "@/components/componentsCompras/search/searchProdutos";
 
 export default function Produtos () {
 	const option = "produtos"
