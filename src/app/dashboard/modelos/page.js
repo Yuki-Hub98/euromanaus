@@ -43,7 +43,7 @@ export default function Modelos () {
 				{statusPost} {statusEdit} {statusDelete}
 				{warningGet} {warningPost} {warningEdit} {warningDelete}
 				<div className='w-full flex overflow-y-auto h-50 flex-col rounded'>
-					<TableRender data={resultGet} name={option} ValueTable={ValueTable} />
+					<TableRender data={resultGet} name={option} style={"w-1/3"} ValueTable={ValueTable} />
 					<div className='w-full h-10 bg-[#CFCFCF]'>
 						<span className='text-black'>
 							teste teste teste teste

@@ -9,12 +9,6 @@ const TopButtons = (props) => {
 
 	const OptionPage = (page) => {
 		switch (page) {
-			case"/dashboard/produtos":
-				return(
-					<>
-					<Search data={props} ReceiveGet={GetData} router={page} />
-					</>
-				)
 			case"/dashboard/modelos":
 			return(
 				<>

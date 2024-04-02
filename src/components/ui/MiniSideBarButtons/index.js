@@ -17,39 +17,6 @@ const MiniSideBarButtons = (props) => {
 
     const optionPage = (page) => {
         switch (page) {
-            case"/dashboard/fornecedor":
-            return(
-                <>
-                    <div className='flex flex-col pt-5 justify-center gap-2 items-center'>
-                    <Button color="primary" size="sm" variant="ghost" onPress={onOpen}>
-                      Cadastrar
-                    </Button>
-                    <RegisterModal isOpen={isOpen} size={"4xl"} h={"w-3/5"} name={props?.name} 
-                    ReceivePost={PostData} onOpenChange={onOpenChange}/>
-                    <div className='flex items-center'>
-                      {valueTable ? 
-                        <Button color="primary" size="sm" variant="ghost" onPress={() => {setOpen(true)}}>
-                          Editar
-                        </Button>
-                      :
-                        <Button color="primary" size="sm" isDisabled variant="ghost">
-                          Editar
-                        </Button>
-                      }
-                      <EditModal name={props?.name} size={"4xl"} h={"w-3/5"} ReceivePut={PutData} 
-                      valueTable={valueTable} isOpen={open} SetValueTable={SetValueTable} modal={modal}/>
-                    </div>
-                    {valueTable ? 
-                      <Button color="primary" size="sm" variant="ghost" onClick={() => DeleteData(props?.name, valueTable)}>
-                        Excluir
-                      </Button>
-                        :
-                      <Button color="primary" size="sm" isDisabled variant="ghost">
-                        Excluir
-                      </Button>
-                    }
-                    </div>
-                </>)
             case "/dashboard/produtos":
               return(
                 <>

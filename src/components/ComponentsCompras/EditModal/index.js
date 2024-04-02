@@ -1,44 +1,20 @@
 "use client"
 import React , {useEffect, useState} from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
-	ModalFooter, Tabs, Tab, Card, CardBody, Input} from "@nextui-org/react";
+	ModalFooter, Input} from "@nextui-org/react";
 import RegexToSave from "@/functions/regexToSave";
-import { GetNameFonecedor } from "@/app/actions/fornecedor";
-import Fiscal from "../produtoRegister/fiscal";
-import ProdutoRegister from "../produtoRegister";
-import { GetProdutoToEdit } from "@/app/actions/produto";
-import { GetArvoreProduto } from "@/app/actions/arvore-produto";
-import useSearchArvoreProduto from "@/hooks/services/useSearchArvoreProduto";
-import { SearchModelo } from "@/app/actions/modelo";
+
 
 const EditModal = (props) => {
 	const { ReceivePut, valueTable, SetValueTable } = props
 	const [dataToPut, setDataToPut] = useState();
 	const [dataDescricao, setDataDescricao] = useState();
-	const [dataRenderModal, setDataRenderModal] = useState({
-		departamento:[],
-		cor:[],
-		especificacao:[],
-		fornecedor:[],
-		modelos:[]
-	});
 	const [data, setData] = useState (valueTable);
-	const [slectedScreenProduto, setSelectedScreenProduto] = useState("Produto");
-	const  {requestArvore, dataArvore} = useSearchArvoreProduto()
-
-	const RequestEditProduto = async (idItem) => {
-		const produto = await GetProdutoToEdit(idItem)
-		setData(produto)
-	}
 
 	useEffect(()=> {
 		setDataDescricao(valueTable?.descricao)
-		setData(valueTable)
-		if (valueTable?.codigoItem) {
-			RequestEditProduto(valueTable?.codigoItem)
-		}
 	},[valueTable])
-
+	
 	const toClean = () => {
 		setData(null)
 		setDataToPut(null)
@@ -69,88 +45,7 @@ const EditModal = (props) => {
 	const TypeButton = (type) => {
 		if(type === "modelos"){
 			return 1 
-		}else if(type === "produtos"){
-			return 4
-		}   
 	}
-
-		const handleValue = (target) => {
-			const {name, value, checked} = target.target;
-			if (data?.linha && data?.grupo && name === "modelo") {
-				const descProd = `${data?.linha} ${value} ${data?.grupo}`
-				setData(prevState => ({
-					...prevState,
-					["descricaoProduto"]: descProd
-				}))
-			}else if (data?.linha  && data?.modelo && name === "grupo") {
-				const descProd = `${data?.linha} ${data?.modelo} ${value}`
-				setData(prevState => ({
-					...prevState,
-					["descricaoProduto"]: descProd
-				}))
-			}
-			setData(prevState => ({
-				...prevState,
-				[name]:value
-			}))
-			if(name === "processado") {
-				setData(prevState => ({
-					...prevState,
-					[name]: checked
-				}))
-			}
-		}
-	
-		const AddItemProduto = async (data, valueTable) => {
-			const newData = {...data}
-
-			newData?.items.forEach((element) => {
-				newData.items = [...newData.items, {idItem: element.idItem, descricaoItem: `${newData.descricaoProduto} ${element.cor} ${element.especificacao}`, codBarra: element.codBarra, cor: element.cor, especificacao: element.especificacao}]
-				newData.items.shift()
-			})
-
-			newData?.items.forEach((element, index) => {
-				if (element.idItem === valueTable?.idItem) {
-					newData.items.splice(index, 1)
-					newData.items = [...newData.items, {idItem: valueTable?.idItem, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: valueTable?.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
-				}
-			});
-			delete newData.cor
-			delete newData.especificacao
-			delete newData.descricaoItem
-			setData(newData)
-	}
-
-	const RequestModal = async () =>{
-		const dataDepartamento = await GetArvoreProduto("departamento")
-		const dataFornecedor = await GetNameFonecedor()
-		const dataCor = await GetArvoreProduto("cor")
-		const dataEspecificacao = await GetArvoreProduto("especificacao")
-		const modelo = await SearchModelo("modelos")
-
-		setDataRenderModal(data=> ({
-			...data,
-			["departamento"]: [dataDepartamento],
-			["cor"]:[dataCor],
-			["especificacao"]: [dataEspecificacao],
-			["fornecedor"]: [dataFornecedor],
-			["modelos"]:[modelo]
-		})) 
-	}
-
-	useEffect(()=> {
-		if (props?.name === "produtos" && props?.isOpen) {
-			RequestModal();
-		}
-	},[props])
-
-	useEffect(() => {
-		if (dataToPut) {
-			ReceivePut(props?.name, dataToPut)
-			return toClean();
-		}
-	})
-
 
 	const buttons = (type) => {
 		switch (type) {
@@ -162,33 +57,6 @@ const EditModal = (props) => {
 						</div>
 					</>
 				)
-			case 4:
-			return(
-				<>    
-					<Card className="w-full">
-						<CardBody className="overflow-hidden bg-background-table">
-							<Tabs
-								fullWidth
-								aria-label="Tabs form"
-								classNames={{
-									tabList: "bg-[white] rounded-b-sm rounded-b-sm",
-									cursor: "w-full bg-[#edca62b4] rounded-b-sm",
-									tabContent: "group-data-[selected=true]:text-[black] rounded-b-sm",
-								}}
-								selectedKey={slectedScreenProduto}
-								onSelectionChange={setSelectedScreenProduto}>
-									<Tab key={"Produto"} title="Cadastro de Produto" className="w-full h-full bg-background-table">
-										<ProdutoRegister dataRenderModal={dataRenderModal} dataProduto={data} requestArvore={requestArvore}  AddItem={AddItemProduto} type={"edit"} 
-										handleValueEdit={handleValue} dataArvore={dataArvore}/>
-									</Tab>
-									<Tab key={"Fiscal"} title="Fiscal" className="w-full h-full bg-background-table">
-										<Fiscal dataRenderModal={dataRenderModal} dataFiscal={data}	SetData={setData} type={"edit"}/>
-									</Tab>
-							</Tabs>
-						</CardBody>
-					</Card>                
-				</>
-			)
 			default:
 				break;
 		}
@@ -245,7 +113,7 @@ const EditModal = (props) => {
 			</Modal>
 		</>
 	)
-		
+	}
 }
 
 export default EditModal
