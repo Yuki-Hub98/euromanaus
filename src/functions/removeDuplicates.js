@@ -40,7 +40,6 @@ const RemoveDuplicatesItems = (array) => {
     setItems.add(item.especificacao);
     return !duplicatedCor || !duplicatedEspacificacao;
   });
-  console.log("newArray: ", newArray)
   return newArray
 }
 

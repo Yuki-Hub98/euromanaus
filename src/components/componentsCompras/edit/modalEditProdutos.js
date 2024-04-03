@@ -25,7 +25,6 @@ const ModalEditProdutos = (props) => {
 
   const RequestEditProduto = async (idItem) => {
 		const produto = await GetProdutoToEdit(idItem)
-    console.log(produto)
 		setData(produto)
 	}
 

@@ -62,3 +62,12 @@ export const cstPisCofinsCadProduto = [
   {descicao: "9 - OPERAÇÃO COM SUSPENSÃO DA CONTRIBUÇÃO"},
   {descicao: "49 - OUTRAS OPERAÇÕES DE SAÍDA"}
 ]
+
+export const tipoRecurso = [
+  {tipo: "MÃO DE OBRA"},
+  {tipo: "MÁQUINA"}
+]
+
+export const unidadeCalculo = [
+  {unidade: "MIN"}
+]

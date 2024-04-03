@@ -9,23 +9,24 @@ import ModalRegisterMaoDeObra from "@/components/componentsIndustrial/register/m
 import ModalEditMaoDeObra from "@/components/componentsIndustrial/edit/modalEditMaoDeObra";
 import TableRender from "@/components/ui/table/tableRender/";
 import useHandleChange from "@/hooks/ui/useHandleChange";
-import { RegisterCadastroDeFuncao, GetCadastroDeFuncao, EditCadastroDeFuncao, DelCadastroDeFuncao } from "@/app/actions/cadastro-de-funcao";
+import { DelCadastroDeRecurso, EditCadastroDeRecurso, GetCadastroDeRecurso, RegisterCadastroDeRecurso } from "@/app/actions/cadastro-de-recurso";
 
-export default function CadastroFuncao (props) {
-	const option = "Cadastro de Função"
+
+export default function CadastroRecurso (props) {
+	const option = "Cadastro de Recurso"
 	const [valueTable, setValueTable] = useState();
 	const openRegister = useDisclosure();
 	const openEdit = useDisclosure();
-	const { warningGet , resultGet , ReceiveGet } = useGetData(GetCadastroDeFuncao)
-	const { statusPost, warningPost, ReceivePost } = usePostData(RegisterCadastroDeFuncao);
-	const { statusEdit, warningEdit, ReceivePut } = usePutData(DelCadastroDeFuncao);
-	const { statusDelete, warningDelete, DeleteData } = useDeleteData(EditCadastroDeFuncao)
-	const {dataHandleChange, handleChange} = useHandleChange()
+	const { warningGet , resultGet , ReceiveGet } = useGetData(GetCadastroDeRecurso)
+	const { statusPost, warningPost, ReceivePost } = usePostData(RegisterCadastroDeRecurso);
+	const { statusEdit, warningEdit, ReceivePut } = usePutData(EditCadastroDeRecurso);
+	const { statusDelete, warningDelete, DeleteData } = useDeleteData(DelCadastroDeRecurso)
+	const {dataHandleChange, handleChange, clearHandle} = useHandleChange()
 	const ValueTable = (value) => {
 		setValueTable(value)
 	}
 	useEffect(() => {
-		ReceiveGet("cadastro-de-funcao")
+		ReceiveGet("cadastro-de-recurso")
 	},[])
 	return (
 		<>
@@ -46,11 +47,13 @@ export default function CadastroFuncao (props) {
 					<div className='h-12 gap-2 flex flex-row justify-items-center items-center'>
 						<Input className='w-72' labelPlacement='outside-left' placeholder=" " 
 							onChange={(e) => handleChange(e)} color="primary" label="Descrição" name="descricao"/>
-						<Button color="primary" type="submit" size='sm' variant="ghost" onClick={() => {ReceiveGet("cadastro-de-funcao", dataHandleChange)}} >
+						<Button color="primary" type="submit" size='sm' variant="ghost" onClick={() => {ReceiveGet("cadastro-de-recurso", dataHandleChange), clearHandle()}} >
 							Pesquisar
 						</Button>
 					</div>
 					<Button color="primary" size="sm" variant="ghost" onPress={openRegister.onOpen}> Cadastrar </Button>
+					<Button color="primary" size="sm" variant="ghost" onPress={openEdit.onOpen}> Editar </Button>
+					<Button color="primary" size="sm" variant="ghost" onClick={() => {DeleteData("cadastro-de-recurso", valueTable)}}> Excluir </Button>
 				</div>
 			</div>
 			<ModalRegisterMaoDeObra name={option} isOpen={openRegister.isOpen} 
@@ -59,9 +62,7 @@ export default function CadastroFuncao (props) {
 			onOpenChange={openEdit.onOpenChange} ReceivePut={ReceivePut}/>
 			<div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
 				<div className='w-full flex overflow-y-auto h-50 flex-col rounded'>
-					<TableRender data={resultGet} name={option} ValueTable={ValueTable} 
-						editButton={openEdit.onOpen} deleteButto={DeleteData}
-						nameRequest={"cadastro-de-funcao"} style={"w-1/3"} buttons={true}/>
+					<TableRender data={resultGet} name={option} ValueTable={ValueTable} style={"table-auto whitespace-nowrap"}/>
 				</div>
 			</div>
 		</>

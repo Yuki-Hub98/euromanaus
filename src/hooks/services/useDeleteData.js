@@ -14,18 +14,17 @@ const useDeleteData = (deleteFunction) => {
 	}
 
   const DeleteData = async (nameRequest, data) => {
-      try {
-        const statusDel = await deleteFunction(nameRequest, data)
-        console.log(statusDel)
-        if (statusDel?.status === 403 ) {
-          setStatus(statusDel)
-          throw new Error (statusDel.message)
-        }
-        dispatch(setDelete(statusDel))
+    try {
+      const statusDel = await deleteFunction(nameRequest, data)
+      if (statusDel?.status === 403 ) {
         setStatus(statusDel)
-      } catch (error) {
-        console.log(error)
+        throw new Error (statusDel.message)
       }
+      dispatch(setDelete(statusDel))
+      setStatus(statusDel)
+    } catch (error) {
+      console.log(error)
+    }
 	}
 
   let statusDelete =  status?.del ? ( <> <SuccessAlert CloseStatus={CloseStatus}  message="Deletado com com Sucesso !"/> </> ): (null)
