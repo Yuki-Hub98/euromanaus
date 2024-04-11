@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setDelete } from "@/reducers/models/dataReducer";
 
 const useDeleteData = (deleteFunction) => {
-  const resultDelte = useSelector(state => state.data)
+  const resultDelte = useSelector(state => state.data.renderItemsState)
   const [status, setStatus] = useState()
   const dispatch = useDispatch();
   const CloseStatus = () => {

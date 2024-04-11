@@ -10,14 +10,13 @@ import usePostData from "@/hooks/services/usePostData";
 import usePutData from "@/hooks/services/usePutData";
 import useDeleteData from "@/hooks/services/useDeleteData";
 import useHandleChange from "@/hooks/ui/useHandleChange";
+import useMiniNavegation from "@/hooks/ui/useMiniNavegation";
 import ModalRegisterArvoreProduto from "@/components/componentsCompras/register/modalRegisterArvoreProduto";
 import ModalEditArvoreProduto from "@/components/componentsCompras/edit/modalEditArvoreProduto";
+import FormatURL from "@/functions/formatURL";
 
 export default function ArvoreDeProduto () {
-	const [option, setOption] = useState('departamento');
 	const [dataModal, setDataModal] = useState();
-	const [nameRequestMiniSideBar, setNameRequestMiniSideBar] = useState();
-	const [requestMiniSideBar, setRequestMiniSideBar] = useState(false);
 	const openRegister = useDisclosure();
 	const openEdit = useDisclosure();
 	const [valueTable, setValueTable] = useState();
@@ -26,50 +25,33 @@ export default function ArvoreDeProduto () {
 	const { statusPost, warningPost, ReceivePost } = usePostData(PostArvoreProduto);
 	const { statusEdit, warningEdit, ReceivePut } = usePutData(PutArvoreProduto);
 	const { statusDelete, warningDelete, DeleteData } = useDeleteData(DelArvoreProduto)
-	const ChosenOption = (option, request) => {
-		const op = option.toLowerCase() === "especificação" ? "especificacao" : option.toLowerCase()
-		if (request) {
-			setRequestMiniSideBar(request)
-		}
-		setNameRequestMiniSideBar(op);
-		setTableData([{}])
-		setValueTable(null)
-		return setOption(op)
-	}
+	const { option, ChosenOption } = useMiniNavegation("departamento")
 
 	const ValueTable = (value) => {
 		setValueTable(value)
 	}
 
 	useEffect(() => {
-		if (requestMiniSideBar) {
-			switch (nameRequestMiniSideBar) {
-				case 'linha':
-					modalData('departamento')
-					break;
-				case 'familia':
-					modalData('linha')
-					break;
-				case 'grupo':
-					modalData('familia')
-					break;
-				default:
-					break;
-			}
+		ReceiveGet(FormatURL(option))
+		switch (option) {
+			case 'linha':
+				modalData('departamento')
+				break;
+			case 'familia':
+				modalData('linha')
+				break;
+			case 'grupo':
+				modalData('familia')
+				break;
+			default:
+				break;
 		}
-	})
-
-	useEffect(() => {
-		ReceiveGet(option)
 	},[option])
 
 	const modalData = async (opcao) =>{
 		if (opcao){
-			const data = await GetArvoreProduto(opcao)
-			setDataModal(data)
-			setRequestMiniSideBar(false)
+			setDataModal(await GetArvoreProduto(opcao))
 		}
-		
 	}
 
 	return (
@@ -98,12 +80,12 @@ export default function ArvoreDeProduto () {
 					</div>
 					<Button color="primary" size="sm" variant="ghost" onPress={openRegister.onOpen}> Cadastrar </Button>
 					<Button color="primary" size="sm" variant="ghost" onPress={openEdit.onOpen}> Editar </Button>
-					<Button color="primary" size="sm" variant="ghost" onClick={() => {DeleteData(option, valueTable)}}> Excluir </Button>
+					<Button color="primary" size="sm" variant="ghost" onClick={() => {DeleteData(option, valueTable), setValueTable(null)}}> Excluir </Button>
 				</div>
 			</div>
-			<ModalRegisterArvoreProduto name={option} isOpen={openRegister.isOpen}
+			<ModalRegisterArvoreProduto name={option} isOpen={openRegister.isOpen} ValueTable={ValueTable}
 				onOpenChange={openRegister.onOpenChange} ReceivePost={ReceivePost} dataModal={dataModal}/>
-			<ModalEditArvoreProduto name={option} isOpen={openEdit.isOpen} valueEdit={valueTable} 
+			<ModalEditArvoreProduto name={option} isOpen={openEdit.isOpen} valueEdit={valueTable} ValueTable={ValueTable}
 			onOpenChange={openEdit.onOpenChange} ReceivePut={ReceivePut}/>
 				<div className=' w-full flex h-4/5 overflow-y-auto mt-1.5 flex-row'>
 					<MiniSideBarNav ChosenOption={ChosenOption}  name={navArvoreProduto} />

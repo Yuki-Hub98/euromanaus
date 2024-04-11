@@ -3,8 +3,9 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 import useHandleChange from "@/hooks/ui/useHandleChange";
 import { tipoRecurso } from "@/DB/data";
 import { unidadeCalculo } from "@/DB/data";
+import FormatURL from "@/functions/formatURL";
 
-const ModalRegisterMaoDeObra = (props) => {
+const ModalRegisterCadastroDeRecuro = (props) => {
   const {isOpen, onOpenChange, size, height, name, ReceivePost} = props
   const {dataHandleChange, handleChange, clearHandle} = useHandleChange()
   return(
@@ -26,7 +27,7 @@ const ModalRegisterMaoDeObra = (props) => {
         <ModalContent>
           {(onClose) => (
             <>
-            <ModalHeader className="w-full gri-cols-6 bg-[#edca62b4]"> {name.toUpperCase()} </ModalHeader>
+            <ModalHeader className="w-full gri-cols-6 bg-[#edca62b4]"> CADASTRAR {name.toUpperCase()} </ModalHeader>
             <ModalBody>
             <div className="w-full grid gri-cols-6 gap-2 items-center">
               <div className="col-span-1">
@@ -61,7 +62,7 @@ const ModalRegisterMaoDeObra = (props) => {
               <Button className='bg-sky-50' size="sm" variant="flat" onClick={() => {clearHandle(), onClose()}} >
                 Cancelar
               </Button>
-              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost("cadastro-de-recurso", dataHandleChange)}} 
+              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost(FormatURL(name), dataHandleChange, clearHandle())}} 
                 onPress={onClose} >
                 Cadastrar
               </Button>
@@ -75,4 +76,4 @@ const ModalRegisterMaoDeObra = (props) => {
 
 }
 
-export default ModalRegisterMaoDeObra
+export default ModalRegisterCadastroDeRecuro
