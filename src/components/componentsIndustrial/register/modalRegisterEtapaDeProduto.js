@@ -3,12 +3,18 @@ import React from "react";
 import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Input} from "@nextui-org/react";
 import useHandleChange from "@/hooks/ui/useHandleChange";
+import usePostData from "@/hooks/services/usePostData";
+import { RegisterEtapaDeProducao } from "@/app/actions/etapa-de-producao";
+import FormatURL from "@/functions/formatURL";
 
-const ModalRegisterModelo = (props) => {
-	const {ReceivePost, onOpenChange, isOpen, size, height, name} = props
+const ModalRegisterEtapaDeProducao = (props) => {
+	const { onOpenChange, isOpen, size, height, name } = props
+  const { statusPost, warningPost, ReceivePost } = usePostData(RegisterEtapaDeProducao);
 	const { dataHandleChange, handleChange, clearHandle } = useHandleChange()
+
 	return (
 		<>
+    {statusPost} {warningPost}
 		<Modal 
 			isOpen={isOpen}
 			onOpenChange={onOpenChange}
@@ -32,16 +38,16 @@ const ModalRegisterModelo = (props) => {
 						<div className="col-span-1">
 								<span className="text-sm">Descricão</span>
             </div>
-						<Input  size="sm" type="Text" name="descricao" onChange={(e) => {handleChange(e)}} 
+						<Input  size="sm" type="Text" name="etapaDeProducao" onChange={(e) => {handleChange(e)}} 
 							labelPlacement="outside" className="col-start-2"/>
 					</div>
 					</ModalBody>
 					<ModalFooter>
-						<Button className='bg-sky-50' size="sm" variant="flat" onClick={() => {clearHandle()}} onPress={onClose} >
+						<Button className='bg-sky-50' variant="flat" size="sm" onClick={() => {clearHandle()}} onPress={onClose} >
 							Cancelar
 						</Button>
 						{ dataHandleChange ? (
-							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost(name, dataHandleChange), clearHandle()}} 
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost(FormatURL(name), dataHandleChange), clearHandle()}} 
 								onPress={onClose} >
 								Cadastrar
 							</Button>
@@ -62,4 +68,4 @@ const ModalRegisterModelo = (props) => {
 	
 }
 
-export default ModalRegisterModelo
+export default ModalRegisterEtapaDeProducao

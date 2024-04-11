@@ -137,10 +137,10 @@ const ModalEditFornecedor = (props) => {
             </Card>   
 					</ModalBody>
 					<ModalFooter>
-						<Button className='bg-sky-50' variant="flat" onClick={()=> {setData(null), clearValueTable(null)}} onPress={onClose} >
+						<Button className='bg-sky-50' variant="flat" size="sm" onClick={()=> {setData(null), clearValueTable(null)}} onPress={onClose} >
 							Cancelar
 						</Button>
-						<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {ReceivePut(name, data),  clearValueTable(null)}} 
+						<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePut(name, data),  clearValueTable(null)}} 
 							onPress={onClose} >
 							Editar
 						</Button>
