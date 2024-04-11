@@ -152,17 +152,17 @@ return(
       </div>
     </ModalBody>
     <ModalFooter>
-      <Button className='bg-sky-50' variant="flat" onPress={onClose} onClick={()=> {setData(null), clearValueTable(null)}}>
+      <Button className='bg-sky-50' variant="flat" size="sm" onPress={onClose} onClick={()=> {setData(null), clearValueTable(null)}}>
         Cancelar
       </Button>
       { data ? (
-      <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onPress={onClose} onClick={() => {setData(null), ReceivePut(name, data), clearValueTable(null)}} >
+      <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onPress={onClose} onClick={() => {setData(null), ReceivePut(name, data), clearValueTable(null)}} >
         Editar
       </Button>
       )
         :
       (
-      <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" isDisabled>
+      <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" isDisabled>
         Editar
       </Button>
       )

@@ -139,14 +139,14 @@ const ModalRegisterFornecedor = (props) => {
 							Cancelar
 						</Button>
 						{ isDisabled ? (
-							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {ReceivePost(name, data)}} 
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost(name, data)}} 
 								onPress={onClose} >
 								Cadastrar
 							</Button>
 						)
 							:
 						(
-							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" isDisabled>
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" isDisabled>
 								Cadastrar
 							</Button>
 						)}

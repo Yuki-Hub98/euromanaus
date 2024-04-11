@@ -37,18 +37,18 @@ const ModalRegisterModelo = (props) => {
 					</div>
 					</ModalBody>
 					<ModalFooter>
-						<Button className='bg-sky-50' variant="flat" onClick={() => {clearHandle()}} onPress={onClose} >
+						<Button className='bg-sky-50' size="sm" variant="flat" onClick={() => {clearHandle()}} onPress={onClose} >
 							Cancelar
 						</Button>
 						{ dataHandleChange ? (
-							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {ReceivePost(name, dataHandleChange), clearHandle()}} 
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost(name, dataHandleChange), clearHandle()}} 
 								onPress={onClose} >
 								Cadastrar
 							</Button>
 						)
 							:
 						(
-							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" isDisabled>
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" isDisabled>
 								Cadastrar
 							</Button>
 						)}
