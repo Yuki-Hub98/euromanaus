@@ -71,3 +71,14 @@ export const tipoRecurso = [
 export const unidadeCalculo = [
   {unidade: "MIN"}
 ]
+
+export const navRecursos = [
+  "Recurso",
+  "Grupo de Recursos"
+]
+
+export const tipoAcao = [
+  "ETAPA",
+  "RECURSO",
+  "ITEM"
+]

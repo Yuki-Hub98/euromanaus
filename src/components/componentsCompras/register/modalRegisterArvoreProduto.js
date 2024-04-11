@@ -3,7 +3,7 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 import useHandleChange from "@/hooks/ui/useHandleChange";
 
 const ModalRegisterArvoreProduto = (props) => {
-  const {isOpen, onOpenChange, size, height, name, ReceivePost, dataModal} = props
+  const {isOpen, onOpenChange, size, height, name, ReceivePost, dataModal, ValueTable} = props
   const {dataHandleChange, handleChange, clearHandle} = useHandleChange()
   const LabelArvore = (name) => {
 		switch (name) {
@@ -65,10 +65,10 @@ const ModalRegisterArvoreProduto = (props) => {
             </div>
             </ModalBody>
             <ModalFooter>
-              <Button className='bg-sky-50' size="sm" variant="flat" onClick={() => {clearHandle(), onClose()}} >
+              <Button className='bg-sky-50' size="sm" variant="flat" onPress={onClose} onClick={() => {clearHandle(), ValueTable(null)}} >
                 Cancelar
               </Button>
-              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost(name, dataHandleChange)}} 
+              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePost(name, dataHandleChange), ValueTable(null)}} 
                 onPress={onClose} >
                 Cadastrar
               </Button>

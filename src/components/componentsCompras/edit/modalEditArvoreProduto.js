@@ -3,7 +3,7 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 import useHandleChange from "@/hooks/ui/useHandleChange";
 
 const ModalEditArvoreProduto= (props) => {
-  const {isOpen, ReceivePut, onOpenChange, size, height, name, valueEdit} = props
+  const {isOpen, ReceivePut, onOpenChange, size, height, name, valueEdit, ValueTable} = props
   const {dataHandleChange, handleChange} = useHandleChange(valueEdit)
   const LabelArvore = (name) => {
 		switch (name) {
@@ -59,10 +59,10 @@ const ModalEditArvoreProduto= (props) => {
             </div>
             </ModalBody>
             <ModalFooter>
-              <Button className='bg-sky-50' size="sm" variant="flat" onClick={() => {clearHandle(), onClose()}} >
+              <Button className='bg-sky-50' size="sm" variant="flat" onPress={onClose} onClick={() => {clearHandle(), ValueTable(null)}} >
                 Cancelar
               </Button>
-              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePut(name, dataHandleChange)}} 
+              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePut(name, dataHandleChange), ValueTable(null)}} 
                 onPress={onClose} >
                 Editar
               </Button>

@@ -2,8 +2,9 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Input, Select, SelectItem} from "@nextui-org/react";
 import useHandleChange from "@/hooks/ui/useHandleChange";
 import { tipoRecurso, unidadeCalculo } from "@/DB/data";
+import FormatURL from "@/functions/formatURL";
 
-const ModalEditMaoDeObra = (props) => {
+const ModalEditCadastroDeRecurso = (props) => {
   const {isOpen, ReceivePut, onOpenChange, size, height, name, valueEdit} = props
   const {dataHandleChange, handleChange, clearHandle} = useHandleChange(valueEdit)
 
@@ -26,7 +27,7 @@ const ModalEditMaoDeObra = (props) => {
         <ModalContent>
           {(onClose) => (
             <>
-            <ModalHeader className="w-full gri-cols-6 bg-[#edca62b4]"> EDITAR CADASTRO DE RECURSO </ModalHeader>
+            <ModalHeader className="w-full gri-cols-6 bg-[#edca62b4]"> EDITAR {name.toUpperCase()} </ModalHeader>
             <ModalBody>
             <div className="w-full grid gri-cols-6 gap-2 items-center justify-center">
               <div className="col-span-1">
@@ -63,7 +64,7 @@ const ModalEditMaoDeObra = (props) => {
               <Button className='bg-sky-50' size="sm" variant="flat" onPress={onClose} onClick={() => {clearHandle()}} >
                 Cancelar
               </Button>
-              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePut("cadastro-de-recurso", dataHandleChange)}} 
+              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {ReceivePut(FormatURL(name), dataHandleChange), clearHandle()}} 
                 onPress={onClose} >
                 Confirmar
               </Button>
@@ -77,4 +78,4 @@ const ModalEditMaoDeObra = (props) => {
 
 }
 
-export default ModalEditMaoDeObra
+export default ModalEditCadastroDeRecurso
