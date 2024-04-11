@@ -39,17 +39,17 @@ const ModalEditModelo = (props) => {
 						</div>
 					</ModalBody>
 					<ModalFooter>
-						<Button className='bg-sky-50' variant="flat" onPress={onClose} onClick={() => clearHandle()} >
+						<Button className='bg-sky-50' size="sm" variant="flat" onPress={onClose} onClick={() => clearHandle()} >
 							Cancelar
 						</Button>
 						{ dataHandleChange ? (
-							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onPress={onClose} onClick={() => {ReceivePut(name, dataHandleChange), clearHandle()}} >
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onPress={onClose} onClick={() => {ReceivePut(name, dataHandleChange), clearHandle()}} >
 								Editar
 							</Button>
 						)
 							:
 						(
-							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" isDisabled>
+							<Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" isDisabled>
 								Editar
 							</Button>
 						)
