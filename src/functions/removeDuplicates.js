@@ -43,4 +43,14 @@ const RemoveDuplicatesItems = (array) => {
   return newArray
 }
 
-export { RemoveDuplicatesPost, RemoveDuplicatesPut, RemoveDuplicatesItems }
+const RemoveDuplicatesCodigo = (array) => {
+  const setItems = new Set();
+  const newArray = array.filter((item) => {
+    const duplicatedCodigo = setItems.has(item.codigo);
+    setItems.add(item.codigo);
+    return !duplicatedCodigo
+  });
+  return newArray
+}
+
+export { RemoveDuplicatesPost, RemoveDuplicatesPut, RemoveDuplicatesItems, RemoveDuplicatesCodigo }

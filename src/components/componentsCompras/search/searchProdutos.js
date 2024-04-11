@@ -28,7 +28,7 @@ const SearchProdutos = (props) => {
 
   const Click = () => {
     if (dataHandleChange) {
-        return setDataToGet(name, dataHandleChange)
+        return ReceiveGet(name, dataHandleChange)
     }else{
         return ReceiveGet(name);
     }

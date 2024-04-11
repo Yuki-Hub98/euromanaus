@@ -2,10 +2,11 @@
 import Warning from "@/components/ui/warning";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGet } from "@/reducers/models/dataReducer";
+import { setGet, setGetSeveralData } from "@/reducers/models/dataReducer";
 const useGetData = (getFunction) => {
 
-	const resultGet = useSelector(state => state.data);
+	const resultGet = useSelector(state => state.data.renderItemsState);
+	const severAllGet = useSelector(state => state.data.allItemsState);
 	const [status, setStatus] = useState()
   const dispatch = useDispatch();
 
@@ -26,7 +27,13 @@ const useGetData = (getFunction) => {
 			try {
 				const dataTable = await getFunction(nameRequest, dataGet);
 				setStatus(dataTable)
-				dispatch(setGet(dataTable));
+				if(dataTable[0]?.summaryItems){
+					let summaryItems = dataTable.map((element) => 	element.summaryItems);
+					let allItems = dataTable.map((element) => element.allItems);
+					dispatch(setGetSeveralData(summaryItems, allItems));
+				}else{ 
+					dispatch(setGet(dataTable));
+				}
 			} catch (error) {
 				console.error('Erro ao pesquisar dados:', error);
 			}
@@ -34,7 +41,13 @@ const useGetData = (getFunction) => {
 			try {
 				const dataTable = await getFunction(nameRequest);
 				setStatus(dataTable)
-				dispatch(setGet(dataTable));
+				if(dataTable[0]?.summaryItems){
+					let summaryItems = dataTable.map((element) => 	element.summaryItems);
+					let allItems = dataTable.map((element) => element.allItems);
+					dispatch(setGetSeveralData(summaryItems, allItems))
+				}else{ 
+					dispatch(setGet(dataTable));
+				}
 			} catch (error) {
 				const statusError = {
 					status: 404,
@@ -48,7 +61,7 @@ const useGetData = (getFunction) => {
 
   let warningGet = status?.error ? ( <> <Warning status={status} CloseStatus={CloseStatus} /> </>) : (null)
 
-  return {resultGet, warningGet, ReceiveGet}
+  return {resultGet, severAllGet, warningGet, ReceiveGet}
 }
 
 export default useGetData

@@ -3,12 +3,12 @@ import SuccessAlert from "@/components/ui/successAlert";
 import Warning from "@/components/ui/warning";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPost } from "@/reducers/models/dataReducer";
+import { setPost, setPostSeveralData } from "@/reducers/models/dataReducer";
 import { RemoveDuplicatesPost } from "@/functions/removeDuplicates";
 
 const usePostData = (postFunction) => {
 
-  const dataGlobal = useSelector(state => state.data);
+  const dataGlobal = useSelector(state => state.data.renderItemsState);
   const [status, setStatus] = useState();
   const dispatch = useDispatch();
   const CloseStatus = () => {
@@ -34,7 +34,11 @@ const usePostData = (postFunction) => {
         setStatus(dataPost);
         return;
       }
-      dispatch(setPost(dataPost?.data));
+      if(dataPost?.data?.summaryItems){
+        dispatch(setPostSeveralData(dataPost?.data?.summaryItems, dataPost?.data?.allItems))
+      }else{
+        dispatch(setPost(dataPost.data))
+      };
       setStatus(dataPost);
     } catch (error) {
       console.log(error)

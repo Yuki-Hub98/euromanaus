@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Post = async (nameRequest, data) => {
-  const response = await axios.post(`http://localhost:8080/${nameRequest}`, data)
+  const response = await axios.post(`http://localhost:8080/recursos/${nameRequest}`, data)
   .then((response) => {
     if (response) {
       let dataPost ={
@@ -12,8 +12,10 @@ const Post = async (nameRequest, data) => {
     }
   })
   .catch((error) => {
-    if (error) {
-      return error?.response?.data
+    if (error.response.data) {
+      return error.response.data
+    }else if (error.response) {
+      return error.response
     }
   })
 
