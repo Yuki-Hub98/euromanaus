@@ -78,9 +78,9 @@ export default function ArvoreDeProduto () {
 							Pesquisar
 						</Button>
 					</div>
-					<Button color="primary" size="sm" variant="ghost" onPress={openRegister.onOpen}> Cadastrar </Button>
-					<Button color="primary" size="sm" variant="ghost" onPress={openEdit.onOpen}> Editar </Button>
-					<Button color="primary" size="sm" variant="ghost" onClick={() => {DeleteData(option, valueTable), setValueTable(null)}}> Excluir </Button>
+					<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openRegister.onOpen}> Cadastrar </Button>
+					<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openEdit.onOpen}> Editar </Button>
+					<Button color="primary" className="w-20" size="sm" variant="ghost" onClick={() => {DeleteData(option, valueTable), setValueTable(null)}}> Excluir </Button>
 				</div>
 			</div>
 			<ModalRegisterArvoreProduto name={option} isOpen={openRegister.isOpen} ValueTable={ValueTable}

@@ -52,13 +52,13 @@ export default function Fornecedor () {
 			<div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
 				<aside className=' h-full w-40 flex flex-col bg-background-component rounded left-64 '> 
 					<div className='flex flex-col pt-5 justify-center gap-2 items-center'>
-						<Button color="primary" size="sm" variant="ghost" onPress={openRegister.onOpen}>
+						<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openRegister.onOpen}>
 							Cadastrar
 						</Button>
-						<Button color="primary" size="sm" variant="ghost" onPress={openEdit.onOpen}>
+						<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openEdit.onOpen}>
 							Editar
 						</Button>
-						<Button color="primary" size="sm" variant="ghost" onClick={()=>{DeleteData(option, valueTable), setValueTable(null)}}>
+						<Button color="primary" className="w-20" size="sm" variant="ghost" onClick={()=>{DeleteData(option, valueTable), setValueTable(null)}}>
 							Excluir
 						</Button>
 					</div>
