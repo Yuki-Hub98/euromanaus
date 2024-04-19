@@ -56,22 +56,35 @@ const ModalRegisterProdutos = (props) => {
 
 	const AddItemProduto = async (data) => {
 		const newData = {...data}
-		if (newData?.items?.length > 0) {
-			let lestId = newData?.items[newData?.items?.length - 1].idItem + 1
-			const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId})
-			newData.items.push({idItem: lestId, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao})
-			const newDataRemoveItemsDuplicated = RemoveDuplicatesItems(newData.items)
-			newData.items = [...newDataRemoveItemsDuplicated]
-			
-		}else{
+
+		if (data.departamento === "MATÉRIA PRIMA" && data.cor === undefined && data.especificacao === undefined) {
 			const lestId = await GetLastIdItem();
       if(lestId) {
 				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId?.lastIdItem})
-				newData.items = [{idItem: lestId?.lastIdItem, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+				newData.items = [{idItem: lestId?.lastIdItem, descricaoItem: `${newData.descricaoProduto}`, codBarra: cod.codBarra, cor: newData.modelo}]
       }else{
 				const id = 1
 				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: id})
-				newData.items = [{idItem: id, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+				newData.items = [{idItem: lestId?.lastIdItem, descricaoItem: `${newData.descricaoProduto}`, codBarra: cod.codBarra, cor: newData.modelo}]
+			}
+		}else{
+			if (newData?.items?.length > 0) {
+				let lestId = newData?.items[newData?.items?.length - 1].idItem + 1
+				const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId})
+				newData.items.push({idItem: lestId, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao})
+				const newDataRemoveItemsDuplicated = RemoveDuplicatesItems(newData.items)
+				newData.items = [...newDataRemoveItemsDuplicated]
+				
+			}else{
+				const lestId = await GetLastIdItem();
+				if(lestId) {
+					const cod = await PostCod({fornecedor: newData.fornecedor, idItem: lestId?.lastIdItem})
+					newData.items = [{idItem: lestId?.lastIdItem, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+				}else{
+					const id = 1
+					const cod = await PostCod({fornecedor: newData.fornecedor, idItem: id})
+					newData.items = [{idItem: id, descricaoItem: `${newData.descricaoProduto} ${newData.cor} ${newData.especificacao}`, codBarra: cod.codBarra, cor: newData.cor, especificacao: newData.especificacao}]
+				}
 			}
 		}
 		delete newData.descricaoItem;
