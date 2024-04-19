@@ -33,7 +33,7 @@ export default function ArvoreDeProduto () {
 
 	useEffect(() => {
 		ReceiveGet(FormatURL(option))
-		switch (option) {
+		switch (option.toLowerCase()) {
 			case 'linha':
 				modalData('departamento')
 				break;
@@ -83,7 +83,7 @@ export default function ArvoreDeProduto () {
 					<Button color="primary" className="w-20" size="sm" variant="ghost" onClick={() => {DeleteData(option, valueTable), setValueTable(null)}}> Excluir </Button>
 				</div>
 			</div>
-			<ModalRegisterArvoreProduto name={option} isOpen={openRegister.isOpen} ValueTable={ValueTable}
+			<ModalRegisterArvoreProduto name={option.toLowerCase()} isOpen={openRegister.isOpen} ValueTable={ValueTable}
 				onOpenChange={openRegister.onOpenChange} ReceivePost={ReceivePost} dataModal={dataModal}/>
 			<ModalEditArvoreProduto name={option} isOpen={openEdit.isOpen} valueEdit={valueTable} ValueTable={ValueTable}
 			onOpenChange={openEdit.onOpenChange} ReceivePut={ReceivePut}/>

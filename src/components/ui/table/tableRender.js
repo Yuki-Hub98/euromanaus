@@ -21,7 +21,7 @@ const TableRender = (props) => {
 						del={deleteButto} buttons={buttons} nameRequest={nameRequest}/>
 						: 
 					<div className="flex h-96 justify-center items-center">
-						<h1 className="text-[#2c2c2b] font-bold"> Objeto sem Cadastro </h1>
+						<h1 className="text-[#2c2c2b] font-bold"> Sem Objetos no Momento </h1>
 					</div>
 				}
 			</>

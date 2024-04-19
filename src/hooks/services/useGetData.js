@@ -49,12 +49,7 @@ const useGetData = (getFunction) => {
 					dispatch(setGet(dataTable));
 				}
 			} catch (error) {
-				const statusError = {
-					status: 404,
-					error: "Erro ao pesquisar dados",
-					message: "Por favor contacte os administradores"
-				}
-				setStatus(statusError)
+				console.log(error)
 			}
 		}
 	}
