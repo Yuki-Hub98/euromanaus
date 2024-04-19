@@ -14,10 +14,18 @@ const useHandleChange = (value) => {
   }
   const handleChange = (e) => {
     const {name, value} = e.target;
-    setDataHandleChange(evetData => ({
-      ...evetData,
-      [name]: RegexToSave(value)
-    }))
+    if (value == "") {
+      setDataHandleChange(evetData => ({
+        ...evetData,
+        [name]: undefined
+      }))
+    }else{
+      setDataHandleChange(evetData => ({
+        ...evetData,
+        [name]: RegexToSave(value)
+      }))
+    }
+    
   }
 
   return {dataHandleChange, clearHandle, handleChange}
