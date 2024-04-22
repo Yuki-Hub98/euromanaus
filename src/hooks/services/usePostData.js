@@ -8,7 +8,6 @@ import { RemoveDuplicatesPost } from "@/functions/removeDuplicates";
 
 const usePostData = (postFunction) => {
 
-  const dataGlobal = useSelector(state => state.data.renderItemsState);
   const [status, setStatus] = useState();
   const dispatch = useDispatch();
   const CloseStatus = () => {
@@ -28,14 +27,8 @@ const usePostData = (postFunction) => {
         setStatus(dataPost)
         throw new Error (dataPost.message)
       }
-      if(dataPost?.data?.length > 0) {
-        const newData = RemoveDuplicatesPost(dataGlobal, dataPost.data);
-        newData.forEach(element => dispatch(setPost(element)));
-        setStatus(dataPost);
-        return;
-      }
-      if(dataPost?.data?.summaryItems){
-        dispatch(setPostSeveralData(dataPost?.data?.summaryItems, dataPost?.data?.allItems))
+      if(dataPost.data?.summaryItems){
+        dispatch(setPostSeveralData(dataPost.data))
       }else{
         dispatch(setPost(dataPost.data))
       };

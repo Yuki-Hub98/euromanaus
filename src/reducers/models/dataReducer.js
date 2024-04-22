@@ -1,77 +1,44 @@
-import { RemoveDuplicatesCodigo } from "@/functions/removeDuplicates"
-export const GET_DATA = 'GET_DATA'
-export const GET_MOREDATA = 'GET_MOREDATA'
-export const POST_DATA = 'POST_DATA'
-export const POST_MOREDATA = 'POST_MOREDATA'
-export const EDIT_DATA = 'EDIT_DATA'
-export const DELETE_DATA = 'DELETE_DATA'
-export const EDIT_MOREDATA = 'EDIT_MOREDATA'
+import { createSlice } from "@reduxjs/toolkit";
 
-const setGet = (data) => ( {
-  type: GET_DATA,
-  payload:data
-})
-
-const setGetSeveralData = (summaryItems, allItems) => ({
-  type: GET_MOREDATA,
-  payload: summaryItems,
-  allPayload: allItems,
-})
-
-const setPost = (data) => ({
-  type: POST_DATA,
-  payload: data
-})
-
-const setPostSeveralData = (summaryItems, allItems) => ({
-  type: POST_MOREDATA,
-  payload: summaryItems,
-  allPayload: allItems,
-})
-
-const setEdit = (data) => ({
-  type: EDIT_DATA,
-  payload: data
-})
-
-const setEditSeveralData = (summaryItems, allItems) => ({
-  type: EDIT_MOREDATA,
-  payload: summaryItems,
-  allPayload: allItems,
-})
-
-const setDelete = (data) => ({
-  type: DELETE_DATA,
-  payload: data
-})
-
-
-const initialState = {
-  renderItemsState: [],
-  allItemsState: []
-}
-
-const dataReducer = (state = initialState , action) => {
-  switch (action.type) {
-    case GET_DATA:
-      return {...state, renderItemsState: action.payload, allItemsState:[]};
-    case GET_MOREDATA:
-      return {...state, renderItemsState: action.payload, allItemsState: action.allPayload};
-    case POST_DATA:
-      return {...state, renderItemsState: [...state.renderItemsState, action.payload]};
-    case POST_MOREDATA:
-      return {...state, renderItemsState: [...state.renderItemsState, action.payload], allItemsState: [...state.allItemsState, action.allPayload]};
-    case EDIT_DATA:
-      return {...state, renderItemsState: state.renderItemsState.map(item => (item.codigo === action.payload.codigo ? action.payload : item))};
-    case EDIT_MOREDATA:
-      return {...state, renderItemsState: state.renderItemsState.map(item => (item.codigo === action.payload.codigo ? action.payload : item)),
-        allItemsState: RemoveDuplicatesCodigo([action.allPayload, ...state.allItemsState])};
-    case DELETE_DATA:
-      return {...state, renderItemsState: state.renderItemsState.filter(item => item.codigo !== action.payload.codigo), 
-        allItemsState: state.allItemsState.filter(item => item.codigo !== action.payload.codigo)};
-    default:
-      return state;
+const dataReducer = createSlice({
+  name: 'data',
+  initialState: {
+    renderItemsState: [],
+    allItemsState: []
+  },
+  reducers: {
+    setGet: (state, action) => {
+      state.renderItemsState = action.payload;
+      state.allItemsState = [];
+    },
+    setGetSeveralData: (state, action) => {
+      let summaryItems = action.payload.map((element) => element.summaryItems);
+			let allItems = action.payload.map((element) => element.allItems);
+      state.renderItemsState = summaryItems;
+      state.allItemsState = allItems;
+    },
+    setPost: (state, action) => {
+      state.renderItemsState.push(action.payload);
+    },
+    setPostSeveralData: (state, action) => {
+      state.renderItemsState.push(action.payload.summaryItems);
+      state.allItemsState.push(action.payload.allItems);
+    },
+    setEdit: (state, action) => {
+      state.renderItemsState = state.renderItemsState.map(item => (item.codigo === action.payload.codigo ? action.payload : item));
+    },
+    setEditSeverallData: (state, action) => {
+      state.renderItemsState = state.renderItemsState.map(item => (item.codigo === action.payload.summaryItems.codigo ? action.payload.summaryItems : item));
+      state.allItemsState = state.allItemsState.map(item => (item.codigo === action.payload.allItems.codigo ? action.payload.allItems : item));
+    },
+    setDelete: (state, action) => {
+      state.renderItemsState = state.renderItemsState.filter(item => item.codigo !== action.payload.codigo);
+      state.allItemsState = state.allItemsState.filter(item => item.codigo !== action.payload.codigo);
+    }
   }
-};
+});
 
-export {dataReducer, setGet, setGetSeveralData, setPost, setPostSeveralData, setEdit, setEditSeveralData, setDelete};
+export const { setGet, setGetSeveralData, setPost, setPostSeveralData, setEdit, setEditSeverallData, setDelete } = dataReducer.actions;
+
+export default dataReducer.reducer
+
