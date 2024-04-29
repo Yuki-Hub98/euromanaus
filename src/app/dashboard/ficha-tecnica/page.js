@@ -9,15 +9,16 @@ import ModalRegisterFichaTecnica from "@/components/componentsIndustrial/registe
 import FormatURL from "@/functions/formatURL";
 import { GetFichaTecnica } from "@/app/actions/ficha-tecnica";
 import { GetFichaTecnicaItens } from "@/app/actions/produto";
+import ModalEditFichaTecnica from "@/components/componentsIndustrial/edit/fichaTecnica/ModalEditFichaTecnica";
 
 
 export default function FichaTecnica () {
 	const option = "Ficha Tecnica"
-	const {valueTable, getValueTable} = useValueTable();
 	const { warningGet, resultGet, severAllGet, ReceiveGet } = useGetData(GetFichaTecnica)
 	const dropFichaTecnica = useSearchData(GetFichaTecnicaItens)
 	const openRegister = useDisclosure();
 	const openEdit = useDisclosure();
+	const {valueTable, getValueTable} = useValueTable(severAllGet);
 
 	useEffect(() => {
 		ReceiveGet(FormatURL(option))
@@ -65,6 +66,8 @@ export default function FichaTecnica () {
 			</div>
 			<ModalRegisterFichaTecnica  onOpenChangeRegisterFichaTecnica={openRegister.onOpenChange} isOpenRegisterFichaTecnica={openRegister.isOpen} height={"h-3/5"} size={"4xl"}
 				name={option} modalFichaTecnica={dropFichaTecnica.searchData}/> 
+			<ModalEditFichaTecnica onOpenChangeEditFichaTecnica={openEdit.onOpenChange} isOpenEditFichaTecnica={openEdit.isOpen} height={"h-3/5"} size={"4xl"}
+				name={option} modalFichaTecnica={dropFichaTecnica.searchData} valueEdit={valueTable}/>
 		</>
 	)
 }

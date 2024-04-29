@@ -2,51 +2,10 @@ import { Modal, Button, ModalContent, ModalHeader, ModalBody,
 	ModalFooter, Input, Select, SelectItem} from "@nextui-org/react";
 import useHandleChange from "@/hooks/ui/useHandleChange";
 import ToCamelCase from "@/functions/toCamelCase";
-import { GetModalRegister } from "@/app/actions/ficha-tecnica";
-import { useEffect, useState } from "react";
-import FormatURL from "@/functions/formatURL";
 
-const ModalRegisterEtapaRecursoItem = (props) => {
-  const { isOpenRegister, onOpenChangeRegister, name, size, height, formatData } = props
-  const [ data, setData ] = useState();
-  const [ chave, setChave ] = useState();
-  const [ select, setSelect ] = useState();
+const ModalRegisterRecursoItem = (props) => {
+  const { isOpenRegister, onOpenChangeRegister, nameRecursoItem, size, height, modalItemEtapaRecurso, formatData } = props
   const { dataHandleChange, handleChange, clearHandle } = useHandleChange();
-
-  const filterData = (dataSelect, descricao) => {
-    const value = select.filter((element) =>  element[descricao] === dataSelect[descricao])
-    if(dataSelect.quantidade) {
-      const newFormat = {...value[0], quantidade: parseInt(dataSelect.quantidade)}
-      let newValue = {}
-      if (descricao === "grupoRecurso") {
-        newValue = {...newFormat, tipo: "RECURSO", valorTotalRecurso: parseFloat(newFormat.quantidade * newFormat.valorTotalUnitario).toFixed(2)}
-      }else{
-        newValue = {...newFormat, tipo: "ITEM", valorTotalItem: parseFloat(newFormat.quantidade * newFormat.valorItem).toFixed(2)}
-      }
-      setData(newValue)
-    }else{
-      setData(value[0])
-    }
-    setChave(descricao)
-  }
-
-  const selectItems = async (name) => {
-    setSelect(await GetModalRegister(FormatURL(name)))
-  }
-
-  useEffect(() => {
-    if(data){
-      formatData(data, chave)
-      setData(null)
-      setChave(null)
-    }
-  },[data])
-
-  useEffect(() => {
-    if(isOpenRegister){
-      selectItems(name)
-    }
-  },[name])
 
   return(
     <>
@@ -67,39 +26,33 @@ const ModalRegisterEtapaRecursoItem = (props) => {
         <ModalContent>
           {(onClose) => (
             <>
-            <ModalHeader className="w-full gri-cols-6"> {name.toUpperCase()} </ModalHeader>
+            <ModalHeader className="w-full gri-cols-6"> {nameRecursoItem.toUpperCase()} </ModalHeader>
             <ModalBody>
               <div className="w-full h-full grid grid-cols-6 gap-2 items-center">
                 <label className="col-span-2 text-sm justify-self-center">
-                  {name}
+                  {nameRecursoItem}
                 </label>
                 <Select size="sm" className="col-span-4" aria-labelledby="registerFichaTecnica" 
-                  labelPlacement="outside" onChange={(e) => {handleChange(e)}} name={ToCamelCase(name)}>
-                  {select?.map((select) => (
-                    <SelectItem key={select.grupoRecurso || select.etapaDeProducao || select.descricaoItem}
-                      value={select.grupoRecurso || select.etapaDeProducao || select.descricaoItem}>
-                      {select.grupoRecurso || select.etapaDeProducao || select.descricaoItem}
+                  labelPlacement="outside" onChange={(e) => {handleChange(e)}} name={ToCamelCase(nameRecursoItem)}>
+                  {modalItemEtapaRecurso[ToCamelCase(nameRecursoItem)]?.map((select) => (
+                    <SelectItem key={select.grupoRecurso || select.descricaoItem}
+                      value={select.grupoRecurso || select.descricaoItem}>
+                      {select.grupoRecurso || select.descricaoItem}
                     </SelectItem>
                   ))}
                 </Select>
-                {name != "Etapa de Produção" ?
-                  <>
-                  <label className="col-span-2 text-sm justify-self-center">
+                <label className="col-span-2 text-sm justify-self-center">
                     Quantidade
                   </label>
                   <Input size="sm" type="Text" name="quantidade" onChange={(e) => {handleChange(e)}} 
                     labelPlacement="outside" className="col-span-2"/>
-                  </>
-                    :
-                  null
-                }
               </div>
             </ModalBody>
             <ModalFooter>
               <Button className='bg-sky-50' size="sm" variant="flat" onPress={onClose} onClick={() => {clearHandle()}}>
                 Cancelar
               </Button>
-              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {filterData(dataHandleChange, ToCamelCase(name)), clearHandle()}}
+              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {formatData(dataHandleChange, ToCamelCase(nameRecursoItem)), clearHandle()}}
                 onPress={onClose} >
                 Adicionar
               </Button>
@@ -112,4 +65,4 @@ const ModalRegisterEtapaRecursoItem = (props) => {
   )
 }
 
-export default ModalRegisterEtapaRecursoItem
+export default ModalRegisterRecursoItem

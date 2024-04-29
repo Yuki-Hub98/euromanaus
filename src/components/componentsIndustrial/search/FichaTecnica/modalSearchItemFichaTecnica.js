@@ -8,36 +8,14 @@ import TableRender from "@/components/ui/table/tableRender";
 import useSearchData from "@/hooks/services/useSearchData";
 import { GetFichaTecnicaItens } from "@/app/actions/produto";
 import useSearchArvoreProduto from "@/hooks/services/useSearchArvoreProduto";
-import { GetArvoreProduto } from "@/app/actions/arvore-produto";
-import { SearchModelo } from "@/app/actions/modelo";
-
 
 const ModalSearchItem = (props) => {
 
-  const { isOpenSearch, onOpenChangeSearch, name, size, height, setNameFichaTecnica } = props;
+  const { isOpenSearch, onOpenChangeSearch, name, size, height, setNameFichaTecnica, dataModal } = props;
   const {dataHandleChange, handleChange, clearHandle} = useHandleChange();
   const {searchData, warningSearchDatat, Search, ClearSearchData} = useSearchData(GetFichaTecnicaItens)
   const {valueTable, getValueTable} = useValueTable();
   const {requestArvore, dataArvore} = useSearchArvoreProduto()
-  const [dataModal, setDataModal] = useState({
-    departamento:[],
-    linha:[],
-    modelos:[]
-  });
-  
-  const RequestModal = async () =>{
-    const dataDepartamento = await GetArvoreProduto("departamento")
-    const modelo = await SearchModelo("modelos")
-    setDataModal(data=> ({
-      ...data,
-      ["departamento"]: [dataDepartamento],
-      ["modelos"]: [modelo]
-    })) 
-  }
-
-  useEffect(()=> {
-    RequestModal();
-  },[])
 
   return(
     <>

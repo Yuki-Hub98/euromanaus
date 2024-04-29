@@ -16,7 +16,7 @@ const SuccessAlert = (props) => {
 					// Ocultar o alerta após 3 segundos (ajuste conforme necessário)
 						CloseStatus()
 						setShowAlert(false);
-				}, 4000);
+				}, 3000);
 
 				// Limpar o temporizador ao desmontar o componente
 				return () => clearTimeout(timeoutId);
