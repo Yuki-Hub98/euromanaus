@@ -51,12 +51,12 @@ export const origemCstIcms = [
 ]
 
 export const cstPisCofinsCadProduto = [
-  {descicao: "1 - OPERAÇÃO TRIBUTÁVEL COM ALÍCOTA BÁSICA"},
-  {descicao: "2 - OPERAÇÃO TRIBUTÁVEL COM ALÍCOTA DIFERENCIADA"},
-  {descicao: "3 - OPERAÇÃO TRIBUTÁVEL COM ALÍCOTA POR UNIDADE DE MEDIDA DE PRODUTO"},
-  {descicao: "4 - OPERAÇÃO TRIBUTÁVEL MONOFÁSIA – REVENDA A ALÍCOTA ZERO"},
+  {descicao: "1 - OPERAÇÃO TRIBUTÁVEL COM ALÍQUOTA BÁSICA"},
+  {descicao: "2 - OPERAÇÃO TRIBUTÁVEL COM ALÍQUOTA DIFERENCIADA"},
+  {descicao: "3 - OPERAÇÃO TRIBUTÁVEL COM ALÍQUOTA POR UNIDADE DE MEDIDA DE PRODUTO"},
+  {descicao: "4 - OPERAÇÃO TRIBUTÁVEL MONOFÁSIA – REVENDA A ALÍQUOTA ZERO"},
   {descicao: "5 - OPERAÇÃO TRIBUTÁVEL POR SUBSTITUIÇÃO TRIBUTÁRIA"},
-  {descicao: "6 - OPERAÇÃO TRIBUTÁVEL A ALÍCOTA ZERO"},
+  {descicao: "6 - OPERAÇÃO TRIBUTÁVEL A ALÍQUOTA ZERO"},
   {descicao: "7 - OPERAÇÃO ISENTA DA CONTRIBUÇÃO"},
   {descicao: "8 - OPERAÇÃO SEM INCIDÊNCIA DA CONTRIBUÇÃO"},
   {descicao: "9 - OPERAÇÃO COM SUSPENSÃO DA CONTRIBUÇÃO"},

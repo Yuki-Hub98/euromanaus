@@ -47,9 +47,9 @@ export default function EtapaProducao (props) {
 			<div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
 				<aside className=' h-full w-40 flex flex-col bg-background-component rounded left-64 '> 
 					<div className='flex flex-col pt-5 justify-center gap-2 items-center'>
-						<Button color="primary" size="sm" variant="ghost" onPress={openRegister.onOpen}> Cadastrar </Button>
-						<Button color="primary" size="sm" variant="ghost" onPress={openEdit.onOpen}> Editar </Button>
-						<Button color="primary" size="sm" variant="ghost" onClick={() => {DeleteData(FormatURL(option), valueTable), getValueTable(null)}}> Excluir </Button>
+						<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openRegister.onOpen}> Cadastrar </Button>
+						<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openEdit.onOpen}> Editar </Button>
+						<Button color="primary" className="w-20" size="sm" variant="ghost" onClick={() => {DeleteData(FormatURL(option), valueTable), getValueTable(null)}}> Excluir </Button>
 					</div>
 				</aside>
 				<div className='w-full flex overflow-y-auto h-50 flex-col rounded'>

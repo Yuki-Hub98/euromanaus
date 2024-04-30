@@ -24,9 +24,12 @@ const TableTeste = (props) => {
 
   return(
     <>
-      <Table2 numRows={data.length}>
-        {data?.map((element) => <Column name={name(Object.keys(element))} cellRenderer={(rowIndex, columnIndex) => euroCellRenderer(rowIndex, columnIndex, data)}/>)}
-      </Table2>
+    {/*
+            <Table2 numRows={data.length}>
+            {data?.map((element) => <Column name={name(Object.keys(element))} cellRenderer={(rowIndex, columnIndex) => euroCellRenderer(rowIndex, columnIndex, data)}/>)}
+          </Table2>
+  */}
+
     </>
   )
 

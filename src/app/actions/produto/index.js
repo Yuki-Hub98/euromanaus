@@ -1,6 +1,7 @@
 "use server";
 import CodBarras from "@/app/api/produto/codBarras";
 import Get from "@/app/api/produto/get";
+import GetItensFichaTecnica from "@/app/api/produto/getItensFichaTecnica";
 import Post from "@/app/api/produto/post";
 import CstIcms from "@/app/api/produto/csticms";
 import Ncm from "@/app/api/produto/ncm";
@@ -19,6 +20,11 @@ const GetProduto = async (nameRequest, data) => {
 
 const GetSearchProduto = async (data) => {
   const get = await SearchProduto(data)
+  return get
+}
+
+const GetFichaTecnicaItens = async (nameRequest, data) => {
+  const get = await GetItensFichaTecnica(nameRequest, data)
   return get
 }
 
@@ -67,4 +73,4 @@ const DelProduto = async (nameRequest, data) =>{
   return del
 }
 
-export {GetProduto, GetCst_Icms, GetNcm, GetModeloLinha, GetSearchProduto, GetLastIdItem, GetProdutoToEdit, PostProduto, PostCod, PutProdudo, DelProduto}
+export {GetProduto, GetFichaTecnicaItens, GetCst_Icms, GetNcm, GetModeloLinha, GetSearchProduto, GetLastIdItem, GetProdutoToEdit, PostProduto, PostCod, PutProdudo, DelProduto}

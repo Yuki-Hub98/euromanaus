@@ -62,9 +62,9 @@ const Recursos = () => {
 							<Button color="primary" type="submit" size='sm' variant="ghost" onClick={() => {ReceiveGet(FormatURL(option), dataHandleChange), clearHandle()}} >
 								Pesquisar
 							</Button>
-							<Button color="primary" size="sm" variant="ghost" onPress={openRegisterCadastro.onOpen}> Cadastrar </Button>
-							<Button color="primary" size="sm" variant="ghost" onPress={openEditCadastro.onOpen}> Editar </Button>
-							<Button color="primary" size="sm" variant="ghost" onClick={() => {DeleteData(FormatURL(option), valueTable)}}> Excluir </Button>
+							<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openRegisterCadastro.onOpen}> Cadastrar </Button>
+							<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openEditCadastro.onOpen}> Editar </Button>
+							<Button color="primary" className="w-20" size="sm" variant="ghost" onClick={() => {DeleteData(FormatURL(option), valueTable)}}> Excluir </Button>
 						</>
 						:
 						<>
@@ -73,9 +73,9 @@ const Recursos = () => {
 							<Button color="primary" type="submit" size='sm' variant="ghost" onClick={() => {ReceiveGet(FormatURL(option), dataHandleChange), clearHandle()}} >
 								Pesquisar
 							</Button>
-							<Button color="primary" size="sm" variant="ghost" onPress={openRegisterGrupo.onOpen}> Cadastrar </Button>
-							<Button color="primary" size="sm" variant="ghost" onPress={openEditGrupo.onOpen}> Editar </Button>
-							<Button color="primary" size="sm" variant="ghost" onClick={() => {DeleteData(FormatURL(option), valueTable)}}> Excluir </Button>
+							<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openRegisterGrupo.onOpen}> Cadastrar </Button>
+							<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openEditGrupo.onOpen}> Editar </Button>
+							<Button color="primary" className="w-20" size="sm" variant="ghost" onClick={() => {DeleteData(FormatURL(option), valueTable)}}> Excluir </Button>
 						</>
 					}
 					</div>

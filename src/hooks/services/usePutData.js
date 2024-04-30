@@ -1,12 +1,10 @@
 import SuccessAlert from "@/components/ui/successAlert";
 import Warning from "@/components/ui/warning";
 import React, {useState} from "react"
-import { useDispatch, useSelector } from "react-redux";
-import { setEdit, setEditSeveralData } from "@/reducers/models/dataReducer";
-import { RemoveDuplicatesPut } from "@/functions/removeDuplicates";
+import { useDispatch } from "react-redux";
+import { setEdit, setEditSeverallData } from "@/reducers/models/dataReducer";
 
 const usePutData = (putFunction) => {
-  const dataGlobal = useSelector(state => state.data.renderItemsState)
   const [status, setStatus] = useState()
   const dispatch = useDispatch();
   const CloseStatus = () => {
@@ -21,14 +19,8 @@ const usePutData = (putFunction) => {
           setStatus(statusPut)
           throw new Error (statusPut.message)
         }
-        if(statusPut?.data?.length > 0) {
-          const newData = RemoveDuplicatesPut(dataGlobal, statusPut.data);
-          newData.forEach(element => dispatch(setEdit(element)));
-          setStatus(statusPut)
-          return;
-        }
-        if(statusPut?.data?.summaryItems){
-          dispatch(setEditSeveralData(statusPut?.data?.summaryItems, statusPut?.data?.allItems))
+        if(statusPut.data?.summaryItems){
+          dispatch(setEditSeverallData(statusPut.data))
         }else{
           dispatch(setEdit(statusPut.data))
         };
