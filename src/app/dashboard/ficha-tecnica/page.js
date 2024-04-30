@@ -7,7 +7,7 @@ import useValueTable from "@/hooks/ui/useValueTable";
 import { BreadcrumbItem, Breadcrumbs, Button, useDisclosure, Input } from "@nextui-org/react"
 import ModalRegisterFichaTecnica from "@/components/componentsIndustrial/register/fichaTecnica/modalRegisterFichaTecnica";
 import FormatURL from "@/functions/formatURL";
-import { GetFichaTecnica } from "@/app/actions/ficha-tecnica";
+import { GetFichaTecnica, GetModalRegister } from "@/app/actions/ficha-tecnica";
 import { GetFichaTecnicaItens } from "@/app/actions/produto";
 import ModalEditFichaTecnica from "@/components/componentsIndustrial/edit/fichaTecnica/ModalEditFichaTecnica";
 
@@ -19,6 +19,21 @@ export default function FichaTecnica () {
 	const openRegister = useDisclosure();
 	const openEdit = useDisclosure();
 	const {valueTable, getValueTable} = useValueTable(severAllGet);
+	const [modalItemEtapaRecurso, setModalItemEtapaRecurso] = useState({
+    etapaDeProducao:[],
+    grupoRecurso:[],
+    descricaoItem:[]
+  })
+
+	const ResquestModalItemEtapaRecurso = async () => {
+    const modal = await GetModalRegister("ficha-tecnica")
+    setModalItemEtapaRecurso(prev=> ({
+      ...prev,
+      ["etapaDeProducao"]: modal.etapas,
+      ["grupoRecurso"]:modal.recursos,
+      ["descricaoItem"]: modal.itens
+    }))
+  }
 
 	useEffect(() => {
 		ReceiveGet(FormatURL(option))
@@ -50,8 +65,8 @@ export default function FichaTecnica () {
 			<div className='flex h-4/5 overflow-y-auto mt-1.5 w-full flex-row'>
 				<aside className=' h-full w-40 flex flex-col bg-background-component rounded left-64 '> 
 					<div className='flex flex-col pt-5 justify-center gap-2 items-center'>
-						<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openRegister.onOpen}> Cadastrar </Button>
-						<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openEdit.onOpen}> Editar </Button>
+						<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openRegister.onOpen} onClick={() => ResquestModalItemEtapaRecurso()}> Cadastrar </Button>
+						<Button color="primary" className="w-20" size="sm" variant="ghost" onPress={openEdit.onOpen} onClick={()=> ResquestModalItemEtapaRecurso()}> Editar </Button>
 						<Button color="primary" className="w-20" size="sm" variant="ghost" onClick={() => {DeleteData(FormatURL(option), valueTable), getValueTable(null)}}> Excluir </Button>
 					</div>
 				</aside>
@@ -65,9 +80,9 @@ export default function FichaTecnica () {
 				</div>
 			</div>
 			<ModalRegisterFichaTecnica  onOpenChangeRegisterFichaTecnica={openRegister.onOpenChange} isOpenRegisterFichaTecnica={openRegister.isOpen} height={"h-3/5"} size={"4xl"}
-				name={option} modalFichaTecnica={dropFichaTecnica.searchData}/> 
+				name={option} modalFichaTecnica={dropFichaTecnica.searchData} modalItemEtapaRecurso={modalItemEtapaRecurso}/> 
 			<ModalEditFichaTecnica onOpenChangeEditFichaTecnica={openEdit.onOpenChange} isOpenEditFichaTecnica={openEdit.isOpen} height={"h-3/5"} size={"4xl"}
-				name={option} modalFichaTecnica={dropFichaTecnica.searchData} valueEdit={valueTable}/>
+				name={option} modalFichaTecnica={dropFichaTecnica.searchData} valueEdit={valueTable} modalItemEtapaRecurso={modalItemEtapaRecurso}/>
 		</>
 	)
 }

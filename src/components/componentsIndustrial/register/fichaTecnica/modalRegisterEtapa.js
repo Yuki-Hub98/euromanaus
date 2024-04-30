@@ -23,25 +23,23 @@ const ModalRegisterEtapa = (props) => {
 
   const clearItem = (value) => {
     if (dataEdited.length > 0) {
-      const newData = dataEdited
-
       if (value.tipo === "RECURSO") {
-        const recurso = newData[0].etapaDeProducaoRecursos.filter(recurso => recurso.codigo != value.codigo)
-        newData[0].etapaDeProducaoRecursos = recurso
+        const recurso = dataEdited[0].etapaDeProducaoRecursos.filter(recurso => recurso.codigo != value.codigo)
+        dataEdited[0] = { ...dataEdited[0], etapaDeProducaoRecursos: recurso };
       }else if (value.tipo === "ITEM") {
-        const item = newData[0].etapaDeProducaoItems.filter(item => item.codigo != value.codigo)
-        newData[0].etapaDeProducaoItems = item
+        const item = dataEdited[0].etapaDeProducaoItems.filter(item => item.codigo != value.codigo)
+        dataEdited[0] = { ...dataEdited[0], etapaDeProducaoItems: item }
       }
   
-      const newRender = newData.map((array) => {
+      const newRender = dataEdited.map((array) => {
         let newArray = array.etapaDeProducaoRecursos.concat(array.etapaDeProducaoItems)
         newArray.unshift({codigo:array.codigo, etapaDeProducao: array.etapaDeProducao})
         return newArray
       })
   
-      setEtapas(newData[0])
+      setEtapas(dataEdited[0])
       setDataRender({
-        etapas:newRender[0]
+        etapas: newRender[0]
       })
     }else{
       let _etapa = {...etapas}
@@ -88,18 +86,65 @@ const ModalRegisterEtapa = (props) => {
   }
 
   const dataPreparing = (value) => {
-    const newEtapa = {...etapas}
 
     if (dataEdited.length > 0) {
-      const _newEtapa = {...dataEdited[0]}
+      let _newEtapa = {...dataEdited[0]}
 
-      if (value.grupoRecurso) value.codigo = _newEtapa.etapaDeProducaoRecursos.length + 1, _newEtapa.etapaDeProducaoRecursos.push(value)
+      if (etapas.codigo) {
+        let newEtapas = {...etapas}
+        if (value.grupoRecurso) {
+          let _etapaDeProducaoRecursos = [...newEtapas.etapaDeProducaoRecursos]
+          value.codigo = newEtapas.etapaDeProducaoRecursos.length + 1
+          _etapaDeProducaoRecursos.push(value)
+          newEtapas.etapaDeProducaoRecursos = _etapaDeProducaoRecursos
+  
+        }
+  
+        if (value.descricaoItem) {
+          let _etapaDeProducaoItem = [...newEtapas.etapaDeProducaoItems]
+            value.codigo = newEtapas.etapaDeProducaoItems.length + 1
+            _etapaDeProducaoItem.push(value)
+            newEtapas.etapaDeProducaoItems = _etapaDeProducaoItem
+        
+          }
 
-      if (value.descricaoItem) value.codigo = _newEtapa.etapaDeProducaoItems.length + 1, _newEtapa.etapaDeProducaoItems.push(value)
+        setEtapas(prev => ({
+          ...prev,
+          ["codigo"]: newEtapas.codigo,
+          ["etapaDeProducao"]: newEtapas.etapaDeProducao,
+          ["etapaDeProducaoRecursos"]: newEtapas.etapaDeProducaoRecursos,
+          ["etapaDeProducaoItems"]: newEtapas.etapaDeProducaoItems
+        }))
 
-      setEtapas(_newEtapa)
-      
+      }else{
+        if (value.grupoRecurso) {
+          let _etapaDeProducaoRecursos = [..._newEtapa.etapaDeProducaoRecursos]
+          value.codigo = _newEtapa.etapaDeProducaoRecursos.length + 1
+          _etapaDeProducaoRecursos.push(value)
+          _newEtapa.etapaDeProducaoRecursos = _etapaDeProducaoRecursos
+  
+        }
+  
+        if (value.descricaoItem) {
+          let _etapaDeProducaoItem = [..._newEtapa.etapaDeProducaoItems]
+            value.codigo = _newEtapa.etapaDeProducaoItems.length + 1
+            _etapaDeProducaoItem.push(value)
+            _newEtapa.etapaDeProducaoItems = _etapaDeProducaoItem
+        
+          }
+        
+        setEtapas(prev => ({
+          ...prev,
+          ["codigo"]: _newEtapa.codigo,
+          ["etapaDeProducao"]: _newEtapa.etapaDeProducao,
+          ["etapaDeProducaoRecursos"]: _newEtapa.etapaDeProducaoRecursos,
+          ["etapaDeProducaoItems"]: _newEtapa.etapaDeProducaoItems
+        }))
+      }
+
     }else{
+      const newEtapa = {...etapas}
+
       if (value.etapaDeProducao) newEtapa.codigo = value.codigo, newEtapa.etapaDeProducao = value.etapaDeProducao
 
       if (value.grupoRecurso) value.codigo = newEtapa.etapaDeProducaoRecursos.length + 1, newEtapa.etapaDeProducaoRecursos.push(value)

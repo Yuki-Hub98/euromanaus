@@ -15,13 +15,8 @@ import useValueTable from "@/hooks/ui/useValueTable";
 import { RemoveDuplicatesCodigo } from "@/functions/removeDuplicates";
 
 const ModalRegisterFichaTecnica = (props) => {
-  const {onOpenChangeRegisterFichaTecnica, isOpenRegisterFichaTecnica, size, height, name, modalFichaTecnica } = props
+  const {onOpenChangeRegisterFichaTecnica, isOpenRegisterFichaTecnica, size, height, name, modalFichaTecnica, modalItemEtapaRecurso } = props
   const [option, setOption] = useState();
-  const [modalItemEtapaRecurso, setModalItemEtapaRecurso] = useState({
-    etapaDeProducao:[],
-    grupoRecurso:[],
-    descricaoItem:[]
-  })
   const [dataModalSearchItem, setDataModalSearchItem] = useState({
     departamento:[],
     linha:[],
@@ -85,16 +80,6 @@ const ModalRegisterFichaTecnica = (props) => {
     })) 
   }
 
-  const ResquestModalItemEtapaRecurso = async () => {
-    const modal = await GetModalRegister("ficha-tecnica")
-    setModalItemEtapaRecurso(prev=> ({
-      ...prev,
-      ["etapaDeProducao"]: modal.etapas,
-      ["grupoRecurso"]:modal.recursos,
-      ["descricaoItem"]: modal.itens
-    }))
-  }
-
   const setNameFichaTecnica = (value) => {
     if (value?.codigo) {
       setData(prev => ({
@@ -123,7 +108,7 @@ const ModalRegisterFichaTecnica = (props) => {
 
   const dataConfirmed = (value) => {
     const newEtapa = {...data}
-    newEtapa.etapas.push(value)
+    newEtapa.etapas.unshift(value)
     const filter = RemoveDuplicatesCodigo(newEtapa.etapas)
     setCodigoEtapa(filter.length)
     setData(prev => ({
@@ -176,8 +161,12 @@ const ModalRegisterFichaTecnica = (props) => {
                 </div>
                 <div className="col-start-3 col-span-1 pl-16 flex justify-center items-center" aria-labelledby="adicionar">
                   <Button size="sm" name="adicionarEtapa" className="bg-[#edca62b4] w-28 shadow-lg shadow-indigo-500/20 mr-1" 
-                    type="button" onClick={()=>{ResquestModalItemEtapaRecurso(), openModalEtapa.onOpen(), setOption("Etapa de Produção"), editedData(valueTable), clearValue(true)}} >
+                    type="button" onClick={()=>{ openModalEtapa.onOpen(), setOption("Etapa de Produção"), editedData(valueTable), clearValue(true) }} >
                     Adicionar Etapa
+                  </Button>
+                  <Button size="sm" name="adicionarEtapa" className="bg-[#edca62b4] w-28 shadow-lg shadow-indigo-500/20 mr-1" 
+                    type="button" onClick={()=>{ openModalEtapa.onOpen(), setOption("Etapa de Produção"), editedData(valueTable), clearValue(true) }} >
+                    Editar Etapa
                   </Button>
                 </div>
               </form>
