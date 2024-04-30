@@ -45,9 +45,8 @@ const Table = (props) => {
 
 	useEffect(() => {
 		if (focusedRow !== null) {
-	updateMarkedRowValues(focusedRow);
+			updateMarkedRowValues(focusedRow);
 		}
-
 	});
 
 	useEffect(() => {

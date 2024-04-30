@@ -17,10 +17,10 @@ const ModalEditGrupoRecurso = (props) => {
   const AddRecurso = (recurso) => {
     const newData = {...data}
     const dados = DataCadastroDeRecurso.filter((item) => item?.recurso === recurso?.recurso);
-    newData?.recursos?.push(dados[0])
+    const newRecursos = newData.recursos.concat(dados)
     setData(prev => ({
       ...prev,
-      ["recursos"]: RemoveDuplicatesCodigo(newData.recursos)
+      ["recursos"]: RemoveDuplicatesCodigo(newRecursos)
       })
     );
   }

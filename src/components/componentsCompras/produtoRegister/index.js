@@ -44,7 +44,7 @@ const ProdutoRegister = (props) => {
                   <span id="descricaoItem" className="text-xs">Descrição Item</span>
                 </div>
                 <div className="col-span-5">
-                  <Input className="w-full" size="sm" isDisabled name="descricaoItem" value={dataProduto?.descricaoItem || ''} labelPlacement="outside"/>
+                  <Input className="w-full" size="sm" isDisabled name="descricaoItem" value={dataProduto?.items ? dataProduto?.items[dataProduto?.items?.length - 1]?.descricaoItem : '' || ''} labelPlacement="outside"/>
                 </div>
                 <div className="w-36" aria-labelledby="departamento">
                   <span id="departamento" className="text-xs">Departamento</span>
@@ -180,19 +180,11 @@ const ProdutoRegister = (props) => {
                       ))}
                     </Select> }
                   </div>
-                  {isDisabled ?  
                     <div className="col-end-7 justify-self-end pr-2" aria-labelledby="adicionar">
                       <Button size="sm" name="adicionar" className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {AddItem(dataProduto)}}>
                         Adicionar
                       </Button>
                     </div>
-                  : 
-                    <div className="col-end-7 justify-self-end pr-2" aria-labelledby="adicionar">
-                      <Button size="sm" isDisabled name="adicionar" className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" onClick={() => {AddItem(dataProduto)}}>
-                        Adicionar
-                      </Button>
-                    </div>
-                  }
                   </div>
                   <div className="col-span-6 h-40 overflow-y-auto overflow-x-auto rounded">
                     <TableRender data={dataProduto?.items} name={"produtos"} ValueTable={ValueTable} type={"search"} />

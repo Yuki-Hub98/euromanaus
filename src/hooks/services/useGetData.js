@@ -28,9 +28,7 @@ const useGetData = (getFunction) => {
 				const dataTable = await getFunction(nameRequest, dataGet);
 				setStatus(dataTable)
 				if(dataTable[0]?.summaryItems){
-					let summaryItems = dataTable.map((element) => 	element.summaryItems);
-					let allItems = dataTable.map((element) => element.allItems);
-					dispatch(setGetSeveralData(summaryItems, allItems));
+					dispatch(setGetSeveralData(dataTable));
 				}else{ 
 					dispatch(setGet(dataTable));
 				}
@@ -42,19 +40,12 @@ const useGetData = (getFunction) => {
 				const dataTable = await getFunction(nameRequest);
 				setStatus(dataTable)
 				if(dataTable[0]?.summaryItems){
-					let summaryItems = dataTable.map((element) => 	element.summaryItems);
-					let allItems = dataTable.map((element) => element.allItems);
-					dispatch(setGetSeveralData(summaryItems, allItems))
+					dispatch(setGetSeveralData(dataTable))
 				}else{ 
 					dispatch(setGet(dataTable));
 				}
 			} catch (error) {
-				const statusError = {
-					status: 404,
-					error: "Erro ao pesquisar dados",
-					message: "Por favor contacte os administradores"
-				}
-				setStatus(statusError)
+				console.log(error)
 			}
 		}
 	}
