@@ -1,8 +1,7 @@
 import axios from "axios";
 const Get = async (nameRequest, data) => {
-  /*
   if (data) {
-    const response = await axios.get(`http://localhost:8080/recursos/${nameRequest}/search?descricao=${data.descricao}`)
+    const response = await axios.get(`http://localhost:8080/${nameRequest}/search?fichaTecnica=${data?.descricao}`)
     .then((response) => {
       if (response) {
         return response?.data
@@ -17,8 +16,7 @@ const Get = async (nameRequest, data) => {
       }
     })
     return response
-  }*/
-
+  }
 
   const response = await axios.get(`http://localhost:8080/${nameRequest}`)
   .then((response) => {

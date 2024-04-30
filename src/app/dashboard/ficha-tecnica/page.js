@@ -7,18 +7,22 @@ import useValueTable from "@/hooks/ui/useValueTable";
 import { BreadcrumbItem, Breadcrumbs, Button, useDisclosure, Input } from "@nextui-org/react"
 import ModalRegisterFichaTecnica from "@/components/componentsIndustrial/register/fichaTecnica/modalRegisterFichaTecnica";
 import FormatURL from "@/functions/formatURL";
-import { GetFichaTecnica, GetModalRegister } from "@/app/actions/ficha-tecnica";
+import { GetFichaTecnica, GetModalRegister, DeleteFichaTecnica } from "@/app/actions/ficha-tecnica";
 import { GetFichaTecnicaItens } from "@/app/actions/produto";
 import ModalEditFichaTecnica from "@/components/componentsIndustrial/edit/fichaTecnica/ModalEditFichaTecnica";
+import useDeleteData from "@/hooks/services/useDeleteData";
+import useHandleChange from "@/hooks/ui/useHandleChange";
 
 
 export default function FichaTecnica () {
 	const option = "Ficha Tecnica"
+	const {handleChange, clearHandle, dataHandleChange} = useHandleChange()
 	const { warningGet, resultGet, severAllGet, ReceiveGet } = useGetData(GetFichaTecnica)
+	const { warningDelete, statusDelete, DeleteData } = useDeleteData(DeleteFichaTecnica)
 	const dropFichaTecnica = useSearchData(GetFichaTecnicaItens)
 	const openRegister = useDisclosure();
 	const openEdit = useDisclosure();
-	const {valueTable, getValueTable} = useValueTable(severAllGet);
+	const { valueTable, getValueTable } = useValueTable(severAllGet);
 	const [modalItemEtapaRecurso, setModalItemEtapaRecurso] = useState({
     etapaDeProducao:[],
     grupoRecurso:[],
@@ -42,6 +46,7 @@ export default function FichaTecnica () {
 
 	return (
 		<>
+		{statusDelete} {warningDelete}
 		{warningGet} {dropFichaTecnica.warningSearchDatat}
 			<div className='w-full h-6 absolute top-2'>
 				<Breadcrumbs color='primary'>
@@ -57,7 +62,7 @@ export default function FichaTecnica () {
 				<div className="flex flex-row items-center gap-2" >
 					<Input className='w-72' labelPlacement='outside-left' placeholder=" " 
 						onChange={(e) => handleChange(e)} color="primary" label="Descrição" name="descricao"/>
-					<Button color="primary" type="submit" size='sm' variant="ghost" onClick={() => {ReceiveGet(option, dataHandleChange)}} >
+					<Button color="primary" type="submit" size='sm' variant="ghost" onClick={() => {ReceiveGet(FormatURL(option), dataHandleChange), clearHandle()}} >
 						Pesquisar
 					</Button>
 				</div>

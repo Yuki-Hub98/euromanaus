@@ -3,6 +3,7 @@ import GetModalRegisterFichaTecnica from "@/app/api/ficha-tecnica/getModalRegist
 import Post from "@/app/api/ficha-tecnica/post";
 import Get from "@/app/api/ficha-tecnica/get";
 import Put from "@/app/api/ficha-tecnica/put";
+import Del from "@/app/api/ficha-tecnica/del";
 
 const RegisterFichaTecnica = async (nameRequest, data) => {
   const post = await Post(data, nameRequest);
@@ -24,4 +25,9 @@ const GetModalRegister = async (nameRequest) => {
   return get
 }
 
-export {RegisterFichaTecnica, GetModalRegister, GetFichaTecnica, UpdateFichaTecnica}
+const DeleteFichaTecnica = async (nameRequest, data) => {
+  const del = await Del(nameRequest, data)
+  return del
+}
+
+export {RegisterFichaTecnica, GetModalRegister, GetFichaTecnica, UpdateFichaTecnica, DeleteFichaTecnica}
