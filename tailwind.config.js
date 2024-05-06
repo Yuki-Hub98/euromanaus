@@ -42,7 +42,7 @@ module.exports = {
 			disabledOpacity: 0.5, // this value is applied as opacity-[value] when the component is disabled
 			dividerWeight: "1px", // h-divider the default height applied to the divider component
 			fontSize: {
-				tiny: "0.75rem", // text-tiny
+				tiny: "0.80rem", // text-tiny
 				small: "0.875rem", // text-small
 				medium: "1rem", // text-medium
 				large: "1.125rem", // text-large

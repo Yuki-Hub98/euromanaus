@@ -15,7 +15,7 @@ const DropDownNav = (values) =>{
 			<span className={`${!open && 'hidden'} flex-1 ml-3 text-left whitespace-nowrap`}>{values?.name}</span>
 			{open ? <GoChevronDown/>  : null}
 			</button>
-				<ul className={`bg-white overflow-y-auto max-h-0 ${dropPrincipal ? 'max-h-max' : 'max-h-0'}`}>
+				<ul className={`bg-white overflow-y-auto max-h-0 ${dropPrincipal ? 'max-h-max pb-1.5' : 'max-h-0'}`}>
 					{values?.opcoes?.map((op) => (
 						<li key={op} className={"font-normal text-gray-900 rounded-lg transition duration-300"}>
 							<SubMenu opcao={op}/>
