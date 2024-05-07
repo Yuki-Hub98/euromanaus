@@ -3,6 +3,7 @@
 import { DropDownNav } from "./dropDownNav";
 import Link from "next/link";
 import { opcoesCadastro } from "@/DB/data";
+import { opcoesMovimento } from "@/DB/data";
 import { VscMenu } from "react-icons/vsc";
 import { useState } from "react";
 import { CgNotes } from "react-icons/cg";
@@ -37,7 +38,7 @@ const Sidebar = (props) => {
 									<DropDownNav name={"Consulta"} open={open} icon={<MdContentPasteSearch size={18}/>} opcoes={opcoesCadastro}/>
 								</li>
 								<li>
-									<DropDownNav name={"Movimento"} open={open} icon={<CgNotes size={18}/>} opcoes={opcoesCadastro}/>
+									<DropDownNav name={"Movimento"} open={open} icon={<CgNotes size={18}/>} opcoes={opcoesMovimento}/>
 								</li>
 								</ul>
 								<ul className="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">

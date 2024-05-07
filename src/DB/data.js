@@ -36,6 +36,10 @@ export const opcoesCadastro = [
   "Expedição"
 ]
 
+export const opcoesMovimento = [
+  "Administração de Preço"
+]
+
 export const navArvoreProduto = [
   "Departamento", 
   "Linha", 
