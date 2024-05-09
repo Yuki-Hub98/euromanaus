@@ -245,7 +245,7 @@ const ModalRegisterEtapa = (props) => {
               <Button className='bg-sky-50' size="sm" variant="flat" onPress={onClose} onClick={() => {clearData()}}>
                 Cancelar
               </Button>
-              <Button className="bg-[#edca62b4] shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {dataConfirmed(etapas), clearData()}}
+              <Button className="bg-[#edca62b4] w-20 shadow-lg shadow-indigo-500/20" size="sm" onClick={() => {dataConfirmed(etapas), clearData()}}
                 onPress={onClose} >
                 Confirmar
               </Button>
