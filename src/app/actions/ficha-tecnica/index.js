@@ -1,5 +1,6 @@
 "use server";
 import GetModalRegisterFichaTecnica from "@/app/api/ficha-tecnica/getModalRegister";
+import OnlyFicha from "@/app/api/ficha-tecnica/onlyFicha";
 import Post from "@/app/api/ficha-tecnica/post";
 import Get from "@/app/api/ficha-tecnica/get";
 import Put from "@/app/api/ficha-tecnica/put";
@@ -13,6 +14,11 @@ const RegisterFichaTecnica = async (nameRequest, data) => {
 const UpdateFichaTecnica = async (nameRequest, data) => {
   const put = await Put(nameRequest, data)
   return put
+}
+
+const GetGeneratesFicha = async (nameRequest, data) => {
+  const get = await OnlyFicha(nameRequest, data)
+  return get
 }
 
 const GetFichaTecnica = async (nameRequest, data) => {
@@ -30,4 +36,4 @@ const DeleteFichaTecnica = async (nameRequest, data) => {
   return del
 }
 
-export {RegisterFichaTecnica, GetModalRegister, GetFichaTecnica, UpdateFichaTecnica, DeleteFichaTecnica}
+export {RegisterFichaTecnica, GetModalRegister, GetGeneratesFicha, GetFichaTecnica, UpdateFichaTecnica, DeleteFichaTecnica}

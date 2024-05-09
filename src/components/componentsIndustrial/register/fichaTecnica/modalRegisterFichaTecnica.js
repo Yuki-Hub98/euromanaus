@@ -13,6 +13,7 @@ import { GetModalRegister } from "@/app/actions/ficha-tecnica";
 import usePostData from "@/hooks/services/usePostData";
 import useValueTable from "@/hooks/ui/useValueTable";
 import { RemoveDuplicatesCodigo } from "@/functions/removeDuplicates";
+import ModalGeneric from "@/components/ui/modalGeneric";
 
 const ModalRegisterFichaTecnica = (props) => {
   const {onOpenChangeRegisterFichaTecnica, isOpenRegisterFichaTecnica, size, height, name, modalFichaTecnica, modalItemEtapaRecurso } = props
@@ -28,6 +29,7 @@ const ModalRegisterFichaTecnica = (props) => {
   const [codigoEtapa, setCodigoEtapa] = useState(0)
   const openModalEtapa = useDisclosure();
   const openModalSearchItem = useDisclosure();
+  const genericModal = useDisclosure();
   const { statusPost, warningPost, ReceivePost } = usePostData(RegisterFichaTecnica)
   const [dataRender, setDataRender] = useState({etapas:[]})
   const {valueTable, getValueTable, clearValue, clear} = useValueTable()
@@ -81,28 +83,22 @@ const ModalRegisterFichaTecnica = (props) => {
   }
 
   const setNameFichaTecnica = (value) => {
-    if (value?.codigo) {
       setData(prev => ({
         ...prev,
-        ["fichaTecnica"] : value?.descricaoItem
+        ["fichaTecnica"] : value.descricaoItem,
+        ["codigo"]: value.codigo
       }))
-    }else{
-      setData(prev => ({
-        ...prev,
-        ["fichaTecnica"] : value
-      }))
-    }
   }
 
   const formatDataRender = (data) => {
-    const newArraysRender = data.map((array) => {
+    const newArraysRender = data?.map((array) => {
       let newArray = array.etapaDeProducaoRecursos.concat(array.etapaDeProducaoItems)
       newArray.unshift({codigo:array.codigo, etapaDeProducao: array.etapaDeProducao})
       return newArray
     })
     setDataRender(prev => ({
       ...prev,
-      ["etapas"]: newArraysRender.reduce((acc, curr) => acc.concat(curr), [])
+      ["etapas"]: newArraysRender?.reduce((acc, curr) => acc.concat(curr), [])
     }))
   }
 
@@ -117,6 +113,16 @@ const ModalRegisterFichaTecnica = (props) => {
     }))
 
     formatDataRender(filter)
+  }
+
+  const generateFicha = (data) => {
+    console.log(data)
+    let  newEtapa = data?.allItems?.etapas
+    setData(prev => ({
+      ...prev,
+      ["etapas"]: newEtapa
+    }))
+    formatDataRender(newEtapa)
   }
 
   const clearData = () => {
@@ -154,12 +160,12 @@ const ModalRegisterFichaTecnica = (props) => {
                   <label className="text-sm">Ficha Técnica</label>
                   <Select size="sm" name="fichaTecnica" className="w-96" labelPlacement="outside-left" selectedKeys={[data?.fichaTecnica]} placeholder={`${data?.fichaTecnica ? data?.fichaTecnica : ''}`} aria-label="fichaTecnica">
                     {modalFichaTecnica?.map((item) => (
-                      <SelectItem onClick={() => setNameFichaTecnica(item.descricaoItem)} key={item.descricaoItem} value={item.descricaoItem}>{item.descricaoItem}</SelectItem>
+                      <SelectItem onClick={() => setNameFichaTecnica(item)} key={item.descricaoItem} value={item.descricaoItem}>{item.descricaoItem}</SelectItem>
                     ))}
                   </Select>
                   <LuSearch size={22} className="col-start-3 cursor-pointer hover:text-[#edca62b4]" onClick={() => {RequestModalSearchItem(), openModalSearchItem.onOpen()}} />
                 </div>
-                <div className="col-start-3 col-span-1 pl-16 flex justify-center items-center" aria-labelledby="adicionar">
+                <div className="col-start-3 col-span-1 pl-10 flex justify-center items-center" aria-labelledby="adicionar">
                   <Button size="sm" name="adicionarEtapa" className="bg-[#edca62b4] w-28 shadow-lg shadow-indigo-500/20 mr-1" 
                     type="button" onClick={()=>{ openModalEtapa.onOpen(), setOption("Etapa de Produção"), editedData(valueTable), clearValue(true) }} >
                     Adicionar Etapa
@@ -167,6 +173,10 @@ const ModalRegisterFichaTecnica = (props) => {
                   <Button size="sm" name="adicionarEtapa" className="bg-[#edca62b4] w-28 shadow-lg shadow-indigo-500/20 mr-1" 
                     type="button" onClick={()=>{ openModalEtapa.onOpen(), setOption("Etapa de Produção"), editedData(valueTable), clearValue(true) }} >
                     Editar Etapa
+                  </Button>
+                  <Button size="sm" name="adicionarEtapa" className="bg-[#edca62b4] w-28 shadow-lg shadow-indigo-500/20 mr-1" 
+                    type="button" onClick={()=>{ genericModal.onOpen(), setOption("Gerar Ficha Técnica") }} >
+                    Gerar Ficha
                   </Button>
                 </div>
               </form>
@@ -188,6 +198,7 @@ const ModalRegisterFichaTecnica = (props) => {
               dataRenderEdited={dataRenderEdited} />
             <ModalSearchItem name={"Search Item"} size={"5xl"} height={"h-5/6"} isOpenSearch={openModalSearchItem.isOpen} dataModal={dataModalSearchItem}
               onOpenChangeSearch={openModalSearchItem.onOpenChange} setNameFichaTecnica={setNameFichaTecnica} />
+            <ModalGeneric name={option} isOpenGeneric={genericModal.isOpen} onOpenGeneric={genericModal.onOpenChange} generateFicha={generateFicha}/>
             </>
           )}
         </ModalContent>
