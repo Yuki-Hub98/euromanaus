@@ -57,7 +57,7 @@ const TableMarkings = (props) => {
       return(
         <>
         <tbody>
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
           <tr key={index}
           tabIndex={0}
           onFocus={() => { item.etapaDeProducao ?
