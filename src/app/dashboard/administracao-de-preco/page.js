@@ -14,6 +14,8 @@ import FormatURL from "@/functions/formatURL"
 const administracaoPreco = () => {
   const option = "Administração de Preço"
 	const openFilter = useDisclosure();
+	const dataAtual = new Date()
+	const dataFormatada = `${dataAtual.getFullYear()}-${dataAtual.getMonth() + 1 < 10 ? '0' : ''}${dataAtual.getMonth() + 1}-${dataAtual.getDate() < 10 ? '0' : ''}${dataAtual.getDate()}`;
 	const [dataModalSearchItem, setDataModalSearchItem] = useState({
     departamento:[],
     linha:[],
@@ -22,7 +24,27 @@ const administracaoPreco = () => {
 	const {valueTable, getValueTable, clearValue, clear} = useValueTable();
 	const [valuesAdministracaoDePreco, setValuesAdministracaoDePreco] = useState({administracaoDePreco:[]})
 	const {statusEdit, warningEdit, ReceivePut} = usePutData(UpdateAdministracaoDePreco)
-	const dataAtual = new Date()
+	const [calcDescontoData, setCalcDescontoDate] = useState(dataFormatada)
+	const [dataProgramada, setDataProgramada] = useState()
+
+	const valueDataProgramada = (e) => {
+		const {value} = e.target
+		setDataProgramada(value)
+	}
+
+	const formatDate = (press) => {
+		const {key, target, type} = press
+	
+		if (key === "Enter" && type === "keyup") {
+			dataAtual.setDate(dataAtual.getDate() + parseInt(target.value))
+			let newDate = `${dataAtual.getFullYear()}-${dataAtual.getMonth() + 1 < 10 ? '0' : ''}${dataAtual.getMonth() + 1}-${dataAtual.getDate() < 10 ? '0' : ''}${dataAtual.getDate()}`;
+			setCalcDescontoDate(newDate)
+		}else if (type === "change") {
+			let ultimasLetrasIndex = target.value.substr(-2);
+			setCalcDescontoDate(target.value)
+			setDataProgramada(Math.abs((parseInt(ultimasLetrasIndex) - dataAtual.getDate())))	
+		}
+	}
 	
 	const clearData = () => {
 		setValuesAdministracaoDePreco(prev => ({
@@ -86,11 +108,12 @@ const administracaoPreco = () => {
 					</div>
 					<div className="col-span-3 grid grid-cols-4 h-full">
 						<label className="text-[#edca62] text-xs col-start-1 max-h-8 pt-2">Data Base</label>
-						<Input className="col-start-2 max-h-8" value={"07/05/2024"} type="date" labelPlacement='outside-left' size="sm" color="primary" name="dataBase"/>
+						<Input className="col-start-2 max-h-8" value={dataFormatada} type="date" labelPlacement='outside-left' size="sm" color="primary" name="dataBase"/>
 						<label className="text-[#edca62] text-xs col-start-1 max-h-8 pt-2">Data Programada</label>
-						<Input className="w-[9rem] col-start-2 max-h-8" type="text" labelPlacement='outside-left' size="sm" color="primary" name="dataProgramada"/>
+						<Input className="w-[9rem] col-start-2 max-h-8" onKeyUp={formatDate} placeholder="Dias" value={dataProgramada || ''} onChange={(e) => valueDataProgramada(e)} 
+							type="text" labelPlacement='outside-left' size="sm" color="primary" name="dataProgramada"/>
 						<label className="text-[#edca62] text-xs col-start-1 max-h-8 pt-2">Data Final</label>
-						<Input className="col-start-2 max-h-8" type="date" labelPlacement='outside-left' size="sm" placeholder=" " color="primary" name="dataFinal"/>
+						<Input className="col-start-2 max-h-8" type="date" value={calcDescontoData} onChange={(e) => {formatDate(e)}} labelPlacement='outside-left' size="sm" placeholder=" " color="primary" name="dataFinal"/>
 						<label className="text-[#edca62] text-xs col-start-1 max-h-8 pt-2">Desconto</label>
 						<Input className="w-[9rem] col-start-2 max-h-8" type="text" labelPlacement='outside-left' size="sm" placeholder="%" color="primary" name="desconto"/>
 					</div>
