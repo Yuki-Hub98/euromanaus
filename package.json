@@ -10,9 +10,8 @@
 	},
 	"dependencies": {
 		"@material-tailwind/react": "2.1.8",
-		"@nextui-org/button": "^2.0.31",
-		"@nextui-org/date-picker": "^2.0.7",
-		"@nextui-org/react": "^2.3.6",
+		"@nextui-org/button": "2.0.26",
+		"@nextui-org/react": "2.2.9",
 		"@nextui-org/system": "2.0.15",
 		"@nextui-org/theme": "2.1.17",
 		"@reduxjs/toolkit": "^2.2.2",
@@ -28,6 +27,7 @@
 		"react-icons": "^4.12.0",
 		"react-redux": "9.1.0",
 		"react-select": "5.8.0",
+		"react-to-print": "^2.15.1",
 		"recoil": "^0.7.7",
 		"redux": "5.0.1",
 		"tailwind-merge": "^2.2.2",
@@ -40,7 +40,7 @@
 		"eslint": "8",
 		"eslint-config-next": "14.0.1",
 		"postcss": "8.4.31",
-		"tailwindcss": "^3.4.0",
+		"tailwindcss": "3.3.5",
 		"typescript": "^5.4.3"
 	}
 }
