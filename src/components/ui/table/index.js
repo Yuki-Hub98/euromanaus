@@ -70,7 +70,7 @@ const Table = (props) => {
 				<tr >
 					{data !== null && typeof data === 'object' ? 
 					(Object.keys(data[0]).map((col, index) => (
-						<th key={index} className='p-2 bg-[#CFCFCF] border outline-none sticky top-0 text-[#2c2c2b] '>
+						<th key={index} className='p-2 bg-[#CFCFCF] text-tiny border outline-none sticky top-0 text-[#2c2c2b] '>
 							{FormatTable(col)}
 						</th>
 					))) : null}
@@ -86,12 +86,12 @@ const Table = (props) => {
 						setFocusedRow(rowIndex);
 						setFocusedCol(null);
 						}}
-						className={`border outline-none border-[#d9d9d9] ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
+						className={`border outline-none text-tiny border-[#d9d9d9] ${focusedRow === rowIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}>
 						{ item ? (Object.values(item).map((value, colIndex) => (
 						<td
 							onClick={() => handleCellClick(rowIndex, colIndex)}
 							key={colIndex}
-							className={`border outline-none cursor-pointer border-[#d9d9d9] ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
+							className={`border outline-none cursor-pointer text-tiny border-[#d9d9d9] ${ focusedRow === rowIndex && focusedCol === colIndex ? 'bg-[#edca62b4]' : 'bg-[#F7F7F7]'}  text-[#2c2c2b]`}
 							>
 							{value}
 						</td>

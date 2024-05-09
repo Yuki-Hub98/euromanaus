@@ -10,7 +10,7 @@ const Del = async (nameRequest,data) => {
 		})
 		.catch((error) => {
 			if (error) {
-				return error.response
+				return error.response?.data
 			}
 		})
 		return response
