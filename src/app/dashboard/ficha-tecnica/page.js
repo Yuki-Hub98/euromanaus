@@ -12,7 +12,7 @@ import { GetFichaTecnicaItens } from "@/app/actions/produto";
 import ModalEditFichaTecnica from "@/components/componentsIndustrial/edit/fichaTecnica/ModalEditFichaTecnica";
 import useDeleteData from "@/hooks/services/useDeleteData";
 import useHandleChange from "@/hooks/ui/useHandleChange";
-
+import { ButtonPrint } from "@/components/ui/print/buttonPrint";
 
 export default function FichaTecnica () {
 	const option = "Ficha Tecnica"
@@ -59,6 +59,7 @@ export default function FichaTecnica () {
 				<div className=' w-full absolute pl-2'>
 					<h1 className='font-bold text-background-table capitalize'>{option}</h1>
 				</div>
+				<ButtonPrint data={valueTable}/>
 				<div className="flex flex-row items-center gap-2" >
 					<Input className='w-72' labelPlacement='outside-left' placeholder=" " 
 						onChange={(e) => handleChange(e)} color="primary" label="Descrição" name="descricao"/>
