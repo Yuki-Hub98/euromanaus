@@ -5,10 +5,11 @@ import { ReactToPrint }  from "react-to-print"
 import { SlPrinter } from 'react-icons/sl';
 import FormatValuePrint from "@/functions/formatValue";
 
-const FichaTecnica = React.forwardRef((props, ref) => {
-		const { data, sumarry } = props;
+class FichaTecnica extends React.Component {
+	render() {
+		const { data, sumarry } = this.props;
     return (
-      <div ref={ref} className="flex flex-col gap-1 h-screen w-screen p-2.5">
+      <div className="flex flex-col gap-1 h-screen w-screen p-2.5">
 				<div className="h-20 border-1 border-gray-900">
 					<div className="p-2 items-center">
 						<h1 className="font-bold" >Euromanaus</h1>
@@ -77,7 +78,8 @@ const FichaTecnica = React.forwardRef((props, ref) => {
 
 			
     )
-  });
+  }};
+
 
 const FichaTecnicaPrint = () => {
 

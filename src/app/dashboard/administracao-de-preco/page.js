@@ -11,7 +11,7 @@ import { RemoveDuplicatesCodigo } from "@/functions/removeDuplicates"
 import { UpdateAdministracaoDePreco } from "@/app/actions/administracao-de-preco"
 import FormatURL from "@/functions/formatURL"
 
-const administracaoPreco = () => {
+export default function AdministracaoPreco() {
   const option = "Administração de Preço"
 	const openFilter = useDisclosure();
 	const dataAtual = new Date()
@@ -137,5 +137,3 @@ const administracaoPreco = () => {
     </>
   )
 }
-
-export default administracaoPreco

@@ -9,10 +9,10 @@ const Get = async (nameRequest, data) => {
     })
     .catch((error) => {
       if (error.response.data) {
-        return error.response.data
+        return error.response?.data
       }
       if (error.response) {
-        return error.response
+        return error?.response
       }
     })
     return response
@@ -25,11 +25,11 @@ const Get = async (nameRequest, data) => {
     }
   })
   .catch((error) => {
-    if (error.response.data) {
-      return error.response.data
+    if (error.response?.data) {
+      return error.response?.data
     }
     if (error.response) {
-      return error.response
+      return error?.response
     }
   })
   return response
